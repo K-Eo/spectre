@@ -29,4 +29,12 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should patch update" do
+    terminal = Terminal.first
+    patch terminal_path(terminal), params: { terminal: { name: 'foobar' } }
+    assert_redirected_to terminal_path(terminal)
+    terminal.reload
+    assert terminal.name, 'foobar'
+  end
+
 end
