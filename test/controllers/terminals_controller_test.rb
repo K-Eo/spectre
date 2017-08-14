@@ -24,4 +24,9 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit" do
+    get edit_terminal_path(Terminal.first)
+    assert_response :success
+  end
+
 end
