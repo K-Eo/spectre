@@ -1,0 +1,7 @@
+= form_for @terminal do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+    small.form-text.text-muted Escribe un nombre para identificar esta terminal.
+    
+  = f.submit class: 'btn btn-primary'  
