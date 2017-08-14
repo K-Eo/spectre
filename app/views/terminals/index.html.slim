@@ -1,0 +1,9 @@
+.row
+  .col-12
+    = link_to 'New Terminal', new_terminal_path, class: 'btn btn-success float-right'
+  .col-12.mt-4
+    ul.list-group
+      = render @terminals
+  .col-12.mt-4
+    = paginate @terminals
+      

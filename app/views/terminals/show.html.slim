@@ -1,0 +1,9 @@
+.row
+  .col-10
+    h3.mb-0 = @terminal.name
+    p.text-muted ##{@terminal.id}
+  .col-2.text-right
+    = link_to 'Edit', edit_terminal_path(@terminal), class: 'btn btn-success mr-2'
+    = link_to 'Delete', terminal_path(@terminal), class: 'btn btn-danger',
+              method: :delete, data: { confirm: 'Are you sure?' }
+    
