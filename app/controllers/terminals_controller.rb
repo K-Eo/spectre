@@ -1,7 +1,7 @@
 class TerminalsController < ApplicationController
 
   def index
-    @terminals = Terminal.all
+    @terminals = Terminal.page(params[:page])
   end
 
   def new
