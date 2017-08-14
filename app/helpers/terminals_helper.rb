@@ -4,7 +4,7 @@ module TerminalsHelper
     content_tag :li, class: 'nav-item' do
       klass = 'nav-link'
       klass << ' active' if url.include?(controller_name)
-      concat link_to name, url, class: klass
+      link_to name, url, class: klass
     end
   end
 
