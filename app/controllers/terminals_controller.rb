@@ -4,4 +4,8 @@ class TerminalsController < ApplicationController
     @terminals = Terminal.all
   end
 
+  def new
+    @terminal = Terminal.new
+  end
+
 end
