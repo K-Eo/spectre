@@ -18,6 +18,10 @@ class TerminalsController < ApplicationController
     end
   end
 
+  def show
+    @terminal = Terminal.find(params[:id])
+  end
+
   private
 
     def terminal_params

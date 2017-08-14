@@ -19,4 +19,9 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should get show" do
+    get terminal_path(Terminal.first)
+    assert_response :success
+  end
+
 end

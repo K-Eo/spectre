@@ -1,2 +1,3 @@
-li.list-group-item
-  = terminal.name
+li.list-group-item.pb-1.pt-2
+  h6.mb-1 = link_to terminal.name, terminal, class: 'text-dark'
+  p.mb-0.small.text-muted ##{terminal.id}
