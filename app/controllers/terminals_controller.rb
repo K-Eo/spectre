@@ -1,5 +1,5 @@
 class TerminalsController < ApplicationController
-  before_action :set_terminal, only: ['show', 'edit', 'update']
+  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy']
 
   def index
     @terminals = Terminal.page(params[:page])
@@ -31,6 +31,11 @@ class TerminalsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @terminal.destroy
+    redirect_to terminals_path
   end
 
   private

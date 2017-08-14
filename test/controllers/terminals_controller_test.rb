@@ -37,4 +37,13 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert terminal.name, 'foobar'
   end
 
+  test "should destroy" do
+    terminal = terminals(:one)
+    assert_difference('Terminal.count', -1) do
+      delete terminal_path(terminal)
+    end
+
+    assert_redirected_to terminals_path
+  end
+
 end
