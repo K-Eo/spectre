@@ -10,16 +10,7 @@
     = link_to 'Delete', terminal_path(@terminal), class: 'btn btn-danger',
               method: :delete, data: { confirm: 'Are you sure?' }
               
-  .col-4
-    .card
-      .card-header Asociar dispositivo
-
-      .card-body
-        .h6 Scan QR Code
-        div.text-center.mt-4
-          == @qr_pairing_token
-
-      ul.list-group.list-group-flush
-        li.list-group-item
-          .h6 Send by Email
-    
+  - if @terminal.paired?
+    = render 'device_section'
+  - else
+    = render 'pairing_section'

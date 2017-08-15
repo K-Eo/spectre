@@ -1,0 +1,20 @@
+.col-4
+  .card
+    .card-header Asociar dispositivo
+
+    .card-body
+      .h6 Scan QR Code
+      div.text-center.mt-3
+        == @qr_pairing_token
+
+    ul.list-group.list-group-flush
+      li.list-group-item
+        .h6 Send by Email
+        .input-group.mt-3
+          input.form-control placeholder="mail@example.com"
+          span.input-group-btn
+            button.btn.btn-primary Send
+            
+      li.list-group-item
+        .h6 Enter code
+        input.form-control.mt-3 readonly=true value="#{@terminal.pairing_token}"
