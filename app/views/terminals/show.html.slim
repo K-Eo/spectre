@@ -9,4 +9,12 @@
     = link_to 'Edit', edit_terminal_path(@terminal), class: 'btn btn-success mr-2'
     = link_to 'Delete', terminal_path(@terminal), class: 'btn btn-danger',
               method: :delete, data: { confirm: 'Are you sure?' }
+              
+  .col-4
+    .card
+      .card-header Asociar dispositivo
+      .card-body
+        .h6 Scan QR Code
+      .card-body
+        .h6 Send by Email
     
