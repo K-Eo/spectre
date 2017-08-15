@@ -12,7 +12,7 @@
       
       li.list-group-item
         .h6 Enviar por correo electrónico
-        = form_for @device_mail, url: send_token_terminal_path do |f|
+        = form_for @device_email, url: send_token_terminal_path do |f|
           .input-group.mt-3
             = f.text_field :email,
                             placeholder: 'mail@example.com',
