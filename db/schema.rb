@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815005920) do
+ActiveRecord::Schema.define(version: 20170815010342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170815005920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "pairing_token"
+    t.boolean "paired", default: false
     t.index ["name"], name: "index_terminals_on_name"
     t.index ["pairing_token"], name: "index_terminals_on_pairing_token"
     t.index ["status"], name: "index_terminals_on_status"
