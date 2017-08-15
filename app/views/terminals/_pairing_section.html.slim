@@ -1,21 +1,23 @@
 .col-4
   .card
-    .card-header Asociar dispositivo
-
     .card-body
-      .h6 Scan QR Code
-      div.text-center.mt-3
-        == @qr_pairing_token
+      h4.card-title #{octicon 'info'} Asociar dispositivo
+      p.card-text Use alguna de las siguientes opciones para asociar un dispositivo a esta terminal:
 
     ul.list-group.list-group-flush
       li.list-group-item
-        .h6 Send by Email
+        .h6 Escanear el código QR
+        div.text-center.mt-3
+          == @qr_pairing_token
+      
+      li.list-group-item
+        .h6 Enviar por correo electrónico
         .input-group.mt-3
           input.form-control placeholder="mail@example.com"
           span.input-group-btn
-            button.btn.btn-primary Send
+            button.btn.btn-primary Enviar
             
       li.list-group-item
-        .h6 Enter code
+        .h6 Ingresar el código manualmente
         input.form-control.mt-3 readonly=true value="#{@terminal.pairing_token}"
   
