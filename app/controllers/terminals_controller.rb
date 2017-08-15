@@ -1,5 +1,5 @@
 class TerminalsController < ApplicationController
-  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy']
+  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token']
 
   def index
     @terminals = Terminal.page(params[:page])
@@ -43,8 +43,11 @@ class TerminalsController < ApplicationController
   def send_token
     @device_email = DeviceEmail.new(device_email_params)
     if @device_email.valid?
+      flash[:notice] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
       redirect_to terminal_path(params[:id])
     else
+      @qr_pairing_token = @terminal.generate_pairing_token_qr
+      flash.now[:danger] = "No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente."
       render 'show'
     end
   end
