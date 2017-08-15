@@ -12,11 +12,15 @@
       
       li.list-group-item
         .h6 Enviar por correo electrónico
-        .input-group.mt-3
-          input.form-control placeholder="mail@example.com"
-          span.input-group-btn
-            button.btn.btn-primary Enviar
-            
+        = form_for @device_mail, url: send_token_terminal_path do |f|
+          .input-group.mt-3
+            = f.text_field :email,
+                            placeholder: 'mail@example.com',
+                            class: 'form-control',
+                            autocomplete: 'off'
+            span.input-group-btn
+              = f.submit 'Enviar', class: 'btn btn-primary'
+          
       li.list-group-item
         .h6 Ingresar el código manualmente
         input.form-control.mt-3 readonly=true value="#{@terminal.pairing_token}"
