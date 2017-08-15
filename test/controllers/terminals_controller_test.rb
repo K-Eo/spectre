@@ -46,4 +46,11 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to terminals_path
   end
 
+  test "should post send_token" do
+    terminal = terminals(:one)
+    post send_token_terminal_path(terminal),
+          params: { user: { email: 'foo@bar.com' } }
+    assert_response :success
+  end
+
 end

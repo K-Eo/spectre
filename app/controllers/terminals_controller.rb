@@ -41,6 +41,9 @@ class TerminalsController < ApplicationController
     redirect_to terminals_path
   end
 
+  def send_token
+  end
+
   private
 
     def terminal_params
