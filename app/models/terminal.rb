@@ -6,6 +6,12 @@ class Terminal < ApplicationRecord
 
   before_create :create_pairing_token
 
+  def generate_pairing_token_qr
+    url = "https://spectre.com/#{self.pairing_token}"
+    qr_code = RQRCode::QRCode.new(url, size: 4, level: :m)
+    qr_code.as_svg(offset: 0, color: '000', module_size: 6)
+  end
+
   private
 
     def create_pairing_token

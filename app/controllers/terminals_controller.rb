@@ -20,11 +20,8 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    url = "https://spectre.com/#{@terminal.pairing_token}"
-    qr_code = RQRCode::QRCode.new(url, size: 4, level: :m)
-    @qr_pairing_token = qr_code.as_svg(offset: 0, color: '000', module_size: 6)
-
-    @device_mail = DeviceEmail.new
+    @qr_pairing_token = @terminal.generate_pairing_token_qr
+    @device_email = DeviceEmail.new
   end
 
   def edit
