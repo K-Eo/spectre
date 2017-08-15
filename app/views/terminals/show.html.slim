@@ -13,8 +13,13 @@
   .col-4
     .card
       .card-header Asociar dispositivo
+
       .card-body
         .h6 Scan QR Code
-      .card-body
-        .h6 Send by Email
+        div.text-center.mt-4
+          == @qr_pairing_token
+
+      ul.list-group.list-group-flush
+        li.list-group-item
+          .h6 Send by Email
     
