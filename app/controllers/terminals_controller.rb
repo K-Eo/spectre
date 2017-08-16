@@ -43,6 +43,7 @@ class TerminalsController < ApplicationController
   def send_token
     @device_email = DeviceEmail.new(device_email_params)
     if @device_email.valid?
+      TerminalMailer.pairing_token(@device_email.email, @terminal.pairing_token).deliver_later
       flash[:message] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
       redirect_to terminal_path(params[:id])
     else
