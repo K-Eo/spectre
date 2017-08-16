@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815010342) do
+ActiveRecord::Schema.define(version: 20170816180053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "devices", force: :cascade do |t|
+    t.string "imei", limit: 16
+    t.string "os"
+    t.string "phone", limit: 20
+    t.string "owner", limit: 120
+    t.string "model"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imei"], name: "index_devices_on_imei"
+  end
 
   create_table "terminals", force: :cascade do |t|
     t.string "name"
