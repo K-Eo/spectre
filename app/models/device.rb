@@ -1,4 +1,12 @@
 class Device < ApplicationRecord
+  validates :imei, presence: true,
+                    length: { maximum: 16 }
+  validates :os, presence: true
+  validates :phone, presence: true,
+                    length: { maximum: 20 }
+  validates :owner, presence: true,
+                    length: { maximum: 120 }
+  validates :model, presence: true
 
   def self.fake
     device = Device.new
