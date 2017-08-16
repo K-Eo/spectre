@@ -38,7 +38,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy" do
-    terminal = terminals(:one)
+    terminal = terminals(:ripper)
     assert_difference('Terminal.count', -1) do
       delete terminal_path(terminal)
     end
@@ -47,7 +47,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should post send_token" do
-    terminal = terminals(:one)
+    terminal = terminals(:ripper)
     post send_token_terminal_path(terminal),
           params: { device_email: { email: 'foo@bar.com' } }
 
@@ -57,7 +57,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should render danger on error when send_token" do
-    terminal = terminals(:one)
+    terminal = terminals(:ripper)
     post send_token_terminal_path(terminal),
           params: { device_email: { email: nil } }
 
