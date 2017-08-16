@@ -54,6 +54,9 @@ class TerminalsController < ApplicationController
     end
   end
 
+  def pair_device
+  end
+
   private
 
     def device_email_params

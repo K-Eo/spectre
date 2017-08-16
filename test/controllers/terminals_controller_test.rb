@@ -67,4 +67,20 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should pair device" do
+    device = {
+      imei: '538399670155719',
+      os: 'Android KitKat',
+      phone: '318-418-9663',
+      owner: 'Susan M. Hadden',
+      model: 'Moto X',
+      pairing_token: '96d596f5434ffea0a955'
+    }
+
+    terminal = terminals(:ripper)
+
+    post pair_device_terminal_path(terminal), params: { device: device }
+    assert_response :success
+  end
+
 end
