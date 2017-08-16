@@ -2,7 +2,8 @@
 class TerminalMailerPreview < ActionMailer::Preview
 
   def pairing_token
-    terminal = Terminal.first
+    terminal = Terminal.new(name: 'foobar')
+    terminal.create_pairing_token
     TerminalMailer.pairing_token('foo@bar.com', terminal)
   end
 

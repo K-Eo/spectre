@@ -6,7 +6,7 @@ table border="0" cellpadding="0" cellspacing="0"
   tbody
     tr
       td align="center"
-        = image_tag attachments['qrcode.png'].url
+        img src="#{@qr_image.to_data_url}"
             
 p 2.- Ingresar el código manualmente
 
@@ -14,4 +14,4 @@ table border="0" cellpadding="0" cellspacing="0"
   tbody
     tr
       td align="center"
-        = @qrcode
+        = @qr_code
