@@ -1,4 +1,5 @@
 class Device < ApplicationRecord
+  belongs_to :terminal
   validates :imei, presence: true,
                     length: { maximum: 16 }
   validates :os, presence: true

@@ -3,7 +3,7 @@ require 'test_helper'
 class DeviceTest < ActiveSupport::TestCase
 
   def setup
-    @device = Device.fake
+    @device = devices(:motorola)
   end
 
   test "imei should be present" do
