@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  imei: MyString
-  os: MyString
-  phone: MyString
-  owner: MyString
-  model: MyString
+motorola:
+  imei: 508053251391179
+  os: 'Android Lollipop'
+  phone: '(251) 546-9442'
+  owner: 'Wanda D. Hopkins'
+  model: 'Moto G'
 
-two:
-  imei: MyString
-  os: MyString
-  phone: MyString
-  owner: MyString
-  model: MyString
+samsung:
+  imei: 540491775435736
+  os: 'Android Marshmallow'
+  phone: '810-237-8875'
+  owner: 'Robert B. Page'
+  model: 'Samsung Galaxy S8'
