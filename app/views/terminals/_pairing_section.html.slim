@@ -8,7 +8,7 @@
       li.list-group-item
         .h6 Escanear el código QR
         div.text-center.mt-3
-          == @qr_pairing_token
+          img src="#{@qr_pairing_token.to_data_url}"
       
       li.list-group-item
         .h6 Enviar por correo electrónico

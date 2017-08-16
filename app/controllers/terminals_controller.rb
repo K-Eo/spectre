@@ -20,7 +20,7 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    @qr_pairing_token = @terminal.generate_pairing_token_qr
+    @qr_pairing_token = @terminal.qr_pairing_token_png(200)
     @device_email = DeviceEmail.new
   end
 
@@ -47,7 +47,7 @@ class TerminalsController < ApplicationController
       flash[:message] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
       redirect_to terminal_path(params[:id])
     else
-      @qr_pairing_token = @terminal.generate_pairing_token_qr
+      @qr_pairing_token = @terminal.qr_pairing_token_png(200)
       flash.now[:type] = "danger"
       flash.now[:message] = "No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente."
       render 'show'
