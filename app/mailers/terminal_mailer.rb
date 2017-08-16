@@ -4,7 +4,7 @@ class TerminalMailer < ApplicationMailer
   def pairing_token(email, terminal)
     @email = email
     @qrcode = terminal.pairing_token
-    attachments.inline['qrcode.svg'] = terminal.generate_pairing_token_qr
+    attachments.inline['qrcode.png'] = terminal.qr_pairing_token_png(220).to_s
     mail(to: @email, subject: 'Instrucciones para asociar dispositivo')
   end
 
