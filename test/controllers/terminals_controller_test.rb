@@ -46,4 +46,25 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to terminals_path
   end
 
+  test "should post send_token" do
+    terminal = terminals(:one)
+    post send_token_terminal_path(terminal),
+          params: { device_email: { email: 'foo@bar.com' } }
+
+    assert_not flash[:type]
+    assert_equal 'Enviado instrucciones a <strong>foo@bar.com</strong>.', flash[:message]
+    assert_redirected_to terminal_path(terminal)
+  end
+
+  test "should render danger on error when send_token" do
+    terminal = terminals(:one)
+    post send_token_terminal_path(terminal),
+          params: { device_email: { email: nil } }
+
+    assert_equal 'danger', flash[:type]
+    assert_equal 'No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente.',
+                  flash[:message]
+    assert_response :success
+  end
+
 end

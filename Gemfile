@@ -37,6 +37,9 @@ gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
 gem 'slim-rails'
 gem 'kaminari'
+gem 'octicons_helper'
+
+gem 'rqrcode', '~> 0.10.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

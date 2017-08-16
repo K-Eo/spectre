@@ -15,4 +15,11 @@ class TerminalTest < ActiveSupport::TestCase
     assert terminal.valid?
   end
 
+  test "should generate pairing token on create" do
+    terminal = Terminal.new(name: 'foobar')
+    terminal.save
+    terminal.reload
+    assert_match /[a-f0-9]{10}/, terminal.pairing_token
+  end
+
 end
