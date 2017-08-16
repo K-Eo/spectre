@@ -3,7 +3,8 @@ require 'test_helper'
 class TerminalMailerTest < ActionMailer::TestCase
 
   test "send pairing token" do
-    email = TerminalMailer.pairing_token('user@example.com', '1234567890')
+    terminal = terminals(:one)
+    email = TerminalMailer.pairing_token('user@example.com', terminal)
 
     assert_emails 1 do
       email.deliver_now
