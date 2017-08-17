@@ -1,5 +1,5 @@
 class TerminalsController < ApplicationController
-  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token']
+  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'pair_device']
 
   def index
     @terminals = Terminal.page(params[:page])
@@ -55,9 +55,28 @@ class TerminalsController < ApplicationController
   end
 
   def pair_device
+    @device = @terminal.devices.new(device_params)
+    if @device.save
+      flash[:message] = 'Pairing device ready.'
+      redirect_to terminal_path(@terminal)
+    else
+      @device_email = DeviceEmail.new
+      @qr_pairing_token = @terminal.pairing_token_png(200)
+      flash.now[:type] = 'danger'
+      flash.now[:message] = 'Pairing device fail. Try again.'
+      render 'show'
+    end
   end
 
   private
+
+    def pairing_token_param
+      params.require(:device).permit(:pairing_token)
+    end
+
+    def device_params
+      params.require(:device).permit(:imei, :os, :phone, :owner, :model)
+    end
 
     def device_email_params
       params.require(:device_email).permit(:email)

@@ -79,7 +79,31 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
     terminal = terminals(:ripper)
 
-    post pair_device_terminal_path(terminal), params: { device: device }
+    assert_difference 'Device.count' do
+      post pair_device_terminal_path(terminal), params: { device: device }
+    end
+
+    assert_equal 'Pairing device ready.', flash[:message]
+    assert_redirected_to terminal_path(terminal)
+  end
+
+  test "should flash error if pair device fail" do
+    terminal = terminals(:ripper)
+    device = {
+      imei: '',
+      os: '',
+      phone: '',
+      owner: '',
+      model: '',
+      pairing_token: ''
+    }
+
+    assert_difference('Device.count', 0) do
+      post pair_device_terminal_path(terminal), params: { device: device }
+    end
+
+    assert_equal 'danger', flash[:type]
+    assert_equal 'Pairing device fail. Try again.', flash[:message]
     assert_response :success
   end
 
