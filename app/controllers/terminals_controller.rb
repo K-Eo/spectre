@@ -1,4 +1,5 @@
 class TerminalsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:pair_device]
   before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'pair_device']
 
   def index
@@ -56,6 +57,7 @@ class TerminalsController < ApplicationController
 
   def pair_device
     @device = @terminal.devices.new(device_params)
+    @device.current = true
     if @device.save
       render status: :created
     else

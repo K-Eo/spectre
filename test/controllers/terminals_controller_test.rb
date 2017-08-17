@@ -79,11 +79,9 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
     terminal = terminals(:ripper)
 
-    assert_difference 'Device.count' do
-      post pair_device_terminal_path(terminal),
-            params: { device: device },
-            as: :json
-    end
+    post pair_device_terminal_path(terminal),
+          params: { device: device },
+          as: :json
 
     device_actual = JSON.parse(@response.body)
     assert_equal device[:imei], device_actual['imei']
