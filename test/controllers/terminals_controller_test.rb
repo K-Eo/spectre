@@ -80,11 +80,20 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     terminal = terminals(:ripper)
 
     assert_difference 'Device.count' do
-      post pair_device_terminal_path(terminal), params: { device: device }
+      post pair_device_terminal_path(terminal),
+            params: { device: device },
+            as: :json
     end
 
-    assert_equal 'Pairing device ready.', flash[:message]
-    assert_redirected_to terminal_path(terminal)
+    device_actual = JSON.parse(@response.body)
+    assert_equal device[:imei], device_actual['imei']
+    assert_equal device[:os], device_actual['os']
+    assert_equal device[:phone], device_actual['phone']
+    assert_equal device[:owner], device_actual['owner']
+    assert_equal device[:model], device_actual['model']
+    assert_not device_actual['created_at'].nil?
+    assert_not device_actual['updated_at'].nil?
+    assert_response :success
   end
 
   test "should flash error if pair device fail" do
@@ -99,12 +108,20 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference('Device.count', 0) do
-      post pair_device_terminal_path(terminal), params: { device: device }
+      post pair_device_terminal_path(terminal),
+            params: { device: device },
+            as: :json
     end
 
-    assert_equal 'danger', flash[:type]
-    assert_equal 'Pairing device fail. Try again.', flash[:message]
-    assert_response :success
+    device_actual = JSON.parse(@response.body)
+    assert_equal '', device_actual['imei']
+    assert_equal '', device_actual['os']
+    assert_equal '', device_actual['phone']
+    assert_equal '', device_actual['owner']
+    assert_equal '', device_actual['model']
+    assert device_actual['created_at'].nil?
+    assert device_actual['updated_at'].nil?
+    assert_response :unprocessable_entity
   end
 
 end

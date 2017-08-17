@@ -57,14 +57,9 @@ class TerminalsController < ApplicationController
   def pair_device
     @device = @terminal.devices.new(device_params)
     if @device.save
-      flash[:message] = 'Pairing device ready.'
-      redirect_to terminal_path(@terminal)
+      render status: :created
     else
-      @device_email = DeviceEmail.new
-      @qr_pairing_token = @terminal.pairing_token_png(200)
-      flash.now[:type] = 'danger'
-      flash.now[:message] = 'Pairing device fail. Try again.'
-      render 'show'
+      render status: :unprocessable_entity
     end
   end
 
