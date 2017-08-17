@@ -121,6 +121,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal '', device_actual['model']
     assert device_actual['created_at'].nil?
     assert device_actual['updated_at'].nil?
+    assert_not device_actual['errors'].nil?
     assert_response :unprocessable_entity
   end
 
