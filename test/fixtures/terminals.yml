@@ -2,8 +2,10 @@
 
 ripper:
   name: Ripper
+  pairing_token: <%= SecureRandom.hex(10) %>
   status: 1
 
 thread:
   name: Thread
+  pairing_token: <%= SecureRandom.hex(10) %>
   status: 1

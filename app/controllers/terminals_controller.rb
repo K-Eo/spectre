@@ -1,6 +1,6 @@
 class TerminalsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:pair_device]
-  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'pair_device']
+  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token']
 
   def index
     @terminals = Terminal.page(params[:page])
@@ -56,8 +56,17 @@ class TerminalsController < ApplicationController
   end
 
   def pair_device
+    if pairing_token_param.nil? || pairing_token_param.empty?
+      @device = Device.new(device_params)
+      render status: :unprocessable_entity
+      return
+    end
+
+    @terminal = Terminal.find_by(pairing_token: pairing_token_param)
+
     @device = @terminal.devices.new(device_params)
     @device.current = true
+
     if @device.save
       render status: :created
     else
@@ -68,7 +77,7 @@ class TerminalsController < ApplicationController
   private
 
     def pairing_token_param
-      params.require(:device).permit(:pairing_token)
+      params.require(:device).permit(:pairing_token)[:pairing_token]
     end
 
     def device_params

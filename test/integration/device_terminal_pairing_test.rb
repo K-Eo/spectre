@@ -3,6 +3,9 @@ require 'test_helper'
 class DeviceTerminalPairingTest < ActionDispatch::IntegrationTest
 
   test "should pair a device with terminal" do
+    # Get target terminal, already has one device as current
+    terminal = terminals(:thread)
+
     # Fake device to pair
     device = {
       imei: '538399670155719',
@@ -10,15 +13,12 @@ class DeviceTerminalPairingTest < ActionDispatch::IntegrationTest
       phone: '318-418-9663',
       owner: 'Susan M. Hadden',
       model: 'Moto X',
-      pairing_token: '96d596f5434ffea0a955'
+      pairing_token: terminal.pairing_token
     }
-
-    # Get target terminal, already has one device as current
-    terminal = terminals(:thread)
 
     # Start pairing
     assert_difference 'Device.count' do
-      post pair_device_terminal_path(terminal),
+      post pair_device_terminals_path,
             params: { device: device },
             as: :json
     end
