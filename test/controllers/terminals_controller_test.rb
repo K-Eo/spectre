@@ -94,14 +94,16 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should response with error if pair device fail" do
+  test "should response errors if missing device info" do
+    terminal = terminals(:ripper)
+
     device = {
       imei: '',
       os: '',
       phone: '',
       owner: '',
       model: '',
-      pairing_token: ''
+      pairing_token: terminal.pairing_token
     }
 
     assert_difference('Device.count', 0) do
@@ -118,8 +120,35 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_equal '', device_actual['model']
     assert device_actual['created_at'].nil?
     assert device_actual['updated_at'].nil?
-    # assert_not device_actual['errors'].nil?
+    assert_not device_actual['errors'].nil?
     assert_response :unprocessable_entity
+  end
+
+  test "should response with error if pair device fail" do
+    device = {
+      imei: '538399810155719',
+      os: 'Android KitKat',
+      phone: '918-418-9663',
+      owner: 'Mark M. Hadden',
+      model: 'Moto E',
+      pairing_token: ''
+    }
+
+    assert_difference('Device.count', 0) do
+      post pair_device_terminals_path,
+            params: { device: device },
+            as: :json
+    end
+
+    device_actual = JSON.parse(@response.body)
+    assert_equal device[:imei], device_actual['imei']
+    assert_equal device[:os], device_actual['os']
+    assert_equal device[:phone], device_actual['phone']
+    assert_equal device[:owner], device_actual['owner']
+    assert_equal device[:model], device_actual['model']
+    assert device_actual['created_at'].nil?
+    assert device_actual['updated_at'].nil?
+    assert_response :not_found
   end
 
 end

@@ -56,13 +56,13 @@ class TerminalsController < ApplicationController
   end
 
   def pair_device
-    if pairing_token_param.nil? || pairing_token_param.empty?
+    @terminal = Terminal.find_by(pairing_token: pairing_token_param)
+
+    if @terminal.nil?
       @device = Device.new(device_params)
-      render status: :unprocessable_entity
+      render status: :not_found
       return
     end
-
-    @terminal = Terminal.find_by(pairing_token: pairing_token_param)
 
     @device = @terminal.devices.new(device_params)
     @device.current = true
