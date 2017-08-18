@@ -68,6 +68,7 @@ class TerminalsController < ApplicationController
     @device.current = true
 
     if @device.save
+      @terminal.set_current_device(@device)
       render status: :created
     else
       render status: :unprocessable_entity

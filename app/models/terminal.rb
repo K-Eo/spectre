@@ -1,5 +1,5 @@
 class Terminal < ApplicationRecord
-  has_many :devices, dependent: :destroy, before_add: :set_current_device
+  has_many :devices, dependent: :destroy
   validates :name, presence: true,
                     length: { maximum: 255 }
 
@@ -35,7 +35,8 @@ class Terminal < ApplicationRecord
     self.regenerate_access_token
 
     # Un pair current device
-    self.devices.where(current: true)
+    self.devices.where.not(imei: device.imei)
+                .where(current: true)
                 .update_all(current: false)
   end
 
