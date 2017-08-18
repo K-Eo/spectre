@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170818185521) do
     t.string "access_token"
     t.index ["access_token"], name: "index_terminals_on_access_token", unique: true
     t.index ["name"], name: "index_terminals_on_name"
-    t.index ["pairing_token"], name: "index_terminals_on_pairing_token"
+    t.index ["pairing_token"], name: "index_terminals_on_pairing_token", unique: true
     t.index ["status"], name: "index_terminals_on_status"
   end
 
