@@ -1,5 +1,5 @@
 class Terminal < ApplicationRecord
-  has_many :devices, dependent: :destroy, after_add: :set_current_device
+  has_many :devices, dependent: :destroy, before_add: :set_current_device
   validates :name, presence: true,
                     length: { maximum: 255 }
 
@@ -23,12 +23,14 @@ class Terminal < ApplicationRecord
   end
 
   def set_current_device(device)
-    self.devices.where.not(imei: device.imei)
-                .where(current: true)
-                .update_all(current: false)
+    # Pair device
     self.paired = true
     self.pairing_token = nil
     self.save
+
+    # Un pair current device
+    self.devices.where(current: true)
+                .update_all(current: false)
   end
 
   def create_pairing_token
