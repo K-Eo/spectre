@@ -23,6 +23,19 @@ class DeviceTerminalPairingTest < ActionDispatch::IntegrationTest
             as: :json
     end
 
+    # Assert response
+    device_actual = JSON.parse(@response.body)
+    assert_equal device[:imei], device_actual['imei']
+    assert_equal device[:os], device_actual['os']
+    assert_equal device[:phone], device_actual['phone']
+    assert_equal device[:owner], device_actual['owner']
+    assert_equal device[:model], device_actual['model']
+    assert_not device_actual['created_at'].nil?
+    assert_not device_actual['updated_at'].nil?
+
+    # Access token should be present
+    assert_not device_actual['access_token'].nil?
+
     # Should response with success
     assert_response :success
 
@@ -38,7 +51,8 @@ class DeviceTerminalPairingTest < ActionDispatch::IntegrationTest
     # Terminal should be updated to paired=true and token=nil
     terminal.reload
     assert terminal.paired?
-    assert terminal.pairing_token.nil?
+    assert_nil terminal.pairing_token
+    assert_not_nil terminal.access_token
   end
 
 end

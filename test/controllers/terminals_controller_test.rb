@@ -83,14 +83,6 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
           params: { device: device },
           as: :json
 
-    device_actual = JSON.parse(@response.body)
-    assert_equal device[:imei], device_actual['imei']
-    assert_equal device[:os], device_actual['os']
-    assert_equal device[:phone], device_actual['phone']
-    assert_equal device[:owner], device_actual['owner']
-    assert_equal device[:model], device_actual['model']
-    assert_not device_actual['created_at'].nil?
-    assert_not device_actual['updated_at'].nil?
     assert_response :success
   end
 
