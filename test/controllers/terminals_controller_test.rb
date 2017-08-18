@@ -57,7 +57,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should render danger on error when send_token" do
-    terminal = terminals(:ripper)
+    terminal = terminals(:thread)
     post send_token_terminal_path(terminal),
           params: { device_email: { email: nil } }
 
@@ -146,7 +146,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   test "should delete unpair_device_web" do
     terminal = terminals(:ripper)
     delete pair_device_terminal_path(terminal)
-    assert_response :success
+    assert_response :redirect
   end
 
   test "should delete unpair_device" do

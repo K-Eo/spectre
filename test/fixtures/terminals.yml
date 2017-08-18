@@ -3,11 +3,13 @@
 ripper:
   name: Ripper
   pairing_token: nil
-  access_token: <%= SecureRandom.hex(24) %>
+  access_token: <%= SecureRandom.hex(18) %>
   paired: true
   status: 1
 
 thread:
   name: Thread
-  pairing_token: <%= SecureRandom.hex(24) %>
+  pairing_token: <%= SecureRandom.hex(18) %>
+  access_token: nil
+  paired: false
   status: 1
