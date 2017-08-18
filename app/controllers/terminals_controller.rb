@@ -79,6 +79,12 @@ class TerminalsController < ApplicationController
     end
   end
 
+  def unpair_device_web
+  end
+
+  def unpair_device
+  end
+
   private
 
     def pairing_token_param

@@ -143,4 +143,15 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "should delete unpair_device_web" do
+    terminal = terminals(:ripper)
+    delete pair_device_terminal_path(terminal)
+    assert_response :success
+  end
+
+  test "should delete unpair_device" do
+    delete pair_device_terminals_path
+    assert_response :success
+  end
+
 end
