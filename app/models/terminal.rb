@@ -45,4 +45,20 @@ class Terminal < ApplicationRecord
     self.regenerate_pairing_token
   end
 
+  def unpair_device
+    # Set current device to false
+    self.devices
+        .where(current: true)
+        .update_all(current: false)
+
+    # To start pairing a new device later we set:
+    # access_token to nil and paired to false,
+    self.access_token = nil
+    self.paired = false
+    self.save
+
+    # also we have to regenerate a new fresh pairing_token.
+    self.regenerate_pairing_token
+  end
+
 end

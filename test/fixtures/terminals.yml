@@ -2,10 +2,12 @@
 
 ripper:
   name: Ripper
-  pairing_token: <%= SecureRandom.hex(10) %>
+  pairing_token: nil
+  access_token: <%= SecureRandom.hex(24) %>
+  paired: true
   status: 1
 
 thread:
   name: Thread
-  pairing_token: <%= SecureRandom.hex(10) %>
+  pairing_token: <%= SecureRandom.hex(24) %>
   status: 1

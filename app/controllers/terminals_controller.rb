@@ -80,6 +80,10 @@ class TerminalsController < ApplicationController
   end
 
   def unpair_device_web
+    @terminal = Terminal.find(params[:id])
+    @terminal.unpair_device
+    flash[:message] = 'El dispositivo ya no se encuentra asociado a esta terminal.'
+    redirect_to terminal_path(@terminal)
   end
 
   def unpair_device
