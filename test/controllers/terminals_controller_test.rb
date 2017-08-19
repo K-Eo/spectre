@@ -143,13 +143,13 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  test "should delete unpair_device_web" do
+  test "pair_device DELETE web should return success on unpair" do
     terminal = terminals(:ripper)
     delete pair_device_terminal_path(terminal)
     assert_response :redirect
   end
 
-  test "should delete unpair_device" do
+  test "pair_device DELETE should return success on unpair" do
     terminal = terminals(:ripper)
     device = devices(:motorola)
     params = { access_token: terminal.access_token, imei: device.imei }
@@ -159,23 +159,73 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
             as: :json
 
     assert_response :success
+
+    assert_equal 0, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.access_token
+    assert_match /[a-zA-Z0-9]/, terminal.pairing_token
+    assert_not terminal.paired
   end
 
-  test "should response error if missing imei" do
+  test "pair_device DELETE should respond error if missing imei" do
     terminal = terminals(:ripper)
+    params = { access_token: terminal.access_token }
+
     delete pair_device_terminals_path,
-            params: { access_token: terminal.access_token },
+            params: params,
             as: :json
+
     assert_response :bad_request
+
+    assert_equal 1, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.pairing_token
+    assert_match /[a-zA-Z0-9]/, terminal.access_token
+    assert terminal.paired
   end
 
-  test "should response error if missing token_access" do
+  test "pair_device DELETE should respond error if missing token_access" do
     terminal = terminals(:ripper)
     device = devices(:motorola)
+    params = { imei: device.imei }
+
     delete pair_device_terminals_path,
-            params: { imei: device.imei },
+            params: params,
             as: :json
+
     assert_response :bad_request
+
+    assert_equal 1, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.pairing_token
+    assert_match /[a-zA-Z0-9]/, terminal.access_token
+    assert terminal.paired
+  end
+
+  test "should respond error if not found token_access" do
+    terminal = terminals(:ripper)
+    device = devices(:motorola)
+    params = { imei: device.imei, access_token: 'foobar' }
+
+    delete pair_device_terminals_path,
+            params: params,
+            as: :json
+
+    assert_response :bad_request
+
+    assert_equal 1, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.pairing_token
+    assert_match /[a-zA-Z0-9]/, terminal.access_token
+    assert terminal.paired
   end
 
 end

@@ -94,6 +94,22 @@ class TerminalsController < ApplicationController
       render status: :bad_request
       return
     end
+
+    terminal = Terminal.find_by(access_token: access_token)
+
+    if terminal.nil?
+      render status: :bad_request
+      return
+    end
+
+    device = terminal.devices.find_by(imei: imei)
+
+    if terminal.nil? && device.nil?
+      render status: :not_found
+    else
+      terminal.unpair_device
+      render status: :ok
+    end
   end
 
   private
