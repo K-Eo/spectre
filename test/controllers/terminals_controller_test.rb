@@ -67,7 +67,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should pair device" do
+  test "pair_device POST should return success on pair" do
     terminal = terminals(:ripper)
 
     device = {
@@ -86,7 +86,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should response errors if missing device info" do
+  test "pair_device POST should return error if missing device info" do
     terminal = terminals(:ripper)
 
     device = {
@@ -116,7 +116,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should response with error if pair device fail" do
+  test "pair_device POST should return error if pairing token doesn't exist" do
     device = {
       imei: '538399810155719',
       os: 'Android KitKat',
