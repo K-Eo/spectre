@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815010342) do
+ActiveRecord::Schema.define(version: 20170818185521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "devices", force: :cascade do |t|
+    t.string "imei", limit: 16
+    t.string "os"
+    t.string "phone", limit: 20
+    t.string "owner", limit: 120
+    t.string "model"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "terminal_id"
+    t.boolean "current", default: true
+    t.index ["imei"], name: "index_devices_on_imei"
+    t.index ["terminal_id"], name: "index_devices_on_terminal_id"
+  end
 
   create_table "terminals", force: :cascade do |t|
     t.string "name"
@@ -22,9 +36,12 @@ ActiveRecord::Schema.define(version: 20170815010342) do
     t.datetime "updated_at", null: false
     t.string "pairing_token"
     t.boolean "paired", default: false
+    t.string "access_token"
+    t.index ["access_token"], name: "index_terminals_on_access_token", unique: true
     t.index ["name"], name: "index_terminals_on_name"
-    t.index ["pairing_token"], name: "index_terminals_on_pairing_token"
+    t.index ["pairing_token"], name: "index_terminals_on_pairing_token", unique: true
     t.index ["status"], name: "index_terminals_on_status"
   end
 
+  add_foreign_key "devices", "terminals"
 end

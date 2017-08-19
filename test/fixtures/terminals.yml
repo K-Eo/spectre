@@ -1,9 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+ripper:
+  name: Ripper
+  # pairing_token: nil
+  access_token: <%= SecureRandom.hex(18) %>
+  paired: true
   status: 1
 
-two:
-  name: MyString
+thread:
+  name: Thread
+  pairing_token: <%= SecureRandom.hex(18) %>
+  # access_token: nil
+  paired: false
   status: 1

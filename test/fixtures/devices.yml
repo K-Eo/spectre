@@ -1,0 +1,28 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+motorola:
+  imei: 508053251391179
+  os: 'Android Lollipop'
+  phone: '(251) 546-9442'
+  owner: 'Wanda D. Hopkins'
+  model: 'Moto G'
+  current: true
+  terminal: ripper
+
+samsung:
+  imei: 540491775435736
+  os: 'Android Marshmallow'
+  phone: '810-237-8875'
+  owner: 'Robert B. Page'
+  model: 'Samsung Galaxy S8'
+  current: false
+  terminal: ripper
+
+moto:
+  imei: 508053241391079
+  os: 'Android Marshmallow'
+  phone: '(333) 546-9442'
+  owner: 'Rudy D. Hopkins'
+  model: 'Moto X'
+  current: true
+  terminal: thread

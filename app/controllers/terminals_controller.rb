@@ -1,4 +1,5 @@
 class TerminalsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:pair_device]
   before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token']
 
   def index
@@ -20,8 +21,12 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    @qr_pairing_token = @terminal.qr_pairing_token_png(200)
-    @device_email = DeviceEmail.new
+    if @terminal.paired
+      @device = @terminal.devices.find_by(current: true)
+    else
+      @qr_pairing_token = @terminal.pairing_token_png(200)
+      @device_email = DeviceEmail.new
+    end
   end
 
   def edit
@@ -47,14 +52,67 @@ class TerminalsController < ApplicationController
       flash[:message] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
       redirect_to terminal_path(params[:id])
     else
-      @qr_pairing_token = @terminal.qr_pairing_token_png(200)
+      @qr_pairing_token = @terminal.pairing_token_png(200)
       flash.now[:type] = "danger"
       flash.now[:message] = "No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente."
       render 'show'
     end
   end
 
+  def pair_device
+    @terminal = Terminal.find_by(pairing_token: pairing_token_param)
+
+    if @terminal.nil?
+      @device = Device.new(device_params)
+      render status: :not_found
+      return
+    end
+
+    @device = @terminal.devices.new(device_params)
+    @device.current = true
+
+    if @device.save
+      @terminal.set_current_device(@device)
+      render status: :created
+    else
+      render status: :unprocessable_entity
+    end
+  end
+
+  def unpair_device_web
+    @terminal = Terminal.find(params[:id])
+    @terminal.unpair_device
+    flash[:message] = 'El dispositivo ya no se encuentra asociado a esta terminal.'
+    redirect_to terminal_path(@terminal)
+  end
+
+  def unpair_device
+    access_token = params[:access_token]
+
+    if access_token.nil?
+      render status: :bad_request
+      return
+    end
+
+    terminal = Terminal.find_by(access_token: access_token)
+
+    if terminal.nil?
+      render status: :bad_request
+      return
+    else
+      terminal.unpair_device
+      render status: :ok
+    end
+  end
+
   private
+    def pairing_token_param
+      params.require(:device).permit(:pairing_token)[:pairing_token]
+    end
+
+    def device_params
+      params.require(:device).permit(:imei, :os, :phone, :owner, :model)
+    end
 
     def device_email_params
       params.require(:device_email).permit(:email)
