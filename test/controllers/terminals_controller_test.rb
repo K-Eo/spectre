@@ -151,8 +151,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
   test "pair_device DELETE should return success on unpair" do
     terminal = terminals(:ripper)
-    device = devices(:motorola)
-    params = { access_token: terminal.access_token, imei: device.imei }
+    params = { access_token: terminal.access_token }
 
     delete pair_device_terminals_path,
             params: params,
@@ -169,29 +168,9 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_not terminal.paired
   end
 
-  test "pair_device DELETE should respond error if missing imei" do
-    terminal = terminals(:ripper)
-    params = { access_token: terminal.access_token }
-
-    delete pair_device_terminals_path,
-            params: params,
-            as: :json
-
-    assert_response :bad_request
-
-    assert_equal 1, terminal.devices.where(current: true).count
-
-    terminal.reload
-
-    assert_nil terminal.pairing_token
-    assert_match /[a-zA-Z0-9]/, terminal.access_token
-    assert terminal.paired
-  end
-
   test "pair_device DELETE should respond error if missing token_access" do
     terminal = terminals(:ripper)
-    device = devices(:motorola)
-    params = { imei: device.imei }
+    params = { access_token: '' }
 
     delete pair_device_terminals_path,
             params: params,
@@ -210,8 +189,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
   test "should respond error if not found token_access" do
     terminal = terminals(:ripper)
-    device = devices(:motorola)
-    params = { imei: device.imei, access_token: 'foobar' }
+    params = { access_token: 'foobar' }
 
     delete pair_device_terminals_path,
             params: params,

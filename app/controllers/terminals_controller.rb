@@ -88,9 +88,8 @@ class TerminalsController < ApplicationController
 
   def unpair_device
     access_token = params[:access_token]
-    imei = params[:imei]
 
-    if access_token.nil? || imei.nil?
+    if access_token.nil?
       render status: :bad_request
       return
     end
@@ -100,12 +99,6 @@ class TerminalsController < ApplicationController
     if terminal.nil?
       render status: :bad_request
       return
-    end
-
-    device = terminal.devices.find_by(imei: imei)
-
-    if terminal.nil? && device.nil?
-      render status: :not_found
     else
       terminal.unpair_device
       render status: :ok
