@@ -87,10 +87,16 @@ class TerminalsController < ApplicationController
   end
 
   def unpair_device
+    access_token = params[:access_token]
+    imei = params[:imei]
+
+    if access_token.nil? || imei.nil?
+      render status: :bad_request
+      return
+    end
   end
 
   private
-
     def pairing_token_param
       params.require(:device).permit(:pairing_token)[:pairing_token]
     end

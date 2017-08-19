@@ -150,8 +150,32 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should delete unpair_device" do
-    delete pair_device_terminals_path
+    terminal = terminals(:ripper)
+    device = devices(:motorola)
+    params = { access_token: terminal.access_token, imei: device.imei }
+
+    delete pair_device_terminals_path,
+            params: params,
+            as: :json
+
     assert_response :success
+  end
+
+  test "should response error if missing imei" do
+    terminal = terminals(:ripper)
+    delete pair_device_terminals_path,
+            params: { access_token: terminal.access_token },
+            as: :json
+    assert_response :bad_request
+  end
+
+  test "should response error if missing token_access" do
+    terminal = terminals(:ripper)
+    device = devices(:motorola)
+    delete pair_device_terminals_path,
+            params: { imei: device.imei },
+            as: :json
+    assert_response :bad_request
   end
 
 end
