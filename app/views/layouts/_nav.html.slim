@@ -23,10 +23,16 @@ nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"
           a class="dropdown-item" href="#" Something else here
 
     div class="my-2 my-lg-0"
-      = link_to 'Sign In',
-                new_user_session_path,
-                class: 'btn btn-outline-success my-2 my-sm-0 mr-3'
+      - if user_signed_in?
+        = link_to 'Sign Out',
+                  destroy_user_session_path,
+                  class: 'btn btn-outline-danger my-2 my-sm-0 mr-3',
+                  method: :delete
+      - else
+        = link_to 'Sign In',
+                  new_user_session_path,
+                  class: 'btn btn-outline-success my-2 my-sm-0 mr-3'
 
-      = link_to 'Sign Up',
-                new_user_registration_path,
-                class: 'btn btn-outline-primary my-2 my-sm-0'
+        = link_to 'Sign Up',
+                  new_user_registration_path,
+                  class: 'btn btn-outline-primary my-2 my-sm-0'
