@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   # Scope routes for domain
-  scope(path: ':subdomain', constraints: { subdomain: /[\w\-]+/ }) do
+  scope(path: ':organization', constraints: { organization: /[\w\-]+/ }) do
 
     resources :terminals do
       member do
