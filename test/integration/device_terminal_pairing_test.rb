@@ -18,7 +18,7 @@ class DeviceTerminalPairingTest < ActionDispatch::IntegrationTest
 
     # Start pairing
     assert_difference 'Device.count' do
-      post pair_device_terminals_path,
+      post device_pairings_path,
             params: { device: device },
             as: :json
     end
