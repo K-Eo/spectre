@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   namespace :device do
-    resources :pairings, only: [:create, :destroy]
+    resources :pairings, only: [:create, :destroy], param: :token
   end
 
   root 'pages#index'

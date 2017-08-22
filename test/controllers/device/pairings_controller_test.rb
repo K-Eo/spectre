@@ -110,4 +110,39 @@ class Device::PairingsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil terminal.access_token
   end
 
+  test "should destroy a pairing" do
+    terminal = terminals(:ripper)
+
+    # CASE: access token does not exist
+    delete device_pairing_path('foobar'),
+            as: :json
+
+    assert_response :bad_request
+
+    assert_equal 1, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.pairing_token
+    assert_match /[a-zA-Z0-9]/, terminal.access_token
+    assert terminal.paired
+
+    # CASE: Success
+    params = { access_token: terminal.access_token }
+
+    delete device_pairing_path(terminal.access_token),
+            params: params,
+            as: :json
+
+    assert_response :success
+
+    assert_equal 0, terminal.devices.where(current: true).count
+
+    terminal.reload
+
+    assert_nil terminal.access_token
+    assert_match /[a-zA-Z0-9]/, terminal.pairing_token
+    assert_not terminal.paired
+  end
+
 end

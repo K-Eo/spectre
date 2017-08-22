@@ -20,6 +20,25 @@ class Device::PairingsController < ApplicationController
     end
   end
 
+  def destroy
+    access_token = params[:token]
+
+    if access_token.nil?
+      render status: :bad_request
+      return
+    end
+
+    terminal = Terminal.find_by(access_token: access_token)
+
+    if terminal.nil?
+      render status: :bad_request
+      return
+    else
+      terminal.unpair_device
+      render status: :ok
+    end
+  end
+
 private
 
     def pairing_token_param
