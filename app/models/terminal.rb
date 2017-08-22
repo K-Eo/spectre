@@ -10,6 +10,8 @@ class Terminal < ApplicationRecord
   has_secure_token :access_token
   has_secure_token :pairing_token
 
+  acts_as_tenant(:tenant)
+
   def pairing_token_png(size = 120)
     url = "https://spectre.com/#{self.pairing_token}"
     qr_code = RQRCode::QRCode.new(url, size: 4, level: :m)
