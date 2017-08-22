@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   namespace :device do
-    resources :pairings, only: [:create, :update, :destroy]
+    resources :pairings, only: [:create, :destroy]
   end
 
   root 'pages#index'

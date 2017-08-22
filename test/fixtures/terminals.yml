@@ -6,6 +6,7 @@ ripper:
   access_token: <%= SecureRandom.hex(18) %>
   paired: true
   status: 1
+  tenant: spectre
 
 thread:
   name: Thread
@@ -13,3 +14,4 @@ thread:
   # access_token: nil
   paired: false
   status: 1
+  tenant: spectre
