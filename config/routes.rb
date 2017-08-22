@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :terminals do
       member do
         post 'send_token'
+        delete 'pair_device', to: 'terminals#unpair_device'
       end
     end
 

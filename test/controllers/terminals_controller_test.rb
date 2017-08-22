@@ -67,9 +67,14 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "pair_device DELETE web should return success on unpair" do
-    terminal = terminals(:ripper)
-    delete pair_device_terminal_path(terminal)
+  test "should destroy device pairing" do
+    tenant = tenants(:spectre)
+    terminal = Terminal.find_by(tenant_id: tenant.id, name: 'Ripper')
+    delete pair_device_terminal_path(tenant, terminal)
+    terminal.reload
+    assert_not terminal.paired?
+    assert_not_nil terminal.pairing_token
+    assert_nil terminal.access_token
     assert_response :redirect
   end
 
