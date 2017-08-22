@@ -6,7 +6,62 @@ class Device::PairingsControllerTest < ActionDispatch::IntegrationTest
     # Get target terminal, already has one device as current
     terminal = terminals(:thread)
 
-    # Fake device to pair
+    # Case: Missing devide info
+    device = {
+      imei: '',
+      os: '',
+      phone: '',
+      owner: '',
+      model: '',
+      pairing_token: terminal.pairing_token
+    }
+
+    assert_difference('Device.count', 0) do
+      post device_pairings_path,
+            params: { device: device },
+            as: :json
+    end
+
+    device_actual = JSON.parse(@response.body)
+    assert_equal '', device_actual['imei']
+    assert_equal '', device_actual['os']
+    assert_equal '', device_actual['phone']
+    assert_equal '', device_actual['owner']
+    assert_equal '', device_actual['model']
+    assert device_actual['created_at'].nil?
+    assert device_actual['updated_at'].nil?
+    assert_not device_actual['errors'].nil?
+    assert_response :unprocessable_entity
+
+
+    # CASE: No pairing token
+    device = {
+      imei: '538399810155719',
+      os: 'Android KitKat',
+      phone: '918-418-9663',
+      owner: 'Mark M. Hadden',
+      model: 'Moto E',
+      pairing_token: ''
+    }
+
+    assert_difference('Device.count', 0) do
+      post device_pairings_path,
+            params: { device: device },
+            as: :json
+    end
+
+    device_actual = JSON.parse(@response.body)
+    assert_equal device[:imei], device_actual['imei']
+    assert_equal device[:os], device_actual['os']
+    assert_equal device[:phone], device_actual['phone']
+    assert_equal device[:owner], device_actual['owner']
+    assert_equal device[:model], device_actual['model']
+    assert device_actual['created_at'].nil?
+    assert device_actual['updated_at'].nil?
+    assert_response :not_found
+
+
+    # CASE: Correct device info and pairing token
     device = {
       imei: '538399670155719',
       os: 'Android KitKat',
