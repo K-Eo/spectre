@@ -2,36 +2,42 @@ require 'test_helper'
 
 class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
+  def setup
+    @tenant = tenants(:spectre)
+  end
+
   test "should get index" do
-    get terminals_path
+    get terminals_path(@tenant.organization)
     assert_response :success
   end
 
   test "should get new" do
-    get terminals_path
+    get new_terminal_path(@tenant.organization)
     assert_response :success
   end
 
   test "should post create" do
-    assert_difference 'Terminal.count' do
-      post terminals_path, params: { terminal: { name: 'foobar' } }
+    assert_difference "Terminal.where(tenant_id: #{@tenant.id}).count" do
+      post terminals_path(@tenant.organization),
+            params: { terminal: { name: 'foobar' } }
       assert_redirected_to terminals_path
     end
   end
 
   test "should get show" do
-    get terminal_path(Terminal.first)
+    get terminal_path(@tenant.organization, Terminal.first)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_terminal_path(Terminal.first)
+    get edit_terminal_path(@tenant.organization, Terminal.first)
     assert_response :success
   end
 
   test "should patch update" do
     terminal = Terminal.first
-    patch terminal_path(terminal), params: { terminal: { name: 'foobar' } }
+    patch terminal_path(@tenant.organization, terminal),
+          params: { terminal: { name: 'foobar' } }
     assert_redirected_to terminal_path(terminal)
     terminal.reload
     assert terminal.name, 'foobar'
@@ -39,8 +45,8 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy" do
     terminal = terminals(:ripper)
-    assert_difference('Terminal.count', -1) do
-      delete terminal_path(terminal)
+    assert_difference("Terminal.where(tenant_id: #{@tenant.id}).count", -1) do
+      delete terminal_path(@tenant.organization, terminal)
     end
 
     assert_redirected_to terminals_path
@@ -48,7 +54,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
   test "should post send_token" do
     terminal = terminals(:ripper)
-    post send_token_terminal_path(terminal),
+    post send_token_terminal_path(@tenant.organization, terminal),
           params: { device_email: { email: 'foo@bar.com' } }
 
     assert_not flash[:type]
@@ -58,7 +64,7 @@ class TerminalsControllerTest < ActionDispatch::IntegrationTest
 
   test "should render danger on error when send_token" do
     terminal = terminals(:thread)
-    post send_token_terminal_path(terminal),
+    post send_token_terminal_path(@tenant.organization, terminal),
           params: { device_email: { email: nil } }
 
     assert_equal 'danger', flash[:type]
