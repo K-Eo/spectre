@@ -42,6 +42,7 @@ gem 'octicons_helper'
 gem 'rqrcode', '~> 0.10.1'
 
 gem 'devise', '~> 4.2'
+gem 'acts_as_tenant'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
