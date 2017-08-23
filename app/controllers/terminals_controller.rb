@@ -1,6 +1,6 @@
 class TerminalsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:pair_device]
-  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token']
+  before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'unpair_device']
 
   def index
     @terminals = Terminal.page(params[:page])
@@ -34,6 +34,8 @@ class TerminalsController < ApplicationController
 
   def update
     if @terminal.update(terminal_params)
+      flash[:message] = 'Actualizado correctamente.'
+      flash[:type] = 'success'
       redirect_to terminal_path(@terminal)
     else
       render 'edit'
@@ -42,13 +44,15 @@ class TerminalsController < ApplicationController
 
   def destroy
     @terminal.destroy
+    flash[:message] = 'La terminal ha sido eliminada'
+    flash[:type] = 'success'
     redirect_to terminals_path
   end
 
   def send_token
     @device_email = DeviceEmail.new(device_email_params)
     if @device_email.valid?
-      TerminalMailer.pairing_token(@device_email.email, @terminal).deliver_later
+      TerminalMailer.pairing_token(@device_email.email, @terminal).deliver
       flash[:message] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
       redirect_to terminal_path(params[:id])
     else
@@ -60,7 +64,6 @@ class TerminalsController < ApplicationController
   end
 
   def unpair_device
-    @terminal = Terminal.find(params[:id])
     @terminal.unpair_device
     flash[:message] = 'El dispositivo ya no se encuentra asociado a esta terminal.'
     redirect_to terminal_path(@terminal)
@@ -78,6 +81,9 @@ class TerminalsController < ApplicationController
 
     def set_terminal
       @terminal = Terminal.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:message] = 'La terminal no existe'
+      redirect_to terminals_path
     end
 
 end

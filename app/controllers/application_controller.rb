@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
 
   def set_organization
     @tenant = Tenant.find_by(organization: params[:organization])
-    set_current_tenant(@tenant)
+    if @tenant.nil?
+      redirect_to root_path
+    else
+      set_current_tenant(@tenant)
+    end
   end
 
   def default_url_options(options= {})
