@@ -1,11 +1,20 @@
 class Device::PairingsController < ApplicationController
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render_404
+  end
+
   def create
+    unless params[:device].present?
+      render json: '', status: :bad_request
+      return
+    end
+
     @terminal = Terminal.find_by(pairing_token: pairing_token_param)
 
     if @terminal.nil?
       @device = Device.new(device_params)
-      render status: :not_found
+      render json: '', status: :not_found
       return
     end
 
