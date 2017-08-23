@@ -52,6 +52,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'dotenv-rails'
   gem 'faker', '~> 1.8', '>= 1.8.4'
+  gem 'rspec-rails', '~> 3.6'
+  gem 'guard-rspec'
 end
 
 group :development do
