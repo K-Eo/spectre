@@ -56,6 +56,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
+  gem 'factory_girl_rails'
 end
 
 group :development do
