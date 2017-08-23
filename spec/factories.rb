@@ -1,4 +1,8 @@
 FactoryGirl.define do
+  factory :device_email do
+    sequence(:email) { |n| "device_email#{n}@mail.com" }
+  end
+
   factory :tenant do
     sequence(:name) { |n| "Spectre#{n}" }
     organization { "#{name.downcase}" }
