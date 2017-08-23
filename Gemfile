@@ -54,6 +54,7 @@ group :development, :test do
   gem 'faker', '~> 1.8', '>= 1.8.4'
   gem 'rspec-rails', '~> 3.6'
   gem 'guard-rspec'
+  gem 'rails-controller-testing'
 end
 
 group :development do
