@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
 
   def set_organization
     @tenant = Tenant.find_by(organization: params[:organization])
-    if @tenant.nil?
+
+    if controller_name == 'pages'
+      set_current_tenant(@tenant)
+    elsif @tenant.nil?
       redirect_to root_path
     else
       set_current_tenant(@tenant)
