@@ -55,6 +55,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'guard-rspec'
   gem 'rails-controller-testing'
+  gem 'database_cleaner'
 end
 
 group :development do
