@@ -1,5 +1,5 @@
 class TerminalsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:pair_device]
+  before_action :set_organization
   before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'unpair_device']
 
   def index
