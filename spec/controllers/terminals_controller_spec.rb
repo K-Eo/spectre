@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 describe TerminalsController do
-  let(:tenant) { create(:tenant) }
-
   describe 'set tenant' do
     context 'when organization exists' do
 
       it 'assigns tenant' do
-        get :index, params: { organization: tenant.organization }
+        get :index, params: { organization: @tenant.organization }
         expect(response).to have_http_status(200)
       end
     end
@@ -22,7 +20,7 @@ describe TerminalsController do
 
   describe 'GET index' do
     it 'shows terminals list' do
-      get :index, params: { organization: tenant.organization }
+      get :index, params: { organization: @tenant.organization }
       expect(response).to be_success
       expect(response).to render_template('terminals/index')
     end
@@ -30,7 +28,7 @@ describe TerminalsController do
 
   describe 'GET new' do
     it 'shows new terminal form' do
-      get :new, params: { organization: tenant.organization }
+      get :new, params: { organization: @tenant.organization }
 
       expect(response).to be_success
       expect(response).to render_template('terminals/new')
@@ -42,12 +40,12 @@ describe TerminalsController do
       it 'creates a terminal' do
         expect do
           post :create, params: {
-                          organization: tenant.organization,
+                          organization: @tenant.organization,
                           terminal: { name: 'foobar' }
                         }
         end.to change { Terminal.count }.by(1)
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
       end
     end
 
@@ -55,7 +53,7 @@ describe TerminalsController do
       it 'shows error list' do
         expect do
           post :create, params: {
-                          organization: tenant.organization,
+                          organization: @tenant.organization,
                           terminal: { name: '' }
                         }
         end.to change { Terminal.count }.by(0)
@@ -67,18 +65,10 @@ describe TerminalsController do
 
   describe 'GET show' do
     context 'when terminal is found' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
-
-      before do
-        ActsAsTenant.current_tenant = tenant
-      end
-
-      after do
-        ActsAsTenant.current_tenant = nil
-      end
+      let(:terminal) { create(:terminal) }
 
       it 'shows the terminal' do
-        get :show, params: { organization: tenant.organization,
+        get :show, params: { organization: @tenant.organization,
                               id: terminal.id }
 
         expect(response).to be_success
@@ -88,9 +78,9 @@ describe TerminalsController do
 
     context 'when terminal is not found' do
       it 'redirects to terminals with flash' do
-        get :show, params: { organization: tenant.organization, id: 'foobar' }
+        get :show, params: { organization: @tenant.organization, id: 'foobar' }
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
         expect(flash[:message]).to match(/La terminal no existe/)
       end
     end
@@ -98,18 +88,10 @@ describe TerminalsController do
 
   describe 'GET edit' do
     context 'when terminal is found' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
-
-      before do
-        ActsAsTenant.current_tenant = tenant
-      end
-
-      after do
-        ActsAsTenant.current_tenant = nil
-      end
+      let(:terminal) { create(:terminal) }
 
       it 'shows edit form' do
-        get :edit, params: { organization: tenant.organization, id: terminal.id }
+        get :edit, params: { organization: @tenant.organization, id: terminal.id }
 
         expect(response).to be_success
         expect(response).to render_template('terminals/edit')
@@ -118,29 +100,22 @@ describe TerminalsController do
 
     context 'when terminal is not found' do
       it 'redirects to terminals with flash' do
-        get :edit, params: { organization: tenant.organization, id: 'foobar' }
+        get :edit, params: { organization: @tenant.organization, id: 'foobar' }
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
         expect(flash[:message]).to match(/La terminal no existe/)
       end
     end
   end
 
   describe 'UPDATE' do
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
 
     context 'when terminal is found' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+      let(:terminal) { create(:terminal) }
 
 
       it 'updates terminal' do
-        patch :update, params: { organization: tenant.organization,
+        patch :update, params: { organization: @tenant.organization,
                                   terminal: { name: 'foobar' },
                                   id: terminal.id }
 
@@ -152,10 +127,10 @@ describe TerminalsController do
     end
 
     context 'when invalid data' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+      let(:terminal) { create(:terminal) }
 
       it 'shows errors with flash' do
-        patch :update, params: { organization: tenant.organization,
+        patch :update, params: { organization: @tenant.organization,
                                   terminal: { name: '' },
                                   id: terminal.id }
 
@@ -165,7 +140,7 @@ describe TerminalsController do
 
     context 'when terminal is not found' do
       it 'redirects to terminals with flash' do
-        patch :update, params: { organization: tenant.organization,
+        patch :update, params: { organization: @tenant.organization,
                                   id: 'foobar' }
 
         expect(response).to redirect_to(terminals_path)
@@ -175,23 +150,16 @@ describe TerminalsController do
   end
 
   describe 'DELETE' do
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
 
     context 'when terminal is found' do
       it 'redirects to terminals with flash' do
         terminal = create(:terminal)
         expect do
-          delete :destroy, params: { organization: tenant.organization,
+          delete :destroy, params: { organization: @tenant.organization,
                                     id: terminal.id }
         end.to change { Terminal.count }.by(-1)
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
         expect(flash[:message]).to match(/La terminal ha sido eliminada/)
       end
     end
@@ -199,29 +167,21 @@ describe TerminalsController do
     context 'when terminal is not found' do
       it 'redirects to terminals with flash' do
         expect do
-          delete :destroy, params: { organization: tenant.organization,
+          delete :destroy, params: { organization: @tenant.organization,
                                     id: 'foobar' }
         end.to change { Terminal.count }.by(0)
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
         expect(flash[:message]).to match(/La terminal no existe/)
       end
     end
   end
 
   describe 'POST send_token' do
-    let(:terminal) { create(:terminal, tenant_id: tenant.id) }
-
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
+    let(:terminal) { create(:terminal) }
 
     def go(id, email = 'foo@bar.com')
-      post :send_token, params: { organization: tenant.organization,
+      post :send_token, params: { organization: @tenant.organization,
                                   device_email: { email: email },
                                   id: id }
     end
@@ -249,7 +209,7 @@ describe TerminalsController do
         go('foobar')
 
         expect(flash[:message]).to match(/La terminal no existe/)
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
       end
 
       it 'does not send email' do
@@ -277,19 +237,11 @@ describe TerminalsController do
   end
 
   describe 'DELETE pair_device' do
-    let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+    let(:terminal) { create(:terminal) }
     let(:device) { create(:device, terminal_id: terminal.id, current: true) }
 
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
-
     def go(id)
-      delete :unpair_device, params: { organization: tenant.organization,
+      delete :unpair_device, params: { organization: @tenant.organization,
                                       id: id }
     end
 
@@ -297,7 +249,7 @@ describe TerminalsController do
       it 'redirects to terminal' do
         go(terminal.id)
 
-        expect(response).to redirect_to(terminal_path(tenant.organization, terminal))
+        expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
       end
 
       it 'resets terminal' do
@@ -314,7 +266,7 @@ describe TerminalsController do
       it 'redirects to terminal with flash' do
         go('foobar')
 
-        expect(response).to redirect_to(terminals_path(tenant.organization))
+        expect(response).to redirect_to(terminals_path(@tenant.organization))
         expect(flash[:message]).to match(/La terminal no existe/)
       end
     end
