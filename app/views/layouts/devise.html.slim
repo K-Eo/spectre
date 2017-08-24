@@ -11,8 +11,13 @@ html
 
     = render 'layouts/devise_nav'
 
-    .container
+    .container.mt-5
 
-      == yield
+      .row
+        .col-6.mx-auto
+          .card
+            .card-body
+              == yield
 
-      = render 'layouts/footer'
+      .text-center.mt-4
+        = render 'layouts/footer'
