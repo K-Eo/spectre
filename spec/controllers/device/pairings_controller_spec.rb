@@ -2,16 +2,8 @@ require 'rails_helper'
 
 describe Device::PairingsController do
   render_views
-  let(:tenant) { create(:tenant) }
 
   describe 'POST create' do
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
 
     context 'when no valid' do
       let(:terminal) { create(:terminal) }
@@ -67,7 +59,6 @@ describe Device::PairingsController do
 
         terminal.reload
         expect(terminal.pairing_token).to eq(token)
-        # expect(terminal.access_token).to be_nil
         expect(terminal.paired).to be_falsey
       end
     end
@@ -163,16 +154,9 @@ describe Device::PairingsController do
   end
 
   describe 'DELETE destroy' do
-    before do
-      ActsAsTenant.current_tenant = tenant
-    end
-
-    after do
-      ActsAsTenant.current_tenant = nil
-    end
 
     context 'when access token not found' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+      let(:terminal) { create(:terminal) }
 
       it 'responds with bad_request' do
         delete :destroy, params: { token: 'foobar' }, as: :json
