@@ -5,6 +5,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'devise'
 require 'database_cleaner'
 require 'acts_as_tenant'
 require 'support/factory_girl'
@@ -32,6 +33,9 @@ require 'support/mailer_helper'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+
+  # Devise
+  config.include Devise::Test::ControllerHelpers, type: :controller
 
   # Multitenancy
   config.before(:suite) do

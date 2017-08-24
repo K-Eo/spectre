@@ -1,4 +1,5 @@
 class TerminalsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_organization
   before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'unpair_device']
 
@@ -66,7 +67,7 @@ class TerminalsController < ApplicationController
   def unpair_device
     @terminal.unpair_device
     flash[:message] = 'El dispositivo ya no se encuentra asociado a esta terminal.'
-    redirect_to terminal_path(@terminal)
+    redirect_to terminal_path(current_tenant.organization, @terminal)
   end
 
   private

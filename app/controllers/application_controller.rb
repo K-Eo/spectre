@@ -2,10 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
 
-  def default_url_options(options= {})
-    { organization: params[:organization] }
-  end
-
 protected
 
   def set_organization
