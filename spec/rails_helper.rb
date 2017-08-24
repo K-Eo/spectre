@@ -5,8 +5,10 @@ require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'database_cleaner'
+require 'acts_as_tenant'
 require 'support/factory_girl'
-require 'support/db_cleaner'
+# require 'support/db_cleaner'
 require 'support/mailer_helper'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -31,6 +33,26 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
+  # Multitenancy
+  config.before(:suite) do
+    DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.strategy = :transaction
+    ActsAsTenant.current_tenant = nil
+    Tenant.create!(name: 'Spectre Inc.', organization: 'spectre')
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+    @tenant = Tenant.first
+    ActsAsTenant.current_tenant = @tenant
+  end
+
+  config.after(:each) do
+    ActsAsTenant.current_tenant = nil
+    DatabaseCleaner.clean
+  end
+
+  # Mailer
   config.include(MailerHelper)
   config.before(:each) { reset_emails }
 
