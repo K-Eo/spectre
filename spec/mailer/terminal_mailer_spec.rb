@@ -1,11 +1,9 @@
 require 'rails_helper'
 
 describe TerminalMailer do
-  let(:tenant) { create(:tenant) }
-
   describe '#pairing_token' do
     context 'when user and terminals is valid' do
-      let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+      let(:terminal) { create(:terminal) }
 
       it 'sends email' do
         email = TerminalMailer.pairing_token('user@example.com', terminal)
