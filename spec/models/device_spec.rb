@@ -4,8 +4,7 @@ describe Device do
   let(:device) { build(:device) }
 
   context 'when all properties are set' do
-    let(:tenant) { create(:tenant) }
-    let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+    let(:terminal) { create(:terminal) }
 
     it 'is valid' do
       device.terminal_id = terminal.id

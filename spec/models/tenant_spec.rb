@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe Tenant do
   let(:tenant) { build(:tenant) }
+
+  before(:each) do
+    ActsAsTenant.current_tenant = nil
+  end
+  
   describe 'Name' do
     context 'when is not present' do
       it 'is invalid' do

@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe Terminal do
-  let(:tenant) { create(:tenant) }
-  let(:terminal) { create(:terminal, tenant_id: tenant.id) }
+  let(:terminal) { create(:terminal) }
 
   context 'when all properties are set' do
     it 'is valid'  do
@@ -13,6 +12,7 @@ describe Terminal do
   describe 'Tenant' do
     context 'when tenant does not exist' do
       it 'is invalid' do
+        ActsAsTenant.current_tenant = nil
         terminal2 = build(:terminal)
         expect(terminal2.valid?).to be_falsey
       end
