@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20170824180300) do
     t.string "organization"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organization"], name: "index_tenants_on_organization"
+    t.index ["organization"], name: "index_tenants_on_organization", unique: true
   end
 
   create_table "terminals", force: :cascade do |t|
