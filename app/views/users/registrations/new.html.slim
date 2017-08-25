@@ -37,6 +37,9 @@ h2 Sign up
           span class="input-group-addon" http://spectre.com/
           = t.text_field :organization, autocomplete: "off", class: "form-control"
 
-  = f.submit "Sign up", class: 'btn btn-primary mt-5'
+  div class="form-group row"
+    .col-sm-4
+    .col-sm-8.col-auto
+      = f.submit "Sign up", class: "btn btn-primary mt-4"
 
 = render "devise/shared/links"
