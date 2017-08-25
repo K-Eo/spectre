@@ -15,7 +15,7 @@ class TerminalsController < ApplicationController
     @terminal = Terminal.new(terminal_params)
 
     if @terminal.save
-      redirect_to terminals_path
+      redirect_to terminal_path(current_tenant.organization, @terminal)
     else
       render 'new'
     end
@@ -36,7 +36,7 @@ class TerminalsController < ApplicationController
   def update
     if @terminal.update(terminal_params)
       flash[:success] = 'Actualizado correctamente.'
-      redirect_to terminal_path(@terminal)
+      redirect_to terminal_path(current_tenant.organization, @terminal)
     else
       render 'edit'
     end
@@ -45,7 +45,7 @@ class TerminalsController < ApplicationController
   def destroy
     @terminal.destroy
     flash[:success] = 'La terminal ha sido eliminada'
-    redirect_to terminals_path
+    redirect_to terminals_path(current_tenant.organization)
   end
 
   def send_token
@@ -53,7 +53,7 @@ class TerminalsController < ApplicationController
     if @device_email.valid?
       TerminalMailer.pairing_token(@device_email.email, @terminal).deliver
       flash[:success] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
-      redirect_to terminal_path(params[:id])
+      redirect_to terminal_path(current_tenant.organization, params[:id])
     else
       @qr_pairing_token = @terminal.pairing_token_png(200)
       flash.now[:danger] = "No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente."
@@ -81,7 +81,7 @@ class TerminalsController < ApplicationController
       @terminal = Terminal.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:primary] = 'La terminal no existe'
-      redirect_to terminals_path
+      redirect_to terminals_path(current_tenant.organization)
     end
 
 end
