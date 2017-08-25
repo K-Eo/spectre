@@ -6,4 +6,14 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :tenant
+
+  before_validation :create_tenant
+
+  accepts_nested_attributes_for :tenant
+
+  def create_tenant
+    ActsAsTenant.without_tenant do
+      self.tenant.save if !self.tenant.nil?
+    end
+  end
 end

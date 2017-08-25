@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: 'user'
+  devise_for :users, path: 'user', controllers: {
+    registrations: 'users/registrations'
+  }
 
   # Scope routes for domain
   scope(path: ':organization', constraints: { organization: /[\w\-]+/ }) do
