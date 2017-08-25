@@ -11,6 +11,8 @@ html
 
     = render 'layouts/nav'
 
+    = flash_message
+
     - if controller_name == 'pages'
       = render 'layouts/marketing'
 
