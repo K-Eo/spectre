@@ -9,4 +9,8 @@ nav class="navbar navbar-expand-lg navbar-dark bg-dark"
           aria-expanded="false"
           aria-label="Toggle navigation"]
     span.navbar-toggler-icon
-    
+
+  div class="collapse navbar-collapse" id="core-navbar"
+    ul class="navbar-nav mr-auto"
+      li class="nav-item active"
+        = link_to 'Logout', destroy_user_session_path, method: :delete
