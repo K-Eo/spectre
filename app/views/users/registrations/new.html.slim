@@ -3,27 +3,40 @@ h2 Sign up
 = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = devise_error_messages!
 
-  div class="form-group"
-    = f.label :email
-    = f.email_field :email, autofocus: true, class: 'form-control'
+  p.lead.mb-1.mt-3 Account information
+  hr.mt-0.mb-5
 
-  div class="form-group"
-    = f.label :password
-    = f.password_field :password, autocomplete: "off", class: 'form-control'
+  div class="form-group row"
+    = f.label :email, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.email_field :email, autofocus: true, class: "form-control"
 
-  div class="form-group"
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+  div class="form-group row"
+    = f.label :password, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.password_field :password, autocomplete: "off", class: "form-control"
+
+  div class="form-group row"
+    = f.label :password_confirmation, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+
+  p.lead.mb-1.mt-5 Organization details
+  hr.mt-0.mb-5
 
   = f.fields_for :tenant do |t|
-    div class="form-group"
-      = t.label :name
-      = t.text_field :name, autocomplete: "off", class: "form-control"
+    div class="form-group row"
+      = t.label :name, class: "col-sm-4 col-form-label text-right"
+      .col-sm-8
+        = t.text_field :name, autocomplete: "off", class: "form-control"
 
-    div class="form-group"
-      = t.label :organization
-      = t.text_field :organization, autocomplete: "off", class: "form-control"
+    div class="form-group row"
+      = t.label :organization, class: "col-sm-4 col-form-label text-right"
+      .col-sm-8
+        div class="input-group"
+          span class="input-group-addon" http://spectre.com/
+          = t.text_field :organization, autocomplete: "off", class: "form-control"
 
-  = f.submit "Sign up", class: 'btn btn-primary'
+  = f.submit "Sign up", class: 'btn btn-primary mt-5'
 
 = render "devise/shared/links"

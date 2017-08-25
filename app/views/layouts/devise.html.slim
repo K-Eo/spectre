@@ -12,12 +12,7 @@ html
     = render 'layouts/devise_nav'
 
     .container.mt-5
-
-      .row
-        .col-6.mx-auto
-          .card
-            .card-body
-              == yield
+      == yield
 
       .text-center.mt-4
         = render 'layouts/footer'
