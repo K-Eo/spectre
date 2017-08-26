@@ -1,8 +1,10 @@
-h2 Sign up
+h1.display-4.mb-1 Join Spectre
+
+p.lead Create organization account
 
 = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
 
-  p.lead.mb-1.mt-3 Account information
+  h6.mb-1.mt-4 Account information
   hr.mt-0.mb-5
 
   div class="form-group row"
@@ -20,7 +22,7 @@ h2 Sign up
     .col-sm-8
       = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
 
-  p.lead.mb-1.mt-5 Organization details
+  h6.mb-1.mt-5 Organization details
   hr.mt-0.mb-5
 
   = f.fields_for :tenant do |t|
@@ -37,6 +39,5 @@ h2 Sign up
   div class="form-group row"
     .col-sm-4
     .col-sm-8.col-auto
-      = f.submit "Sign up", class: "btn btn-primary mt-4"
-
-= render "devise/shared/links"
+      = f.submit "Sign up", class: "btn btn-primary mt-4 mb-2"
+      small.form-text.text-muted By clicking "Sign up", you agree to our terms of service and privacy policy.
