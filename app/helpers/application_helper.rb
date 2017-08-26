@@ -5,7 +5,7 @@ module ApplicationHelper
     flash.each do |key, value|
       type = flash_type(key)
       html += <<-HTML
-        <div class="alert alert-#{type} alert-dismissable fade show" role="alert">
+        <div class="alert alert-#{type} alert-dismissable fade show my-0" role="alert">
           <div class="container">
             <button class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
