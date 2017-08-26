@@ -2,10 +2,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
 
+  helper_method :pit
+
+  def pit
+    @tenant.organization
+  end
+
+
 protected
 
   def set_organization
-    @tenant = Tenant.find_by(organization: params[:organization])
+    @tenant ||= Tenant.find_by(organization: params[:organization])
     if @tenant.nil?
       redirect_to root_path
     else

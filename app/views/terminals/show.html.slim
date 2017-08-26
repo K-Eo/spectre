@@ -6,8 +6,8 @@
         • created #{time_ago_in_words(@terminal.created_at, include_seconds: true)} ago
 
   .col-2.text-right
-    = link_to 'Edit', edit_terminal_path(@tenant.organization, @terminal), class: 'btn btn-success mr-2'
-    = link_to 'Delete', terminal_path(@tenant.organization, @terminal), class: 'btn btn-danger',
+    = link_to 'Edit', edit_terminal_path(pit, @terminal), class: 'btn btn-success mr-2'
+    = link_to 'Delete', terminal_path(pit, @terminal), class: 'btn btn-danger',
               method: :delete, data: { confirm: 'Are you sure?' }
 
   - if @terminal.paired?
