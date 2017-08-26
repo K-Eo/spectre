@@ -56,7 +56,8 @@ describe TerminalsController do
                           }
           end.to change { Terminal.count }.by(1)
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          terminal = Terminal.last
+          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
         end
       end
 
@@ -174,7 +175,7 @@ describe TerminalsController do
 
           terminal.reload
           expect(terminal.name).to eq('foobar')
-          expect(response).to redirect_to(terminal_path(terminal))
+          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
           expect(flash[:success]).to match(/Actualizado correctamente./)
         end
       end
@@ -269,9 +270,9 @@ describe TerminalsController do
 
 
       context 'when terminal is found' do
-        it 'redirects to terminal with flash' do
+        it 'redirects to terminal' do
           go(terminal.id)
-          expect(response).to redirect_to(terminal_path(terminal))
+          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
         end
 
         it 'flashes success message' do
