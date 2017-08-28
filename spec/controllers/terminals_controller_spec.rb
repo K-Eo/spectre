@@ -6,7 +6,7 @@ describe TerminalsController do
   describe 'GET index' do
     context 'when logged out' do
       it 'redirects to sign' do
-        get :index, params: { organization: @tenant.organization }
+        get :index
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -14,7 +14,7 @@ describe TerminalsController do
     context 'when logged in' do
       it 'shows terminals list' do
         sign_in user
-        get :index, params: { organization: @tenant.organization }
+        get :index
         expect(response).to be_success
         expect(response).to render_template('terminals/index')
       end
@@ -25,7 +25,7 @@ describe TerminalsController do
     context 'when logged in' do
       it 'shows new terminal form' do
         sign_in user
-        get :new, params: { organization: @tenant.organization }
+        get :new
 
         expect(response).to be_success
         expect(response).to render_template('terminals/new')
@@ -34,7 +34,7 @@ describe TerminalsController do
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        get :new, params: { organization: @tenant.organization }
+        get :new
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -50,10 +50,7 @@ describe TerminalsController do
       context 'when data is valid' do
         it 'creates a terminal' do
           expect do
-            post :create, params: {
-                            organization: @tenant.organization,
-                            terminal: { name: 'foobar' }
-                          }
+            post :create, params: { terminal: { name: 'foobar' } }
           end.to change { Terminal.count }.by(1)
 
           terminal = Terminal.last
@@ -64,10 +61,7 @@ describe TerminalsController do
       context 'when data is invalid' do
         it 'shows error list' do
           expect do
-            post :create, params: {
-                            organization: @tenant.organization,
-                            terminal: { name: '' }
-                          }
+            post :create, params: { terminal: { name: '' } }
           end.to change { Terminal.count }.by(0)
 
           expect(response).to render_template('terminals/new')
@@ -77,10 +71,7 @@ describe TerminalsController do
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        post :create, params: {
-                        organization: @tenant.organization,
-                        terminal: { name: 'foobar' }
-                      }
+        post :create, params: { terminal: { name: 'foobar' } }
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -97,8 +88,7 @@ describe TerminalsController do
         let(:terminal) { create(:terminal) }
 
         it 'shows the terminal' do
-          get :show, params: { organization: @tenant.organization,
-                                id: terminal.id }
+          get :show, params: { id: terminal.id }
 
           expect(response).to be_success
           expect(response).to render_template('terminals/show')
@@ -107,17 +97,16 @@ describe TerminalsController do
 
       context 'when terminal is not found' do
         it 'redirects to terminals with flash' do
-          get :show, params: { organization: @tenant.organization, id: 'foobar' }
+          get :show, params: { id: 'foobar' }
 
-          expect(response).to redirect_to(terminals_path)
-          expect(flash[:primary]).to match(/La terminal no existe/)
+          expect(response).to be_not_found
         end
       end
     end
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        get :show, params: { organization: @tenant.organization, id: 'foobar' }
+        get :show, params: { id: 'foobar' }
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -134,7 +123,7 @@ describe TerminalsController do
         let(:terminal) { create(:terminal) }
 
         it 'shows edit form' do
-          get :edit, params: { organization: @tenant.organization, id: terminal.id }
+          get :edit, params: { id: terminal.id }
 
           expect(response).to be_success
           expect(response).to render_template('terminals/edit')
@@ -143,17 +132,16 @@ describe TerminalsController do
 
       context 'when terminal is not found' do
         it 'redirects to terminals with flash' do
-          get :edit, params: { organization: @tenant.organization, id: 'foobar' }
+          get :edit, params: { id: 'foobar' }
 
-          expect(response).to redirect_to(terminals_path)
-          expect(flash[:primary]).to match(/La terminal no existe/)
+          expect(response).to be_not_found
         end
       end
     end
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        get :edit, params: { organization: @tenant.organization, id: 'foobar' }
+        get :edit, params: { id: 'foobar' }
       end
     end
   end
@@ -169,8 +157,7 @@ describe TerminalsController do
 
 
         it 'updates terminal' do
-          patch :update, params: { organization: @tenant.organization,
-                                    terminal: { name: 'foobar' },
+          patch :update, params: { terminal: { name: 'foobar' },
                                     id: terminal.id }
 
           terminal.reload
@@ -184,8 +171,7 @@ describe TerminalsController do
         let(:terminal) { create(:terminal) }
 
         it 'shows errors with flash' do
-          patch :update, params: { organization: @tenant.organization,
-                                    terminal: { name: '' },
+          patch :update, params: { terminal: { name: '' },
                                     id: terminal.id }
 
           expect(response).to render_template 'terminals/edit'
@@ -194,19 +180,16 @@ describe TerminalsController do
 
       context 'when terminal is not found' do
         it 'redirects to terminals with flash' do
-          patch :update, params: { organization: @tenant.organization,
-                                    id: 'foobar' }
+          patch :update, params: { id: 'foobar' }
 
-          expect(response).to redirect_to(terminals_path)
-          expect(flash[:primary]).to match(/La terminal no existe/)
+          expect(response).to be_not_found
         end
       end
     end
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        patch :update, params: { organization: @tenant.organization,
-                                  id: 'foobar' }
+        patch :update, params: { id: 'foobar' }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -222,8 +205,7 @@ describe TerminalsController do
         it 'redirects to terminals with flash' do
           terminal = create(:terminal)
           expect do
-            delete :destroy, params: { organization: @tenant.organization,
-                                      id: terminal.id }
+            delete :destroy, params: { id: terminal.id }
           end.to change { Terminal.count }.by(-1)
 
           expect(response).to redirect_to(terminals_path)
@@ -234,20 +216,17 @@ describe TerminalsController do
       context 'when terminal is not found' do
         it 'redirects to terminals with flash' do
           expect do
-            delete :destroy, params: { organization: @tenant.organization,
-                                      id: 'foobar' }
+            delete :destroy, params: { id: 'foobar' }
           end.to change { Terminal.count }.by(0)
 
-          expect(response).to redirect_to(terminals_path)
-          expect(flash[:primary]).to match(/La terminal no existe/)
+          expect(response).to be_not_found
         end
       end
     end
 
     context 'when logged out' do
       it 'redirects to sign in' do
-        delete :destroy, params: { organization: @tenant.organization,
-                                  id: 'foobar' }
+        delete :destroy, params: { id: 'foobar' }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -257,8 +236,7 @@ describe TerminalsController do
     let(:terminal) { create(:terminal) }
 
     def go(id, email = 'foo@bar.com')
-      post :send_token, params: { organization: @tenant.organization,
-                                  device_email: { email: email },
+      post :send_token, params: { device_email: { email: email },
                                   id: id }
     end
 
@@ -290,8 +268,7 @@ describe TerminalsController do
         it 'shows flash message' do
           go('foobar')
 
-          expect(flash[:primary]).to match(/La terminal no existe/)
-          expect(response).to redirect_to(terminals_path)
+          expect(response).to be_not_found
         end
 
         it 'does not send email' do
@@ -330,8 +307,7 @@ describe TerminalsController do
     let(:device) { create(:device, terminal_id: terminal.id, current: true) }
 
     def go(id)
-      delete :unpair_device, params: { organization: @tenant.organization,
-                                      id: id }
+      delete :unpair_device, params: { id: id }
     end
 
     context 'when logged in' do
@@ -360,8 +336,7 @@ describe TerminalsController do
         it 'redirects to terminal with flash' do
           go('foobar')
 
-          expect(response).to redirect_to(terminals_path)
-          expect(flash[:primary]).to match(/La terminal no existe/)
+          expect(response).to be_not_found
         end
       end
     end

@@ -1,9 +1,5 @@
 class Device::PairingsController < ApplicationController
 
-  rescue_from ActiveRecord::RecordNotFound do
-    render_404
-  end
-
   def create
     unless params[:device].present?
       render json: '', status: :bad_request

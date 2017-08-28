@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   set_current_tenant_through_filter
   before_action :set_organization
 
+  rescue_from ActiveRecord::RecordNotFound do
+    render_404
+  end
+
 protected
 
   def set_organization

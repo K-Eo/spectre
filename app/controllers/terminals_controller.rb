@@ -78,9 +78,6 @@ class TerminalsController < ApplicationController
 
     def set_terminal
       @terminal = Terminal.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      flash[:primary] = 'La terminal no existe'
-      redirect_to terminals_path
     end
 
 end
