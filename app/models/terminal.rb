@@ -5,10 +5,10 @@ class Terminal < ApplicationRecord
 
   default_scope { order(created_at: :desc, name: :asc) }
 
-  after_create :generate_tokens
-
   has_secure_token :access_token
   has_secure_token :pairing_token
+
+  acts_as_tenant(:tenant)
 
   def pairing_token_png(size = 120)
     url = "https://spectre.com/#{self.pairing_token}"
@@ -38,11 +38,6 @@ class Terminal < ApplicationRecord
     self.devices.where.not(imei: device.imei)
                 .where(current: true)
                 .update_all(current: false)
-  end
-
-  def generate_tokens
-    self.regenerate_access_token
-    self.regenerate_pairing_token
   end
 
   def unpair_device

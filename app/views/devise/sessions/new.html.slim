@@ -1,0 +1,28 @@
+.row.justify-content-center
+  .col-5
+
+    p.lead.text-center Sign in to Spectre
+
+    .card
+      .card-body
+
+        = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+          div class="form-group"
+            = f.label :email
+            = f.email_field :email, autofocus: true, class: 'form-control'
+
+          div class="form-group"
+            = f.label :password
+            = f.password_field :password, autocomplete: "off", class: 'form-control'
+
+          - if devise_mapping.rememberable?
+            div class="form-check"
+              = f.label :remember_me, class: 'form-check-label' do
+                = f.check_box :remember_me, class: 'form-check-input'
+                | Remember me
+
+
+          = f.submit "Log in", class: 'btn btn-primary btn-block mt-4'
+
+        .mt-4
+          = link_to 'Forgot password?', new_password_path(resource_name)

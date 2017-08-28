@@ -1,0 +1,43 @@
+h1.display-4.mb-1 Join Spectre
+
+p.lead Create organization account
+
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+
+  h6.mb-1.mt-4 Account information
+  hr.mt-0.mb-5
+
+  div class="form-group row"
+    = f.label :email, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.email_field :email, autofocus: true, class: "form-control"
+
+  div class="form-group row"
+    = f.label :password, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.password_field :password, autocomplete: "off", class: "form-control"
+
+  div class="form-group row"
+    = f.label :password_confirmation, class: "col-sm-4 col-form-label text-right"
+    .col-sm-8
+      = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+
+  h6.mb-1.mt-5 Organization details
+  hr.mt-0.mb-5
+
+  = f.fields_for :tenant do |t|
+    div class="form-group row"
+      = t.label :name, class: "col-sm-4 col-form-label text-right"
+      .col-sm-8
+        = t.text_field :name, autocomplete: "off", class: "form-control"
+
+    div class="form-group row"
+      = t.label :organization, class: "col-sm-4 col-form-label text-right"
+      .col-sm-8
+        = t.text_field :organization, autocomplete: "off", class: "form-control"
+
+  div class="form-group row"
+    .col-sm-4
+    .col-sm-8.col-auto
+      = f.submit "Sign up", class: "btn btn-primary mt-4 mb-2"
+      small.form-text.text-muted By clicking "Sign up", you agree to our terms of service and privacy policy.

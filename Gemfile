@@ -41,7 +41,11 @@ gem 'octicons_helper'
 
 gem 'rqrcode', '~> 0.10.1'
 
+gem 'devise', '~> 4.2'
+gem 'acts_as_tenant'
+
 group :development, :test do
+  gem 'pry-byebug'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
@@ -49,6 +53,12 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'dotenv-rails'
   gem 'faker', '~> 1.8', '>= 1.8.4'
+  gem 'rspec-rails', '~> 3.6'
+  gem 'guard-rspec'
+  gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem "rspec_junit_formatter"
 end
 
 group :development do

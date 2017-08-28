@@ -1,0 +1,25 @@
+.bg-dark
+  .container
+    .row.justify-content-center
+      .col-10
+        nav class="navbar navbar-expand-md navbar-dark px-0"
+          = link_to 'Spectre', root_path, class: 'navbar-brand'
+          button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"
+            span class="navbar-toggler-icon"
+
+          div class="collapse navbar-collapse" id="navbarsExampleDefault"
+            div class="ml-auto my-2 my-lg-0"
+              - if user_signed_in?
+                = link_to 'Sign Out',
+                          destroy_user_session_path,
+                          class: 'text-light font-weight-bold my-2 my-sm-0 mr-3',
+                          method: :delete
+              - else
+                = link_to 'Sign In',
+                          new_user_session_path,
+                          class: 'text-light font-weight-bold my-2 my-sm-0 mr-2'
+                span.navbar-text.mr-2 or
+
+                = link_to 'Sign Up',
+                          new_user_registration_path,
+                          class: 'text-light font-weight-bold my-2 my-sm-0'
