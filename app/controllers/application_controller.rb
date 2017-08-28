@@ -1,23 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
-
-  helper_method :pit
-
-  def pit
-    @tenant.organization
-  end
-
+  before_action :set_organization
 
 protected
 
   def set_organization
-    @tenant ||= Tenant.find_by(organization: params[:organization])
-    if @tenant.nil?
-      redirect_to root_path
-    else
-      set_current_tenant(@tenant)
+    tenant = nil
+    if user_signed_in?
+      tenant  ||= current_user.tenant
     end
+    set_current_tenant(tenant)
   end
 
   def render_404
@@ -30,7 +23,7 @@ protected
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || terminals_path(resource.tenant.organization)
+    stored_location_for(resource) || terminals_path
   end
 
 end

@@ -4,16 +4,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  # Scope routes for domain
-  scope(path: ':organization', constraints: { organization: /[\w\-]+/ }) do
-
-    resources :terminals do
-      member do
-        post 'send_token'
-        delete 'pair_device', to: 'terminals#unpair_device'
-      end
+  resources :terminals do
+    member do
+      post 'send_token'
+      delete 'pair_device', to: 'terminals#unpair_device'
     end
-
   end
 
   namespace :device do

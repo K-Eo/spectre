@@ -49,7 +49,7 @@ describe Users::RegistrationsController do
       it 'redirects to root' do
         sign_in create(:user, tenant_id: @tenant.id)
         go
-        expect(response).to redirect_to(terminals_path(@tenant.organization))
+        expect(response).to redirect_to(terminals_path)
       end
     end
   end

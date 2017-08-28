@@ -57,7 +57,7 @@ describe TerminalsController do
           end.to change { Terminal.count }.by(1)
 
           terminal = Terminal.last
-          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
+          expect(response).to redirect_to(terminal_path(terminal))
         end
       end
 
@@ -109,7 +109,7 @@ describe TerminalsController do
         it 'redirects to terminals with flash' do
           get :show, params: { organization: @tenant.organization, id: 'foobar' }
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
           expect(flash[:primary]).to match(/La terminal no existe/)
         end
       end
@@ -145,7 +145,7 @@ describe TerminalsController do
         it 'redirects to terminals with flash' do
           get :edit, params: { organization: @tenant.organization, id: 'foobar' }
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
           expect(flash[:primary]).to match(/La terminal no existe/)
         end
       end
@@ -175,7 +175,7 @@ describe TerminalsController do
 
           terminal.reload
           expect(terminal.name).to eq('foobar')
-          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
+          expect(response).to redirect_to(terminal_path(terminal))
           expect(flash[:success]).to match(/Actualizado correctamente./)
         end
       end
@@ -226,7 +226,7 @@ describe TerminalsController do
                                       id: terminal.id }
           end.to change { Terminal.count }.by(-1)
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
           expect(flash[:success]).to match(/La terminal ha sido eliminada/)
         end
       end
@@ -238,7 +238,7 @@ describe TerminalsController do
                                       id: 'foobar' }
           end.to change { Terminal.count }.by(0)
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
           expect(flash[:primary]).to match(/La terminal no existe/)
         end
       end
@@ -272,7 +272,7 @@ describe TerminalsController do
       context 'when terminal is found' do
         it 'redirects to terminal' do
           go(terminal.id)
-          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
+          expect(response).to redirect_to(terminal_path(terminal))
         end
 
         it 'flashes success message' do
@@ -291,7 +291,7 @@ describe TerminalsController do
           go('foobar')
 
           expect(flash[:primary]).to match(/La terminal no existe/)
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
         end
 
         it 'does not send email' do
@@ -343,7 +343,7 @@ describe TerminalsController do
         it 'redirects to terminal' do
           go(terminal.id)
 
-          expect(response).to redirect_to(terminal_path(@tenant.organization, terminal))
+          expect(response).to redirect_to(terminal_path(terminal))
         end
 
         it 'resets terminal' do
@@ -360,7 +360,7 @@ describe TerminalsController do
         it 'redirects to terminal with flash' do
           go('foobar')
 
-          expect(response).to redirect_to(terminals_path(@tenant.organization))
+          expect(response).to redirect_to(terminals_path)
           expect(flash[:primary]).to match(/La terminal no existe/)
         end
       end

@@ -1,7 +1,7 @@
 nav class="navbar navbar-expand-md navbar-dark bg-dark"
   .container
     - if user_signed_in?
-      = link_to 'Spectre', terminals_path(@tenant.organization), class: 'navbar-brand'
+      = link_to 'Spectre', terminals_path, class: 'navbar-brand'
     - else
       = link_to 'Spectre', root_path, class: 'navbar-brand'
 
