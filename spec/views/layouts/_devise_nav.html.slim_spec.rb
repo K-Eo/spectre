@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe 'layouts/_devise_nav' do
-  include Devise::Test::ControllerHelpers
-
   before do
     render
   end

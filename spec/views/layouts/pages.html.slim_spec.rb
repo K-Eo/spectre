@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe 'layouts/pages' do
-  include Devise::Test::ControllerHelpers
-
   context 'head' do
     before do
       render
