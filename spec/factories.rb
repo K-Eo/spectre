@@ -4,6 +4,12 @@ FactoryGirl.define do
     password "password"
     password_confirmation "password"
     confirmed_at Date.today
+
+    after(:build) do |user, evaluator|
+      if !evaluator.tenant.nil?
+        user.tenant_id = evaluator.tenant.id
+      end
+    end
   end
 
   factory :device_email do
