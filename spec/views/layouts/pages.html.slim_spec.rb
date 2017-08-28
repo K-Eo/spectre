@@ -25,36 +25,6 @@ describe 'layouts/pages' do
     end
   end
 
-
-  context 'index CTA' do
-    context 'when controller_name is pages' do
-      context 'and when action_name is index' do
-        it 'renders marketing partial' do
-          allow(view).to receive(:controller_name).and_return('pages')
-          allow(view).to receive(:action_name).and_return('index')
-          render
-          expect(rendered).to match(%{class="jumbotron"})
-        end
-      end
-
-      context 'and when action_name is not index' do
-        it 'renders without marketing partial' do
-          allow(view).to receive(:controller_name).and_return('pages')
-          allow(view).to receive(:action_name).and_return('show')
-          render
-          expect(rendered).not_to match(%{class="jumbotron"})
-        end
-      end
-    end
-
-    context 'when controller name is not pages' do
-      it 'renders without marketing partial' do
-        render
-        expect(rendered).not_to match(%{class="jumbotron"})
-      end
-    end
-  end
-
   context 'body' do
     before do
       render
@@ -62,6 +32,45 @@ describe 'layouts/pages' do
 
     it 'renders navbar' do
       expect(rendered).to match(%{nav class="navbar})
+    end
+
+    context 'flash' do
+      it 'renders alert' do
+        allow(view).to receive(:flash).and_return({ danger: "danger alert" })
+        render
+
+        expect(rendered).to match(%{class="alert.+"})
+        expect(rendered).to match(%{danger alert})
+      end
+    end
+
+    context 'cta' do
+      context 'when controller_name is pages' do
+        context 'and when action_name is index' do
+          it 'renders marketing partial' do
+            allow(view).to receive(:controller_name).and_return('pages')
+            allow(view).to receive(:action_name).and_return('index')
+            render
+            expect(rendered).to match(%{class="jumbotron"})
+          end
+        end
+
+        context 'and when action_name is not index' do
+          it 'renders without marketing partial' do
+            allow(view).to receive(:controller_name).and_return('pages')
+            allow(view).to receive(:action_name).and_return('show')
+            render
+            expect(rendered).not_to match(%{class="jumbotron"})
+          end
+        end
+      end
+
+      context 'when controller name is not pages' do
+        it 'renders without marketing partial' do
+          render
+          expect(rendered).not_to match(%{class="jumbotron"})
+        end
+      end
     end
 
     it 'renders conainter' do
