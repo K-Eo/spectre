@@ -71,16 +71,13 @@ describe 'layouts/pages' do
       end
     end
 
-    it 'renders conainter' do
-      expect(rendered).to match(%{div class="container"})
+    it 'yields' do
+      render plain: 'foobar', layout: 'layouts/pages'
+      expect(rendered).to match(%{foobar})
     end
 
     it 'renders footer' do
-      expect(rendered).to match(%{footer class="footer"})
-    end
-
-    it 'renders copyrights' do
-      expect(rendered).to match(%{&copy; Spectre 2017})
+      expect(rendered).to match('class="footer"')
     end
   end
 end
