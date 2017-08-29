@@ -41,6 +41,13 @@ describe 'layouts/application' do
       expect(rendered).to match(%{id="app-nav"})
     end
 
+    it 'renders flash messages' do
+      allow(view).to receive(:flash).and_return({ danger: "danger alert" })
+      render
+
+      expect(rendered).to match(%{class="flash-message.+"})
+    end
+
     it 'renders tabs' do
       render
       expect(rendered).to match(%{id="app-tabs"})

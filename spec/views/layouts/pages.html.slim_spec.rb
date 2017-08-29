@@ -32,14 +32,11 @@ describe 'layouts/pages' do
       expect(rendered).to match(%{id="app-nav"})
     end
 
-    context 'flash' do
-      it 'renders alert' do
-        allow(view).to receive(:flash).and_return({ danger: "danger alert" })
-        render
+    it 'renders flash messages' do
+      allow(view).to receive(:flash).and_return({ danger: "danger alert" })
+      render
 
-        expect(rendered).to match(%{class="alert.+"})
-        expect(rendered).to match(%{danger alert})
-      end
+      expect(rendered).to match(%{class="flash-message.+"})
     end
 
     context 'cta' do
