@@ -1,13 +1,17 @@
 require 'rails_helper'
 
 describe 'layouts/_tabs' do
-  it 'renders tabs wrapper' do
+  subject { rendered }
+
+  before do
     render
-    expect(rendered).to match(%{id="app-tabs"})
   end
 
-  it 'renders terminals link' do
-    render
-    expect(rendered).to match(%{<a class="nav-link" href="/terminals">Terminals</a>})
+  describe 'wrapper' do
+    it { is_expected.to have_css('div#app-tabs') }
+  end
+
+  describe 'items' do
+    it { is_expected.to have_link('Terminal', href: '/terminals', class: 'nav-link') }
   end
 end
