@@ -1,0 +1,16 @@
+div class="my-2 my-lg-0 ml-auto" id="user-links"
+  - if user_signed_in?
+    = link_to 'Sign Out',
+              destroy_user_session_path,
+              class: 'text-light font-weight-bold my-2 my-sm-0',
+              method: :delete
+  - else
+    = link_to 'Sign In',
+              new_user_session_path,
+              class: 'text-light font-weight-bold my-2 my-sm-0 mr-2'
+
+    span.navbar-text.mr-2 or
+
+    = link_to 'Sign Up',
+              new_user_registration_path,
+              class: 'text-light font-weight-bold my-2 my-sm-0'
