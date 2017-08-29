@@ -29,7 +29,7 @@ describe 'layouts/pages' do
     end
 
     it 'renders navbar' do
-      expect(rendered).to match(%{nav class="navbar})
+      expect(rendered).to match(%{id="app-nav"})
     end
 
     context 'flash' do
