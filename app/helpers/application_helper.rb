@@ -5,9 +5,9 @@ module ApplicationHelper
     flash.each do |key, value|
       type = flash_type(key)
       html += <<~HTML
-        <div class="alert alert-#{type} alert-dismissable fade show my-0" role="alert">
+        <div class="flash-message alert alert-#{type} alert-dismissable fade show my-0" role="alert">
           <div class="container">
-            #{build_flah_content(value, col)}
+            #{build_flash_content(value, col)}
           </div>
         </div>
       HTML
@@ -18,7 +18,7 @@ module ApplicationHelper
 
 private
 
-  def build_flah_content(value, col)
+  def build_flash_content(value, col)
     content = ""
 
     if !col.nil?
@@ -47,12 +47,12 @@ private
 
   def flash_type(type)
     case type
-    when 'alert'
-      'danger'
-    when 'notice'
-      'success'
+    when :alert
+      return 'danger'
+    when :notice
+      return 'success'
     else
-      type
+      return type
     end
   end
 end
