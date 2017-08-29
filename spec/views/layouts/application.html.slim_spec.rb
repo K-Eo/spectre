@@ -54,8 +54,8 @@ describe 'layouts/application' do
     end
 
     it 'yields' do
-      render plain: 'foobar', layout: 'layouts/application'
-      expect(rendered).to match(%{foobar})
+      render html: 'rspec__foobar', layout: 'layouts/application'
+      expect(rendered).to match(%{rspec__foobar})
     end
   end
 end

@@ -69,8 +69,8 @@ describe 'layouts/pages' do
     end
 
     it 'yields' do
-      render plain: 'foobar', layout: 'layouts/pages'
-      expect(rendered).to match(%{foobar})
+      render html: 'rspec__foobar', layout: 'layouts/pages'
+      expect(rendered).to match(%{rspec__foobar})
     end
 
     it 'renders footer' do
