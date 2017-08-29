@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 describe 'layouts/_footer' do
+  subject { rendered }
+
   before do
     render
   end
 
-  it 'renders footer' do
-    expect(rendered).to match(%{footer class="footer"})
+  describe 'footer' do
+    it { is_expected.to have_css('footer.footer') }
   end
 
-  it 'renders copyright' do
-    expect(rendered).to match(%{&copy; Spectre 2017})
+  describe 'copyright' do
+    it { is_expected.to have_css('p', text: '© Spectre 2017') }
   end
 end
