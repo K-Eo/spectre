@@ -1,61 +1,56 @@
 require 'rails_helper'
 
 describe 'layouts/application' do
-  context 'head' do
-    before do
-      render
-    end
-
-    context 'title' do
+  describe 'head' do
+    describe 'title' do
       context 'when is given' do
         it 'renders given name' do
           assign(:title, 'Foobar')
           render
-          expect(rendered).to match(%{<title>Foobar | Spectre</title>})
+          expect(rendered).to have_css('title', text: 'Foobar | Spectre', visible: false)
         end
       end
 
       context 'when is not given' do
         it 'renders only Spectre' do
-          expect(rendered).to match(%{<title>Spectre</title>})
+          render
+          expect(rendered).to have_css('title', text: 'Spectre', visible: false)
         end
       end
     end
 
-    it 'renders utf-8' do
-      expect(rendered).to match(%{charset="utf-8"})
-    end
+    describe 'meta' do
+      subject do
+        render
+        rendered
+      end
 
-    it 'renders viewport meta' do
-      expect(rendered).to match(%{name="viewport"})
-    end
-
-    it 'renders bootstrap resposive settings' do
-      expect(rendered).to match(%{content="width=device-width, initial-scale=1, shrink-to-fit=no"})
+      it { is_expected.to have_css('meta[charset="utf-8"]', visible: false) }
+      it { is_expected.to have_css('meta[name="viewport"]', visible: false) }
+      it { is_expected.to have_css('meta[content="width=device-width, initial-scale=1, shrink-to-fit=no"]', visible: false) }
     end
   end
 
-  context 'body' do
-    it 'renders nav' do
-      render
-      expect(rendered).to match(%{id="app-nav"})
+  describe'body' do
+    describe 'nav' do
+      subject do
+        render
+        rendered
+      end
+
+      it { is_expected.to have_css('nav#app-nav') }
+      it { is_expected.to have_css('div#app-tabs') }
     end
 
     it 'renders flash messages' do
       allow(view).to receive(:flash).and_return({ danger: "danger alert" })
       render
-
-      expect(rendered).to match(%{class="flash-message.+"})
-    end
-
-    it 'renders tabs' do
-      render
-      expect(rendered).to match(%{id="app-tabs"})
+      expect(rendered).to have_css('.flash-message')
     end
 
     it 'yields' do
       render html: 'rspec__foobar', layout: 'layouts/application'
-      expect(rendered).to match(%{rspec__foobar})
+      expect(rendered).to have_content(%{rspec__foobar})
     end
   end
 end
