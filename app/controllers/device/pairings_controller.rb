@@ -19,9 +19,9 @@ class Device::PairingsController < ApplicationController
 
     if @device.save
       @terminal.set_current_device(@device)
-      render status: :created
+      render 'device/pairings/create.json', status: :created
     else
-      render status: :unprocessable_entity
+      render 'device/pairings/create.json', status: :unprocessable_entity
     end
   end
 
@@ -29,18 +29,18 @@ class Device::PairingsController < ApplicationController
     access_token = params[:token]
 
     if access_token.nil?
-      render status: :bad_request
+      render json: '', status: :bad_request
       return
     end
 
     terminal = Terminal.find_by(access_token: access_token)
 
     if terminal.nil?
-      render status: :bad_request
+      render json: '', status: :bad_request
       return
     else
       terminal.unpair_device
-      render status: :ok
+      render json: '', status: :ok
     end
   end
 

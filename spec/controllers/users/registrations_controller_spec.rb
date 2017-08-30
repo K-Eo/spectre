@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Users::RegistrationsController do
-
   describe 'POST create' do
     before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
@@ -47,7 +46,7 @@ describe Users::RegistrationsController do
 
     context 'when logged in' do
       it 'redirects to root' do
-        sign_in create(:user, tenant_id: @tenant.id)
+        sign_in create(:user)
         go
         expect(response).to redirect_to(terminals_path)
       end

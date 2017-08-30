@@ -26,5 +26,9 @@ FactoryGirl.define do
     owner "Spectre"
     model "Moto G"
     current false
+
+    trait :with_pairing_token do
+      pairing_token nil
+    end
   end
 end

@@ -9,8 +9,8 @@ require 'devise'
 require 'database_cleaner'
 require 'acts_as_tenant'
 require 'support/factory_girl'
-# require 'support/db_cleaner'
 require 'support/mailer_helper'
+require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -36,6 +36,7 @@ RSpec.configure do |config|
 
   # Devise
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :view
 
   # Multitenancy
   config.before(:suite) do

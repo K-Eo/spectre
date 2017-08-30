@@ -49,15 +49,16 @@ class TerminalsController < ApplicationController
 
   def send_token
     @device_email = DeviceEmail.new(device_email_params)
+    @qr_pairing_token = @terminal.pairing_token_png(200)
+
     if @device_email.valid?
       TerminalMailer.pairing_token(@device_email.email, @terminal).deliver
-      flash[:success] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
-      redirect_to terminal_path(params[:id])
+      flash.now[:success] = "Enviado instrucciones a <strong>#{@device_email.email}</strong>."
     else
-      @qr_pairing_token = @terminal.pairing_token_png(200)
       flash.now[:danger] = "No se ha podido enviar el correo. Verifique que sea correcto e intente nuevamente."
-      render 'show'
     end
+
+    render 'show'
   end
 
   def unpair_device
