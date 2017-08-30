@@ -25,7 +25,7 @@ FactoryGirl.define do
     sequence(:phone) { |n| "1234-44#{n}"}
     owner "Spectre"
     model "Moto G"
-    current false
+    current true
 
     trait :with_pairing_token do
       pairing_token nil
