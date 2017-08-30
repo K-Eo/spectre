@@ -4,7 +4,7 @@ describe PagesController do
   describe 'GET index' do
     context 'when logged in' do
       it 'redirects to terminals' do
-        sign_in create(:user, tenant: @tenant)
+        sign_in create(:user)
         get :index
 
         expect(response).to redirect_to(terminals_path)

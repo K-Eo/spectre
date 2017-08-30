@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe TerminalsController do
-  let(:user) { create(:user, tenant_id: @tenant.id) }
+  let(:user) { create(:user) }
 
   describe 'GET index' do
     context 'when logged out' do
