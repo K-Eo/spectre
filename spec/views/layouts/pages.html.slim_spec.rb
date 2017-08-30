@@ -1,52 +1,38 @@
 require 'rails_helper'
 
 describe 'layouts/pages' do
-  context 'head' do
-    before do
+  describe 'head' do
+    subject do
       render
+      rendered
     end
 
-    it 'renders page name' do
-      expect(rendered).to match(%{Spectre | Home})
-    end
-
-    it 'renders utf-8' do
-      expect(rendered).to match(%{charset="utf-8"})
-    end
-
-    it 'renders viewport meta' do
-      expect(rendered).to match(%{name="viewport"})
-    end
-
-    it 'renders bootstrap resposive settings' do
-      expect(rendered).to match(%{content="width=device-width, initial-scale=1, shrink-to-fit=no"})
-    end
+    it { is_expected.to have_css('title', text: 'Spectre | Home', visible: false) }
+    it { is_expected.to have_css('meta[charset="utf-8"]', visible: false) }
+    it { is_expected.to have_css('meta[name="viewport"]', visible: false) }
+    it { is_expected.to have_css('meta[content="width=device-width, initial-scale=1, shrink-to-fit=no"]', visible: false) }
   end
 
-  context 'body' do
-    before do
-      render
-    end
-
+  describe 'body' do
     it 'renders navbar' do
-      expect(rendered).to match(%{id="app-nav"})
+      render
+      expect(rendered).to have_css('nav#app-nav')
     end
 
     it 'renders flash messages' do
       allow(view).to receive(:flash).and_return({ danger: "danger alert" })
       render
-
-      expect(rendered).to match(%{class="flash-message.+"})
+      expect(rendered).to have_css('.flash-message')
     end
 
-    context 'cta' do
-      context 'when controller_name is pages' do
-        context 'and when action_name is index' do
+    describe 'cta' do
+      context 'when controller name is pages' do
+        context 'and when action name is index' do
           it 'renders marketing partial' do
             allow(view).to receive(:controller_name).and_return('pages')
             allow(view).to receive(:action_name).and_return('index')
             render
-            expect(rendered).to match(%{class="jumbotron"})
+            expect(rendered).to have_css('div.jumbotron')
           end
         end
 
@@ -55,7 +41,7 @@ describe 'layouts/pages' do
             allow(view).to receive(:controller_name).and_return('pages')
             allow(view).to receive(:action_name).and_return('show')
             render
-            expect(rendered).not_to match(%{class="jumbotron"})
+            expect(rendered).not_to have_css('div.jumbotron')
           end
         end
       end
@@ -63,18 +49,19 @@ describe 'layouts/pages' do
       context 'when controller name is not pages' do
         it 'renders without marketing partial' do
           render
-          expect(rendered).not_to match(%{class="jumbotron"})
+          expect(rendered).not_to have_css('div.jumbotron')
         end
       end
     end
 
     it 'yields' do
       render html: 'rspec__foobar', layout: 'layouts/pages'
-      expect(rendered).to match(%{rspec__foobar})
+      expect(rendered).to have_content('rspec__foobar')
     end
 
     it 'renders footer' do
-      expect(rendered).to match('class="footer"')
+      render
+      expect(rendered).to have_css('.footer')
     end
   end
 end

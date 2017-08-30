@@ -50,7 +50,7 @@ describe 'layouts/application' do
 
     it 'yields' do
       render html: 'rspec__foobar', layout: 'layouts/application'
-      expect(rendered).to have_content(%{rspec__foobar})
+      expect(rendered).to have_content('rspec__foobar')
     end
   end
 end
