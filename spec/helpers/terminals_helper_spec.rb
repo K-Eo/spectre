@@ -1,28 +1,43 @@
 require 'rails_helper'
 
 describe TerminalsHelper do
-  describe 'tab_item' do
-    def go(name = '', url = '', active = false)
-      link = %{<a class="nav-link#{ ' active' if active }" href="#{url}">#{name}</a>}
-      expected = %{<li class="nav-item">#{link}</li>}
+  describe '#tab_item' do
+    context 'when has no arguments' do
+      subject do
+        helper.tab_item
+      end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('', class: 'nav-link', href: '') }
     end
 
-    context 'when no arguments' do
-      it 'renders default nav-link' do
-        expect(helper.tab_item).to eq(go)
+    context 'when has arguments' do
+      subject do
+        helper.tab_item('Foobar', '/foobar')
       end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Foobar', class: 'nav-link', href: '/foobar') }
     end
 
-    context 'when link is inactive' do
-      it 'renders nav-link' do
-        expect(helper.tab_item('Test', '/')).to eq(go('Test', '/'))
+    context 'when controller name not includes url' do
+      subject do
+        helper.tab_item('Test', '/')
       end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Test', class: 'nav-link', href: '/') }
+      it { is_expected.not_to have_css('.active') }
     end
 
-    context 'when link is active' do
-      it 'renders nav-link with active class' do
-        expect(helper.tab_item('Test', 'test')).to eq(go('Test', 'test', true))
+    context 'when controller name includes url' do
+      subject do
+        helper.tab_item('Test', '/test')
       end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Test', class: 'nav-link active', href: '/test') }
+      it { is_expected.to have_css('.active') }
     end
   end
 end
