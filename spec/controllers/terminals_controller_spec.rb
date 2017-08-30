@@ -374,7 +374,7 @@ describe TerminalsController do
 
   describe 'DELETE pair_device' do
     let(:terminal) { create(:terminal) }
-    let(:device) { create(:device, terminal_id: terminal.id, current: true) }
+    let(:device) { create(:device, terminal_id: terminal.id) }
 
     def go(id)
       delete :unpair_device, params: { id: id }

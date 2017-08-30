@@ -15,7 +15,6 @@ class Device::PairingsController < ApplicationController
     end
 
     @device = @terminal.devices.new(device_params)
-    @device.current = true
 
     if @device.save
       @terminal.set_current_device(@device)
