@@ -8,6 +8,13 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def timeago_for(object)
+    content_tag :span, '',
+                class: 'timeago',
+                datetime: object.created_at,
+                title: object.created_at
+  end
+
 private
 
   def build_alert(content, type, col)
