@@ -1,9 +1,7 @@
 .row
   .col-10
     h3.mb-1 = @terminal.name
-    p.text-muted
-      | ##{@terminal.id}
-        • created #{time_ago_in_words(@terminal.created_at, include_seconds: true)} ago
+    p.text-muted ##{@terminal.id} • created #{timeago_for(@terminal)}
 
   .col-2.text-right
     = link_to 'Edit', edit_terminal_path(@terminal), class: 'btn btn-success mr-2'

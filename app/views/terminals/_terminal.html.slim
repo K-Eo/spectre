@@ -7,6 +7,4 @@ li.list-group-item.pb-1.pt-2.d-flex id="terminal_#{terminal.id}"
 
   div
     h6.mb-1 = link_to terminal.name, terminal_path(terminal), class: 'text-dark'
-    p.mb-0.small.text-muted
-      | ##{terminal.id}
-        • created #{time_ago_in_words(terminal.created_at, include_seconds: true)} ago
+    p.mb-0.small.text-muted ##{terminal.id} • #{timeago_for(terminal)}

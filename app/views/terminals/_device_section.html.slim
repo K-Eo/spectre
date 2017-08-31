@@ -2,7 +2,7 @@
   .card
     .card-body
       h5 Associated Device
-      p.text-muted.mb-0 #{time_ago_in_words(@device.created_at)} ago
+      p.text-muted.mb-0 = timeago_for(@device)
 
     ul.list-group.list-group-flush
       li.list-group-item
