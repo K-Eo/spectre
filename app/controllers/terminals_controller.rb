@@ -22,9 +22,8 @@ class TerminalsController < ApplicationController
 
   def show
     if @terminal.paired
-      @device = @terminal.devices.find_by(current: true)
+      @device = @terminal.device.decorate
     else
-      @qr_pairing_token = @terminal.pairing_token_png(200)
       @device_email = DeviceEmail.new
     end
   end
@@ -78,7 +77,7 @@ class TerminalsController < ApplicationController
     end
 
     def set_terminal
-      @terminal = Terminal.find(params[:id])
+      @terminal = Terminal.find(params[:id]).decorate
     end
 
 end
