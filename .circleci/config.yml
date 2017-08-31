@@ -25,7 +25,8 @@ jobs:
       # Store bundle cache
       - save_cache:
         key: gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-        paths: [vendor/bundle]
+        paths:
+          - vendor/bundle
 
       - restore_cache:
           keys:
@@ -37,7 +38,8 @@ jobs:
 
       - save_cache:
           key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths: [node_modules]
+          paths:
+            - node_modules
 
       # Database setup
       - run: bundle exec rake db:create
