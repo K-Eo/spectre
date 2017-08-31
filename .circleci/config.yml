@@ -12,21 +12,18 @@ jobs:
     steps:
       - checkout
 
-      # Restore bundle cache
       - restore_cache:
           keys:
             - gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
             - gem-cache-{{ .Branch }}
             - gem-cache
 
-      # Bundle install dependencies
       - run: bundle install --path vendor/bundle
 
-      # Store bundle cache
       - save_cache:
-        key: gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
+          key: gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
       - restore_cache:
           keys:
