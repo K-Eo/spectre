@@ -9,6 +9,10 @@ module ApplicationHelper
   end
 
   def timeago_for(object)
+    if object.nil? || !object.created_at.present?
+      return content_tag :span, ''
+    end
+
     content_tag :span, '',
                 class: 'timeago',
                 datetime: object.created_at,
