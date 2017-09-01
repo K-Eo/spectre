@@ -130,7 +130,6 @@ describe TerminalsController do
           it 'assigns device_email and qr_pairing_token' do
             go
             expect(assigns(:device_email)).to be_a(DeviceEmail)
-            expect(assigns(:qr_pairing_token)).not_to be_nil
           end
         end
 
@@ -141,7 +140,6 @@ describe TerminalsController do
             terminal.set_current_device(device)
             get :show, params: { id: terminal.id }
             expect(assigns(:device_email)).to be_nil
-            expect(assigns(:qr_pairing_token)).to be_nil
             expect(assigns(:device)).to be_a(Device)
           end
         end
