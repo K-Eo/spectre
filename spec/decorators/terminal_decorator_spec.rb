@@ -3,9 +3,32 @@ require 'rails_helper'
 RSpec.describe TerminalDecorator do
 
   describe 'props' do
-    subject { TerminalDecorator.new(@terminal) }
+
+    describe 'icon' do
+      context 'when terminal is paired' do
+        subject do
+          terminal = build_stubbed(:terminal, paired: true)
+          TerminalDecorator.new(terminal).icon(class: 'foobar')
+        end
+
+        it { is_expected.to have_css('svg.octicon.octicon-device-mobile') }
+        it { is_expected.to have_css('svg.foobar') }
+      end
+
+      context 'when terminal is not paired' do
+        subject do
+          terminal = build_stubbed(:terminal)
+          TerminalDecorator.new(terminal).icon(class: 'foobar')
+        end
+
+        it { is_expected.to have_css('svg.octicon.octicon-info') }
+        it { is_expected.to have_css('svg.foobar') }
+      end
+    end
 
     context 'when set' do
+      subject { TerminalDecorator.new(@terminal) }
+
       before do
         @terminal = build_stubbed(:terminal, pairing_token: 'token')
       end
@@ -15,6 +38,8 @@ RSpec.describe TerminalDecorator do
     end
 
     context 'when not set' do
+      subject { TerminalDecorator.new(@terminal) }
+
       before do
         @terminal = build_stubbed(:terminal, name: '')
       end

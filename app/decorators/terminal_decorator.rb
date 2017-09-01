@@ -1,8 +1,16 @@
 class TerminalDecorator < ApplicationDecorator
-  delegate_all
+  delegate :id
 
   def name
     handle_present(model.name)
+  end
+
+  def icon(options = {})
+    if model.paired?
+      h.octicon 'device-mobile', options
+    else
+      h.octicon 'info', options
+    end
   end
 
   def created_at

@@ -1,11 +1,11 @@
 .row
   .col-10
-    h3.mb-1 = @terminal.name
-    p.text-muted = @terminal.created_at
+    h3.mb-1 = terminal.name
+    p.text-muted = terminal.created_at
 
   .col-2.text-right
-    = @terminal.edit_link
-    = @terminal.delete_link
+    = terminal.edit_link
+    = terminal.delete_link
 
   - if @terminal.paired?
     = render 'terminals/device/details'

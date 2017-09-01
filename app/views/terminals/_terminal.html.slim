@@ -1,10 +1,7 @@
 li.list-group-item.pb-1.pt-2.d-flex id="terminal_#{terminal.id}"
   div
-    - if terminal.paired?
-      = octicon 'device-mobile', class: 'mr-3'
-    - else
-      = octicon 'info', class: 'mr-3 mt-1'
+    = terminal.icon class: 'mr-3'
 
   div
     h6.mb-1 = link_to terminal.name, terminal_path(terminal), class: 'text-dark'
-    p.mb-0.small.text-muted ##{terminal.id} • #{timeago_for(terminal)}
+    p.mb-0.small.text-muted = terminal.created_at
