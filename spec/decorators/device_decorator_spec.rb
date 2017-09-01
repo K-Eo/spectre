@@ -1,60 +1,97 @@
 require 'rails_helper'
 
 RSpec.describe DeviceDecorator do
-  context 'when props are not present' do
-    subject { DeviceDecorator.new(@device) }
+  let(:device) { build_stubbed(:device) }
 
-    before do
-      @device = build_stubbed(:device, owner: '',
-                                       phone: '',
-                                       imei: '',
-                                       os: '',
-                                       model: '')
+  describe 'owner' do
+    context 'when is set' do
+      subject { DeviceDecorator.new(device).owner }
+      it { is_expected.to eq(device.owner) }
     end
 
-    it { expect(subject.owner).to eq('no given') }
-    it { expect(subject.phone).to eq('no given') }
-    it { expect(subject.imei).to eq('no given') }
-    it { expect(subject.os).to eq('no given') }
-    it { expect(subject.modelify).to eq('no given') }
+    context 'when is not set' do
+      subject do
+        device.owner = ''
+        DeviceDecorator.new(device).owner
+      end
+      it { is_expected.to eq('no given') }
+    end
   end
 
-  context 'when props are present' do
-    subject { DeviceDecorator.new(@device) }
-
-    before do
-      @device = build_stubbed(:device)
+  describe 'phone' do
+    context 'when is set' do
+      subject { DeviceDecorator.new(device).phone }
+      it { is_expected.to eq(device.phone) }
     end
 
-    it { expect(subject.owner).to eq(@device.owner) }
-    it { expect(subject.phone).to eq(@device.phone) }
-    it { expect(subject.imei).to eq(@device.imei) }
-    it { expect(subject.os).to eq(@device.os) }
-    it { expect(subject.modelify).to eq(@device.model) }
+    context 'when is not set' do
+      subject do
+        device.phone = ''
+        DeviceDecorator.new(device).phone
+      end
+      it { is_expected.to eq('no given') }
+    end
+  end
+
+  describe 'imei' do
+    context 'when is set' do
+      subject { DeviceDecorator.new(device).imei }
+      it { is_expected.to eq(device.imei) }
+    end
+
+    context 'when is not set' do
+      subject do
+        device.imei = ''
+        DeviceDecorator.new(device).imei
+      end
+      it { is_expected.to eq('no given') }
+    end
+  end
+
+  describe 'os' do
+    context 'when is set' do
+      subject { DeviceDecorator.new(device).os }
+      it { is_expected.to eq(device.os) }
+    end
+
+    context 'when is not set' do
+      subject do
+        device.os = ''
+        DeviceDecorator.new(device).os
+      end
+      it { is_expected.to eq('no given') }
+    end
   end
 
   describe 'model' do
-    before do
-      @device = build_stubbed(:device)
+    context 'when is set' do
+      subject { DeviceDecorator.new(device).modelify }
+      it { is_expected.to eq(device.model) }
     end
 
-    describe 'associated_at' do
-      subject { DeviceDecorator.new(@device).associated_at }
-
-      it { is_expected.to have_css('span.timeago[datetime][title]')}
-      it { is_expected.to match(/Associated/) }
+    context 'when is not set' do
+      subject do
+        device.model = ''
+        DeviceDecorator.new(device).modelify
+      end
+      it { is_expected.to eq('no given') }
     end
+  end
 
-    describe 'delete_link' do
-      let(:terminal) { build_stubbed(:terminal) }
+  describe 'associated_at' do
+    subject { DeviceDecorator.new(device).associated_at }
 
-      subject { DeviceDecorator.new(@device).delete_link(terminal) }
+    it { is_expected.to have_css('span.timeago[datetime][title]')}
+    it { is_expected.to match(/Associated/) }
+  end
 
-      it { is_expected.to have_link('Delete') }
-      it { is_expected.to have_css("a[href=\"/terminals/#{terminal.id}/pair_device\"]") }
-      it { is_expected.to have_css('a.btn.btn-danger') }
-      it { is_expected.to have_css('a[data-method=delete]') }
-      it { is_expected.to have_css('a[data-confirm="Are you sure?"]') }
-    end
+  describe 'delete_link' do
+    let(:terminal) { build_stubbed(:terminal) }
+    subject { DeviceDecorator.new(device).delete_link(terminal) }
+
+    it { is_expected.to have_link('Delete', href: "/terminals/#{terminal.id}/pair_device") }
+    it { is_expected.to have_css('a.btn.btn-danger') }
+    it { is_expected.to have_css('a[data-method=delete]') }
+    it { is_expected.to have_css('a[data-confirm="Are you sure?"]') }
   end
 end
