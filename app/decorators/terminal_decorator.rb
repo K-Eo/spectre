@@ -1,6 +1,10 @@
 class TerminalDecorator < ApplicationDecorator
   delegate_all
 
+  def name
+    handle_present(model.name)
+  end
+
   def created_at
     "##{model.id} • created #{h.timeago_for(model)}".html_safe
   end
@@ -18,6 +22,11 @@ class TerminalDecorator < ApplicationDecorator
   end
 
   def qr_image
-    model.pairing_token_png(200).to_data_url
+    if model.pairing_token.present?
+      data_url = model.pairing_token_png(200).to_data_url
+      h.content_tag :img, '', src: data_url, title: 'QR Image'
+    else
+      h.content_tag :span, 'Can\'t cook QR Image'
+    end
   end
 end
