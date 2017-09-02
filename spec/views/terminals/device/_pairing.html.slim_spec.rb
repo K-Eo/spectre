@@ -8,7 +8,6 @@ describe 'terminals/device/_pairing' do
     assign(:device_email, DeviceEmail.new)
     render template: 'terminals/device/_pairing',
            locals: { terminal: terminal.decorate }
-           puts rendered
     rendered
   end
 
