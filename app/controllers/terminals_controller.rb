@@ -1,9 +1,10 @@
 class TerminalsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_terminal, only: ['show', 'edit', 'update', 'destroy', 'send_token', 'unpair_device']
+  decorates_assigned :terminal
 
   def index
-    @terminals = Terminal.page(params[:page])
+    @terminals = TerminalsDecorator.decorate(Terminal.page(params[:page]))
   end
 
   def new
@@ -21,10 +22,9 @@ class TerminalsController < ApplicationController
   end
 
   def show
-    if @terminal.paired
-      @device = @terminal.devices.find_by(current: true)
+    if @terminal.paired?
+      @device = @terminal.device.decorate
     else
-      @qr_pairing_token = @terminal.pairing_token_png(200)
       @device_email = DeviceEmail.new
     end
   end

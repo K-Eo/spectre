@@ -1,5 +1,7 @@
 class Terminal < ApplicationRecord
   has_many :devices, dependent: :destroy
+  has_one :device, -> { where(current: true) }
+
   validates :name, presence: true,
                     length: { maximum: 255 }
 

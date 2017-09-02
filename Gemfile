@@ -38,6 +38,7 @@ gem 'jquery-rails'
 gem 'slim-rails'
 gem 'kaminari'
 gem 'octicons_helper'
+gem 'draper'
 
 gem 'rqrcode', '~> 0.10.1'
 

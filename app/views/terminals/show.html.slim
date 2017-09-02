@@ -1,14 +1,13 @@
 .row
   .col-10
-    h3.mb-1 = @terminal.name
-    p.text-muted ##{@terminal.id} • created #{timeago_for(@terminal)}
+    h3.mb-1 = terminal.name
+    p.text-muted = terminal.created_at
 
   .col-2.text-right
-    = link_to 'Edit', edit_terminal_path(@terminal), class: 'btn btn-success mr-2'
-    = link_to 'Delete', terminal_path(@terminal), class: 'btn btn-danger',
-              method: :delete, data: { confirm: 'Are you sure?' }
+    = terminal.edit_link
+    = terminal.delete_link
 
   - if @terminal.paired?
-    = render 'device_section'
+    = render 'terminals/device/details'
   - else
-    = render 'pairing_section'
+    = render 'terminals/device/pairing'

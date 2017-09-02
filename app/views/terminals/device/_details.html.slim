@@ -1,8 +1,8 @@
 .col-4
   .card
     .card-body
-      h5 Associated Device
-      p.text-muted.mb-0 = timeago_for(@device)
+      h5 Device Details
+      p.text-muted.mb-0 = @device.associated_at
 
     ul.list-group.list-group-flush
       li.list-group-item
@@ -22,11 +22,7 @@
           p = @device.os
         address
           strong Model
-          p = @device.model
+          p = @device.modelify
 
     .card-body
-      = link_to 'Delete',
-                pair_device_terminal_path(@terminal),
-                class: 'btn btn-danger',
-                method: :delete,
-                data: { confirm: 'Are you sure?' }
+      = @device.delete_link(terminal)
