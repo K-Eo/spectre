@@ -68,11 +68,9 @@ private
 
   def flash_type(type)
     case type
-    when :alert
-    when 'alert'
+    when :alert, 'alert'
       return 'danger'
-    when :notice
-    when 'notice'
+    when :notice, 'notice'
       return 'success'
     else
       return type
