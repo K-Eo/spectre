@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  resource :dashboard
   root 'pages#index'
 end
