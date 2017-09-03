@@ -1,6 +1,46 @@
 require 'rails_helper'
 
 describe ApplicationHelper do
+  describe '#tab_item' do
+    context 'when has no arguments' do
+      subject do
+        helper.tab_item
+      end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('', class: 'nav-link', href: '') }
+    end
+
+    context 'when has arguments' do
+      subject do
+        helper.tab_item('Foobar', '/foobar')
+      end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Foobar', class: 'nav-link', href: '/foobar') }
+    end
+
+    context 'when controller name not includes url' do
+      subject do
+        helper.tab_item('Test', '/')
+      end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Test', class: 'nav-link', href: '/') }
+      it { is_expected.not_to have_css('.active') }
+    end
+
+    context 'when controller name includes url' do
+      subject do
+        helper.tab_item('Test', '/test')
+      end
+
+      it { is_expected.to have_css('li.nav-item') }
+      it { is_expected.to have_link('Test', class: 'nav-link active', href: '/test') }
+      it { is_expected.to have_css('.active') }
+    end
+  end
+
   describe '#flash_message' do
     context 'when has one' do
       subject do
@@ -58,36 +98,6 @@ describe ApplicationHelper do
           expect(helper.flash_message).to have_css('.alert-foo')
         end
       end
-    end
-  end
-
-  describe '#timeago_for' do
-    context 'when object is valid' do
-      let(:terminal) { create(:terminal) }
-      subject { helper.timeago_for(terminal) }
-
-      it { is_expected.to have_css('span.timeago', text: '', count: 1) }
-      it { is_expected.to have_css("span[datetime=\"#{terminal.created_at}\"]") }
-      it { is_expected.to have_css("span[title=\"#{terminal.created_at}\"]") }
-    end
-
-    context 'when object is invalid' do
-      let(:terminal) { build(:terminal) }
-      subject { helper.timeago_for(terminal) }
-
-      it { is_expected.to have_css('span', text: '', count: 1, visible: false) }
-      it { is_expected.not_to have_css('span.timeago') }
-      it { is_expected.to have_css('span[datetime]', count: 0) }
-      it { is_expected.to have_css('span[title]', count: 0) }
-    end
-
-    context 'when object is nil' do
-      subject { helper.timeago_for(nil) }
-
-      it { is_expected.to have_css('span', text: '', count: 1, visible: false) }
-      it { is_expected.not_to have_css('span.timeago') }
-      it { is_expected.to have_css('span[datetime]', count: 0) }
-      it { is_expected.to have_css('span[title]', count: 0) }
     end
   end
 end

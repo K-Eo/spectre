@@ -5,16 +5,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  belongs_to :tenant
+  belongs_to :company
 
-  before_validation :create_tenant
+  before_validation :create_company
 
-  accepts_nested_attributes_for :tenant
-  acts_as_tenant :tenant
+  accepts_nested_attributes_for :company
+  acts_as_tenant :company
 
-  def create_tenant
+  def create_company
     ActsAsTenant.without_tenant do
-      self.tenant.save if !self.tenant.nil?
+      self.company.save if !self.company.nil?
     end
   end
 end

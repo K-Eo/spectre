@@ -5,7 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     super do |resource|
-      resource.tenant = Tenant.new
+      resource.company = Company.new
     end
   end
 
@@ -46,7 +46,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       user_params.permit(:email,
                          :password,
                          :password_confirmation,
-                         tenant_attributes: [:name, :organization])
+                         company_attributes: [:name])
     end
   end
 

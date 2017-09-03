@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
-  before_action :set_organization
+  before_action :set_company
 
   rescue_from ActiveRecord::RecordNotFound do
     render_404
@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  def set_organization
-    tenant = nil
+  def set_company
+    company = nil
     if user_signed_in?
-      tenant  ||= current_user.tenant
+      company  ||= current_user.company
     end
-    set_current_tenant(tenant)
+    set_current_tenant(company)
   end
 
   def render_404

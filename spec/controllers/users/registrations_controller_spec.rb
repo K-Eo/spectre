@@ -8,9 +8,8 @@ describe Users::RegistrationsController do
         email: 'foobar@mail.com',
         password: 'password',
         password_confirmation: 'password',
-        tenant_attributes: {
-          name: 'Foobar Inc.',
-          organization: 'foobar'
+        company_attributes: {
+          name: 'Foobar Inc.'
         }
       }
     end
@@ -39,7 +38,7 @@ describe Users::RegistrationsController do
         it 'creates tenant' do
           expect do
             go
-          end.to change { Tenant.count }.by(1)
+          end.to change { Company.count }.by(1)
         end
       end
     end

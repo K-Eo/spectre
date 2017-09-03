@@ -1,5 +1,11 @@
 module ApplicationHelper
 
+  def tab_item(name = '', url = '')
+    content_tag :li, class: 'nav-item' do
+      active_link(name, url)
+    end
+  end
+
   def flash_message(col = nil)
     html = ""
     flash.each do |key, value|
@@ -20,6 +26,12 @@ module ApplicationHelper
   end
 
 private
+
+  def active_link(name, url)
+    css = 'nav-link'
+    css << ' active' if url.include?(controller_name)
+    link_to name, url, class: css
+  end
 
   def build_alert(content, type, col)
     content = alert_content_wrapper(col) do
@@ -57,8 +69,10 @@ private
   def flash_type(type)
     case type
     when :alert
+    when 'alert'
       return 'danger'
     when :notice
+    when 'notice'
       return 'success'
     else
       return type
