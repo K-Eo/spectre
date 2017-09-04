@@ -7,10 +7,7 @@ describe Users::RegistrationsController do
       @user = {
         email: 'foobar@mail.com',
         password: 'password',
-        password_confirmation: 'password',
-        company_attributes: {
-          name: 'Foobar Inc.'
-        }
+        password_confirmation: 'password'
       }
     end
 
@@ -19,10 +16,6 @@ describe Users::RegistrationsController do
     end
 
     context 'when logged out' do
-      before do
-        ActsAsTenant.current_tenant = nil
-      end
-
       context 'when is valid' do
         it 'redirects to root' do
           go
@@ -32,7 +25,10 @@ describe Users::RegistrationsController do
         it 'creates user' do
           expect do
             go
-          end.to change { User.count }.by(1)
+          end.to change {
+            ActsAsTenant.current_tenant = nil
+            User.count
+          }.by(1)
         end
 
         it 'creates tenant' do
@@ -45,6 +41,7 @@ describe Users::RegistrationsController do
 
     context 'when logged in' do
       it 'redirects to root' do
+        ActsAsTenant.current_tenant = Company.last
         sign_in create(:user)
         go
         expect(response).to redirect_to(root_path)
