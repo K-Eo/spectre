@@ -1,5 +1,5 @@
 class Company < ApplicationRecord
-  has_many :companies
+  has_many :users
 
   validates :name, presence: true
   validates :name, length: { maximum: 255 }
