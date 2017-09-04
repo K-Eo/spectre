@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
 protected
 
   def set_company
-    if current_user.is_a?(GuestUser)
-      company = Company.find(1)
+    if devise_controller? || current_user.is_a?(GuestUser)
+      company = nil
     else
       company  = current_user.company
     end

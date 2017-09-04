@@ -5,7 +5,6 @@ RSpec.describe DashboardsController, type: :controller do
   describe 'GET show' do
     context 'when logged in' do
       it 'renders show template' do
-        ActsAsTenant.current_tenant = Company.last
         sign_in create(:user)
         get :show
         expect(response).to have_http_status(:success)

@@ -25,10 +25,7 @@ describe Users::RegistrationsController do
         it 'creates user' do
           expect do
             go
-          end.to change {
-            ActsAsTenant.current_tenant = nil
-            User.count
-          }.by(1)
+          end.to change { User.count }.by(1)
         end
 
         it 'creates tenant' do
@@ -41,7 +38,6 @@ describe Users::RegistrationsController do
 
     context 'when logged in' do
       it 'redirects to root' do
-        ActsAsTenant.current_tenant = Company.last
         sign_in create(:user)
         go
         expect(response).to redirect_to(root_path)
