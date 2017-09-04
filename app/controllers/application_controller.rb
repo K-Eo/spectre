@@ -7,13 +7,24 @@ class ApplicationController < ActionController::Base
     render_404
   end
 
+  def current_user
+    super || guest_user
+  end
+
+  def guest_user
+    guest = GuestUser.new
+    guest
+  end
+
 protected
 
   def set_company
-    company = nil
-    if user_signed_in?
-      company  ||= current_user.company
+    if current_user.is_a?(GuestUser)
+      company = Company.find(1)
+    else
+      company  = current_user.company
     end
+
     set_current_tenant(company)
   end
 

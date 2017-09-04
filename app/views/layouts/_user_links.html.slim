@@ -1,10 +1,5 @@
-div class="my-2 my-lg-0 ml-auto" id="user-links"
-  - if user_signed_in?
-    = link_to 'Sign Out',
-              destroy_user_session_path,
-              class: 'text-light font-weight-bold my-2 my-sm-0',
-              method: :delete
-  - else
+div class="my-lg-0 ml-auto" id="user-links"
+  - if current_user.is_a?(GuestUser)
     = link_to 'Sign In',
               new_user_session_path,
               class: 'text-light font-weight-bold my-2 my-sm-0 mr-2'
@@ -14,3 +9,8 @@ div class="my-2 my-lg-0 ml-auto" id="user-links"
     = link_to 'Sign Up',
               new_user_registration_path,
               class: 'text-light font-weight-bold my-2 my-sm-0'
+  - else
+    = link_to 'Sign Out',
+              destroy_user_session_path,
+              class: 'text-light font-weight-bold my-2 my-sm-0',
+              method: :delete
