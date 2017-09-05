@@ -1,1 +1,15 @@
 @import "bootstrap";
+
+body {
+  overflow-y: scroll;
+}
+
+.input-group {
+  padding-bottom: 1em;
+}
+
+.input-group .invalid-feedback {
+  position: absolute;
+  left: 0;
+  top: 2.5em;
+}
