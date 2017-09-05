@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
+  resources :workers
+
   root 'pages#index'
 end
