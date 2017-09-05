@@ -1,0 +1,14 @@
+h1 Workers index
+
+= form_for(@worker_form) do |f|
+  .row
+    .col-6
+      .input-group
+        = f.text_field :email, class: 'form-control'
+        span.input-group-btn
+          = f.submit class: 'btn btn-success'
+
+.row.mt-4
+  .col-12
+    ul.list-unstyled
+      = render partial: 'worker', collection: @workers
