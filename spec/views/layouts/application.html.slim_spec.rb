@@ -39,7 +39,6 @@ describe 'layouts/application' do
       end
 
       it { is_expected.to have_css('nav#app-nav') }
-      it { is_expected.to have_css('div#app-tabs') }
     end
 
     it 'renders flash messages' do

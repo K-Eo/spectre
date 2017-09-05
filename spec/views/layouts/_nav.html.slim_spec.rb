@@ -13,14 +13,6 @@ describe 'layouts/_nav' do
   end
 
   describe 'brand link' do
-    context 'when user logged in' do
-      it 'renders link to terminals path' do
-        allow(view).to receive(:user_signed_in?).and_return(true)
-        render
-        expect(rendered).to have_link('Spectre', href: '/terminals', class: 'navbar-brand')
-      end
-    end
-
     context 'when user logged out' do
       it 'renders link to root path' do
         allow(view).to receive(:user_signed_in?).and_return(false)

@@ -1,18 +1,22 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  before_action :create_company, only: [:create]
+  after_action :restore_company, only: [:create]
 
   # GET /resource/sign_up
-  def new
-    super do |resource|
-      resource.tenant = Tenant.new
-    end
-  end
-
-  # POST /resource
-  # def create
+  # def new
   #   super
   # end
+
+  # POST /resource
+  def create
+    super
+    if !resource.persisted?
+      ActsAsTenant.current_tenant = nil
+      @company.destroy!
+    end
+  end
 
   # GET /resource/edit
   # def edit
@@ -38,17 +42,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  protected
+  # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up) do |user_params|
-      user_params.permit(:email,
-                         :password,
-                         :password_confirmation,
-                         tenant_attributes: [:name, :organization])
-    end
-  end
+  # def configure_sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up) do |user_params|
+  #     user_params.permit(:email,
+  #                        :password,
+  #                        :password_confirmation,
+  #                        company_attributes: [:name])
+  #   end
+  # end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
@@ -64,4 +68,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+private
+
+  def restore_company
+    ActsAsTenant.current_tenant = public_company
+  end
+
+  def create_company
+    @company = Company.new(name: 'My Company')
+    @company.save
+    public_company
+    ActsAsTenant.current_tenant = @company
+  end
+
+  def public_company
+    @public_company ||= ActsAsTenant.current_tenant
+  end
+
 end

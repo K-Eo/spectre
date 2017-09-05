@@ -1,20 +1,31 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
-  before_action :set_organization
+  before_action :set_company
 
   rescue_from ActiveRecord::RecordNotFound do
     render_404
   end
 
+  def current_user
+    super || guest_user
+  end
+
+  def guest_user
+    guest = GuestUser.new
+    guest
+  end
+
 protected
 
-  def set_organization
-    tenant = nil
-    if user_signed_in?
-      tenant  ||= current_user.tenant
+  def set_company
+    if devise_controller? || current_user.is_a?(GuestUser)
+      company = nil
+    else
+      company  = current_user.company
     end
-    set_current_tenant(tenant)
+
+    set_current_tenant(company)
   end
 
   def render_404
@@ -27,7 +38,7 @@ protected
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || terminals_path
+    stored_location_for(resource) || root_path
   end
 
 end

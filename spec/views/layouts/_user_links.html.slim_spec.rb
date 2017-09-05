@@ -14,7 +14,7 @@ describe 'layouts/_user_links' do
   describe 'items' do
     context 'when logged in' do
       before do
-        allow(view).to receive(:user_signed_in?).and_return(true)
+        allow(view).to receive_message_chain('current_user.is_a?') { false }
         render
       end
 
@@ -27,7 +27,7 @@ describe 'layouts/_user_links' do
 
   context 'when user logged out' do
     before do
-      allow(view).to receive(:user_signed_in?).and_return(false)
+      allow(view).to receive_message_chain('current_user.is_a?') { true }
       render
     end
 

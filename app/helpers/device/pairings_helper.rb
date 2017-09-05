@@ -1,2 +1,0 @@
-module Device::PairingsHelper
-end

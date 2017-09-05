@@ -43,12 +43,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :transaction
     ActsAsTenant.current_tenant = nil
-    Tenant.create!(name: 'Spectre Inc.', organization: 'spectre')
+    Company.create!(name: 'Spectre Inc.')
   end
 
   config.before(:each) do
     DatabaseCleaner.start
-    @tenant = Tenant.first
+    @tenant = Company.find(1)
     ActsAsTenant.current_tenant = @tenant
   end
 

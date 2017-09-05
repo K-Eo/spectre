@@ -40,8 +40,6 @@ gem 'kaminari'
 gem 'octicons_helper'
 gem 'draper'
 
-gem 'rqrcode', '~> 0.10.1'
-
 gem 'devise', '~> 4.2'
 gem 'acts_as_tenant'
 
