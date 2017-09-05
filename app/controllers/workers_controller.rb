@@ -7,22 +7,29 @@ class WorkersController < ApplicationController
   end
 
   def create
-    @worker_form = WorkerForm.new
     @workers = User.all
 
     if params[:worker].blank?
+      @worker_form = WorkerForm.new
       flash.now[:alert] = 'Email required'
       render 'index'
       return
     end
 
-    if @worker_form.submit(params.require(:worker))
-      @worker_form.email = ''
-      flash.now[:success] = 'Invitation sent'
+    @worker_form = WorkerForm.new(worker_params)
+
+    if @worker_form.submit
+      flash.now[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
       render 'index'
     else
       render 'index'
     end
+  end
+
+private
+
+  def worker_params
+    params.require(:worker).permit(:email)
   end
 
 end

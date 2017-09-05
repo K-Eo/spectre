@@ -8,21 +8,32 @@ class WorkerForm
 
   delegate :email, to: :user
 
+  def initialize(params = {})
+    user.email = params.fetch(:email, '')
+  end
+
   def user
     @user ||= User.new
   end
 
-  def submit(params)
-    password = Devise.friendly_token.first(8)
-    user.assign_attributes(params.permit(:email))
+  def password
+    @password ||= Devise.friendly_token.first(8)
+  end
+
+  def submit
     user.password = password
     if valid?
       user.skip_confirmation!
       user.save!
+      send_credentials
       true
     else
       false
     end
+  end
+
+  def send_credentials
+    WorkersMailer.credentials(self).deliver_now
   end
 
   def verify_unique_email

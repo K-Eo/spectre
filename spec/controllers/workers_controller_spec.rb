@@ -28,7 +28,7 @@ RSpec.describe WorkersController, type: :controller do
       context 'and when user is valid' do
         it { is_expected.to have_http_status(:success) }
         it { is_expected.to render_template('workers/index') }
-        it { expect(subject.body).to match(/Invitation sent/) }
+        it { expect(subject.body).to match(/Email sent to/) }
       end
 
       context 'when user is invalid' do
