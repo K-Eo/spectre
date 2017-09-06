@@ -1,1 +1,14 @@
-h1 worker details
+.row.mt-3
+  .col-3
+    img src="https://placehold.it/255" class="rounded w-100"
+
+    div.my-3
+      h3 = @worker.name
+      p = @worker.email
+
+    hr
+
+    div.my-3
+      = link_to 'Eliminar trabajador',
+                worker_path(@worker),
+                class: 'btn btn-outline-secondary btn-block'
