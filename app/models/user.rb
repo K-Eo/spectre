@@ -8,4 +8,8 @@ class User < ApplicationRecord
   belongs_to :company
 
   acts_as_tenant :company
+
+  def name
+    [self.first_name, self.last_name].compact.join(' ')
+  end
 end
