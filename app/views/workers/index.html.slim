@@ -1,13 +1,17 @@
-.row
-  .col-6.mt-3
+.row.mt-4
+  .col-12
+    h6 Agrege un nuevo trabajador usando su correo electrónico
+    small.form-text.text-muted Solo puede agregar correos electrónicos que no se encuentren registrados en otras compañias.
+
+  .col-6.mt-2
     = form_for(@worker_form) do |f|
           .input-group
             = f.text_field :email, class: 'form-control', autocomplete: 'off'
             span.input-group-btn
-              = f.submit class: 'btn btn-success'
+              = f.submit 'Agregar trabajador', class: 'btn btn-success'
 
 .row
-  .col-12.my-4
+  .col-12.mt-3.mb-4
     ul.list-group
       = render partial: 'worker', collection: @workers
 
