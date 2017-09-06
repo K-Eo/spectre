@@ -1,14 +1,15 @@
-h1 Workers index
+.row
+  .col-6.mt-3
+    = form_for(@worker_form) do |f|
+          .input-group
+            = f.text_field :email, class: 'form-control', autocomplete: 'off'
+            span.input-group-btn
+              = f.submit class: 'btn btn-success'
 
-= form_for(@worker_form) do |f|
-  .row
-    .col-6
-      .input-group
-        = f.text_field :email, class: 'form-control'
-        span.input-group-btn
-          = f.submit class: 'btn btn-success'
-
-.row.mt-4
-  .col-12
-    ul.list-unstyled
+.row
+  .col-12.my-4
+    ul.list-group
       = render partial: 'worker', collection: @workers
+
+  .col-12
+    = paginate @workers

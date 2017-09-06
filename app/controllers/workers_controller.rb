@@ -3,11 +3,11 @@ class WorkersController < ApplicationController
 
   def index
     @worker_form = WorkerForm.new
-    @workers = User.all
+    @workers = User.page(params[:page])
   end
 
   def create
-    @workers = User.all
+    @workers = User.page(params[:page])
 
     if params[:worker].blank?
       @worker_form = WorkerForm.new
@@ -24,6 +24,10 @@ class WorkersController < ApplicationController
     else
       render 'index'
     end
+  end
+
+  def show
+    @worker = User.find(params[:id])
   end
 
 private

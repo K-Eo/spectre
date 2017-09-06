@@ -1,8 +1,8 @@
 module ApplicationHelper
 
-  def tab_item(name = '', url = '')
+  def tab_item(name = '', url = '', controller = '')
     content_tag :li, class: 'nav-item' do
-      active_link(name, url)
+      active_link(name, url, controller)
     end
   end
 
@@ -27,9 +27,10 @@ module ApplicationHelper
 
 private
 
-  def active_link(name, url)
+  def active_link(name, url, controller)
+    source = controller.blank? ? url : controller
     css = 'nav-link'
-    css << ' active' if url.include?(controller_name)
+    css << ' active' if source.include?(controller_name)
     link_to name, url, class: css
   end
 

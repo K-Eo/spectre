@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   set_current_tenant_through_filter
-  before_action :set_company
+  before_action :set_tenant
+
+  helper_method :company
 
   rescue_from ActiveRecord::RecordNotFound do
     render_404
@@ -18,13 +20,15 @@ class ApplicationController < ActionController::Base
 
 protected
 
-  def set_company
+  def company
     if devise_controller? || current_user.is_a?(GuestUser)
-      company = nil
+      @company = nil
     else
-      company  = current_user.company
+      @company ||= current_user.company
     end
+  end
 
+  def set_tenant
     set_current_tenant(company)
   end
 

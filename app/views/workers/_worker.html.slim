@@ -1,7 +1,10 @@
-li.media.mb-4
-  img.d-flex.mr-3.rounded-circle src="https://placehold.it/60" alt="Generic placeholder image"
-  div.media-body
-    h5.mt-0.mb-1
-      | Lorem ipsum dolor
-      small.text-muted< #{worker.email}
-    p.text-muted joined 1 minute ago
+li.list-group-item.d-flex
+  div.d-flex.align-items-center
+    = octicon 'person', class: 'mr-3'
+
+  div
+    h5.mt-0.mb-0
+      = link_to 'worker name', worker_path(worker), class: 'text-dark' 
+    p.mb-0
+      ' #{worker.email}
+      span.text-muted • joined #{timeago_for(worker)}
