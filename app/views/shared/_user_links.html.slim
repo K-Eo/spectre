@@ -1,5 +1,5 @@
-div class="my-lg-0 ml-auto" id="user-links"
-  - if current_user.is_a?(GuestUser)
+- if current_user.is_a?(GuestUser)
+  div class="my-lg-0 ml-auto" id="user-links"
     = link_to 'Sign In',
               new_user_session_path,
               class: 'text-light font-weight-bold my-2 my-sm-0 mr-2'
@@ -9,8 +9,32 @@ div class="my-lg-0 ml-auto" id="user-links"
     = link_to 'Sign Up',
               new_user_registration_path,
               class: 'text-light font-weight-bold my-2 my-sm-0'
-  - else
-    = link_to 'Sign Out',
-              destroy_user_session_path,
-              class: 'text-light font-weight-bold my-2 my-sm-0',
-              method: :delete
+- else
+  ul.navbar-nav.ml-auto
+    li.nav-item.dropdown
+      a [class="nav-link dropdown-toggle d-flex align-items-center pr-0"
+         id="user_dropdown"
+         data-toggle="dropdown"
+         href="#"
+         aria-haspopup="true"
+         aria-expanded="false"]
+        img src="https://placehold.it/20" class="mr-1 rounded-3"
+
+      div [class="dropdown-menu dropdown-menu-right"
+           aria-labelledby="user_dropdown"]
+        h6.dropdown-header = current_user.name
+
+        div.dropdown-divider
+        = link_to 'Perfil',
+                  root_path,
+                  class: 'dropdown-item'
+
+        div.dropdown-divider
+        = link_to 'Opciones',
+                  root_path,
+                  class: 'dropdown-item'
+
+        = link_to 'Salir',
+                  destroy_user_session_path,
+                  class: 'dropdown-item',
+                  method: :delete
