@@ -23,3 +23,14 @@ body {
   text-decoration: none;
   background-color: $blue;
 }
+
+.text-black {
+  color: $gray-800;
+}
+
+.text-black:hover,
+.text-black:active,
+.text-black:focus {
+  color: $blue;
+  text-decoration: none;
+}
