@@ -1,53 +1,56 @@
 require 'rails_helper'
 
 describe 'layouts/application' do
-  describe 'head' do
-    describe 'title' do
-      context 'when is given' do
-        it 'renders given name' do
-          assign(:title, 'Foobar')
-          render
-          expect(rendered).to have_css('title', text: 'Foobar | Spectre', visible: false)
-        end
-      end
+  subject {
+    assign(:title, title)
+    stub_template 'shared/_company_header' => header
+    allow(view).to receive(:flash).and_return(flash)
+    render
+  }
 
-      context 'when is not given' do
-        it 'renders only Spectre' do
-          render
-          expect(rendered).to have_css('title', text: 'Spectre', visible: false)
-        end
-      end
+  let(:title) { 'Foobar' }
+  let(:header) { 'Company Header' }
+  let(:flash) { Hash.new }
+
+  describe 'title' do
+    context 'when is set' do
+      it { is_expected.to have_css('title', text: 'Foobar | Spectre', visible: false) }
     end
 
-    describe 'meta' do
-      subject do
-        render
-        rendered
-      end
-
-      it { is_expected.to have_css('meta[charset="utf-8"]', visible: false) }
-      it { is_expected.to have_css('meta[name="viewport"]', visible: false) }
-      it { is_expected.to have_css('meta[content="width=device-width, initial-scale=1, shrink-to-fit=no"]', visible: false) }
+    context 'when is not set' do
+      let(:title) { '' }
+      it { is_expected.to have_css('title', text: 'Spectre', visible: false) }
     end
   end
 
-  describe'body' do
-    describe 'nav' do
-      subject do
-        render
-        rendered
-      end
+  describe 'meta' do
+    it { is_expected.to have_css('meta[charset="utf-8"]', visible: false) }
+    it { is_expected.to have_css('meta[name="viewport"]', visible: false) }
+    it { is_expected.to have_css('meta[content="width=device-width, initial-scale=1, shrink-to-fit=no"]', visible: false) }
+  end
 
-      it { is_expected.to have_css('nav#app-nav') }
+  describe 'nav' do
+    it { is_expected.to have_css('nav#app-nav') }
+  end
+
+  describe 'flash' do
+    context 'when is set' do
+      let(:flash) { { danger: "danger alert" } }
+      it { is_expected.to have_css('.flash-message') }
     end
 
-    it 'renders flash messages' do
-      allow(view).to receive(:flash).and_return({ danger: "danger alert" })
-      render
-      expect(rendered).to have_css('.flash-message')
+    context 'when is not set' do
+      it { is_expected.not_to have_css('.flash-message') }
     end
+  end
 
-    it 'yields' do
+  describe 'tabs' do
+    it { is_expected.to have_css('nav#app-tabs') }
+  end
+
+  describe 'yield' do
+    it 'returns content' do
+      stub_template 'shared/_company_header' => header
       render html: 'rspec__foobar', layout: 'layouts/application'
       expect(rendered).to have_content('rspec__foobar')
     end
