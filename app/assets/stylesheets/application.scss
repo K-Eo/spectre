@@ -17,3 +17,9 @@ body {
 .rounded-3 {
   border-radius: 3px !important;
 }
+
+.dropdown-item:hover {
+  color: $white;
+  text-decoration: none;
+  background-color: $blue;
+}
