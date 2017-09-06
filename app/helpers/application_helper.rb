@@ -1,8 +1,22 @@
 module ApplicationHelper
 
-  def tab_item(name = '', url = '', controller = '')
+  def tab_item(name = '', **options)
+    url = options.fetch(:url, '')
+    controller = options.fetch(:controller, '')
+    icon = options.fetch(:icon, '')
+
+    active_class = active_link(url, controller)
+
+    css = ['nav-link',
+           'd-flex',
+           'align-items-center',
+           active_class].compact.join(' ')
+
     content_tag :li, class: 'nav-item' do
-      active_link(name, url, controller)
+      link_to url, class: css do
+        concat octicon icon, class: 'mr-1' if icon.present?
+        concat name
+      end
     end
   end
 
@@ -27,11 +41,14 @@ module ApplicationHelper
 
 private
 
-  def active_link(name, url, controller)
-    source = controller.blank? ? url : controller
-    css = 'nav-link'
-    css << ' active' if source.include?(controller_name)
-    link_to name, url, class: css
+  def active_link(url, controller)
+    url = controller if controller.present?
+
+    if url.include?(controller_name)
+      'active'
+    else
+      ''
+    end
   end
 
   def build_alert(content, type, col)

@@ -2,5 +2,11 @@ nav.container id="app-tabs"
   .row
     .col-12
       ul.nav.nav-tabs
-        = tab_item('Resumen', dashboard_path, 'dashboards')
-        = tab_item('Trabajadores', workers_path)
+        = tab_item 'Resumen',
+                   url: dashboard_path,
+                   controller: 'dashboards',
+                   icon: 'info'
+
+        = tab_item 'Trabajadores',
+                   url: workers_path,
+                   icon: 'organization'
