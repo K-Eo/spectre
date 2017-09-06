@@ -1,8 +1,6 @@
+@import "variables";
 @import "bootstrap";
-
-body {
-  overflow-y: scroll;
-}
+@import "default";
 
 .input-group {
   padding-bottom: 1em;
@@ -34,7 +32,6 @@ body {
   color: $blue;
   text-decoration: none;
 }
-
 
 .octicon {
   fill: currentColor;

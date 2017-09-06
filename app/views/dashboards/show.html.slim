@@ -1,6 +1,10 @@
 .row.justify-content-center
-  .col-4
-    .card.text-center.my-4
+  .col-6
+    .card.text-center.my-10.bg-light
       .card-body
-        h4.card-title Resumen
-        p.card-text En esta sección se muestran las alertas emitidas por los trabajadores.
+        = octicon 'info', class: 'text-muted mb-2', width: 30
+        h5.card-title Aún no hay información de alertas
+        p.card-text
+          ' Registre un nuevo usuario y active la opción
+          strong> centinela
+          ' para que pueda emitir alertas desde su teléfono.
