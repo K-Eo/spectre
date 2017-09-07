@@ -1,0 +1,10 @@
+li.list-group-item.d-flex
+  div.d-flex.align-items-center
+    = octicon 'person', class: 'mr-3'
+
+  div
+    h6.mt-0.mb-0
+      = link_to (worker.name.present? ? worker.name : "Worker #{worker.id}"), profile_worker_path(worker), class: 'text-black'
+    p.mb-0
+      ' #{worker.email}
+      span.text-muted • joined #{timeago_for(worker)}

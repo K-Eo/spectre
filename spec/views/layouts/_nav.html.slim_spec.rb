@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 describe 'layouts/_nav' do
-  subject { rendered }
-
-  before do
+  subject {
+    allow(view).to receive(:current_user).and_return(user)
     render
-  end
+  }
+
+  let(:user) { build_stubbed(:user) }
 
   describe 'wrapper' do
     it { is_expected.to have_css('nav.navbar.navbar-expand-md.navbar-dark.bg-dark') }
@@ -13,16 +14,17 @@ describe 'layouts/_nav' do
   end
 
   describe 'brand link' do
-    context 'when user logged out' do
-      it 'renders link to root path' do
-        allow(view).to receive(:user_signed_in?).and_return(false)
-        render
-        expect(rendered).to have_link('Spectre', href: '/', class: 'navbar-brand')
-      end
+    context 'when logged in' do
+      it { is_expected.to have_link('Spectre', href: '/dashboard', class: 'navbar-brand') }
+    end
+
+    context 'when logged out' do
+      let(:user) { GuestUser.new }
+      it { is_expected.to have_link('Spectre', href: '/', class: 'navbar-brand') }
     end
   end
 
   describe 'user links' do
-    it { is_expected.to have_css('div#user-links') }
+    it { is_expected.to have_css('ul#user-links') }
   end
 end

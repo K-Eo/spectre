@@ -1,8 +1,40 @@
 module ApplicationHelper
 
-  def tab_item(name = '', url = '')
+  def gravatar(object, args = {})
+    options = Hash.new
+
+    options[:d] = args[:d] || 'retro'
+    options[:s] = args[:s] || 80
+
+    image_class = args[:class] || ''
+
+    hash = Digest::MD5.hexdigest(object.email)
+
+    image_tag "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}",
+              class: image_class,
+              width: options[:s],
+              height: options[:s]
+  end
+
+  def tab_item(name = '', options = {})
+    raise "Can't create tab item" if name.blank? || options.blank?
+
+    url = options.fetch(:url, '')
+    controller = options.fetch(:controller, '')
+    icon = options.fetch(:icon, '')
+
+    active_class = active_link(url, controller)
+
+    css = ['nav-link',
+           'd-flex',
+           'align-items-center',
+           active_class].compact.join(' ')
+
     content_tag :li, class: 'nav-item' do
-      active_link(name, url)
+      link_to url, class: css do
+        concat octicon icon, class: 'mr-1' if icon.present?
+        concat name
+      end
     end
   end
 
@@ -27,10 +59,14 @@ module ApplicationHelper
 
 private
 
-  def active_link(name, url)
-    css = 'nav-link'
-    css << ' active' if url.include?(controller_name)
-    link_to name, url, class: css
+  def active_link(url, controller)
+    url = controller if controller.present?
+
+    if url.include?(controller_name)
+      'active'
+    else
+      ''
+    end
   end
 
   def build_alert(content, type, col)

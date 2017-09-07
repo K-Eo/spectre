@@ -2,28 +2,26 @@ require 'rails_helper'
 
 describe ApplicationHelper do
   describe '#tab_item' do
-    context 'when has no arguments' do
-      subject do
-        helper.tab_item
-      end
+    subject { helper.tab_item(name, options) }
 
-      it { is_expected.to have_css('li.nav-item') }
-      it { is_expected.to have_link('', class: 'nav-link', href: '') }
+    let(:name) { nil }
+    let(:options) { nil }
+
+    context 'when has no arguments' do
+      it { expect { subject }.to raise_error("Can't create tab item") }
     end
 
     context 'when has arguments' do
-      subject do
-        helper.tab_item('Foobar', '/foobar')
-      end
+      let(:name) { 'Foobar' }
+      let(:options) { { url: '/foobar' } }
 
       it { is_expected.to have_css('li.nav-item') }
       it { is_expected.to have_link('Foobar', class: 'nav-link', href: '/foobar') }
     end
 
     context 'when controller name not includes url' do
-      subject do
-        helper.tab_item('Test', '/')
-      end
+      let(:name) { 'Test' }
+      let(:options) { { url: '/' } }
 
       it { is_expected.to have_css('li.nav-item') }
       it { is_expected.to have_link('Test', class: 'nav-link', href: '/') }
@@ -31,13 +29,12 @@ describe ApplicationHelper do
     end
 
     context 'when controller name includes url' do
-      subject do
-        helper.tab_item('Test', '/test')
-      end
+      let(:name) { 'Test' }
+      let(:options) { { url: '/test' } }
 
       it { is_expected.to have_css('li.nav-item') }
-      it { is_expected.to have_link('Test', class: 'nav-link active', href: '/test') }
-      it { is_expected.to have_css('.active') }
+      it { is_expected.to have_link('Test', href: '/test') }
+      it { is_expected.to have_css('.nav-link.active') }
     end
   end
 

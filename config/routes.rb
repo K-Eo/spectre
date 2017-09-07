@@ -5,5 +5,15 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
+  resources :workers, except: [:show, :edit, :update, :new] do
+    member do
+      get 'profile'
+      put 'update_profile'
+      get 'settings'
+      get 'account'
+      put 'update_account'
+    end
+  end
+
   root 'pages#index'
 end

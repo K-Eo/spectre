@@ -1,1 +1,65 @@
+@import "variables";
 @import "bootstrap";
+@import "default";
+
+.input-group {
+  padding-bottom: 1em;
+}
+
+.input-group .invalid-feedback {
+  position: absolute;
+  left: 0;
+  top: 2.5em;
+}
+
+.rounded-3 {
+  border-radius: 3px !important;
+}
+
+.dropdown-item:hover {
+  color: $white;
+  text-decoration: none;
+  background-color: $blue;
+}
+
+.text-black {
+  color: $gray-800;
+}
+
+.text-black:hover,
+.text-black:active,
+.text-black:focus {
+  color: $blue;
+  text-decoration: none;
+}
+
+.octicon {
+  fill: currentColor;
+}
+
+.nav-tabs {
+  .nav-link {
+    color: $gray-600;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    color: $gray-700;
+    border-color: transparent;
+
+    .octicon {
+      color: $gray-600;
+    }
+
+  }
+
+  .nav-link.active:hover {
+    color: $gray-700;
+    border-color: $nav-tabs-border-color $nav-tabs-border-color transparent;
+
+    .octicon {
+      color: $gray-700;
+    }
+
+  }
+}

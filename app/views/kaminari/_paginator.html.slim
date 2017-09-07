@@ -1,6 +1,6 @@
 = paginator.render do
   nav
-    ul.pagination.justify-content-center
+    ul.pagination.justify-content-center.mb-0.mt-4
       == first_page_tag unless current_page.first?
       == prev_page_tag unless current_page.first?
       - each_page do |page|

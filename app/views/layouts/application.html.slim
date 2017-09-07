@@ -17,5 +17,11 @@ html
 
     = flash_message
 
-    .container
+    = render 'shared/company_header'
+
+    = render 'layouts/tabs'
+
+    .container.mt-4
       == yield
+
+    = render 'shared/footer'
