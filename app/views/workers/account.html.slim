@@ -1,3 +1,27 @@
 .row
   .col-3
     = render 'workers/menu'
+
+  .col-9
+    h4.font-weight-normal Cuenta
+    hr.mt-0
+
+    = form_for(@worker, url: update_account_worker_path) do |f|
+      .form-group
+        = f.label :email, 'Correo electrónico'
+        = f.text_field :email, class: 'form-control w-50'
+
+      = f.submit 'Actualizar cuenta', class: 'btn btn-success'
+
+    h4.font-weight-normal.mt-5 Eliminar cuenta
+    hr.mt-0
+
+    p
+      ' Una vez que se elimina el trabajador, todos sus datos asociados también son removidos
+      ' y no hay forma de recuperarlos. Por favor, tenga precaución.
+
+    = link_to 'Eliminar trabajador',
+              worker_path(@worker),
+              method: :delete,
+              data: { confirm: '¿Eliminar?' },
+              class: 'btn btn-danger'

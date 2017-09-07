@@ -6,9 +6,13 @@ Rails.application.routes.draw do
 
   resource :dashboard
   resources :workers, except: [:show, :edit, :update, :new] do
-    get 'profile', on: :member
-    get 'settings', on: :member
-    get 'account', on: :member
+    member do
+      get 'profile'
+      put 'update_profile'
+      get 'settings'
+      get 'account'
+      put 'update_account'
+    end
   end
 
   root 'pages#index'

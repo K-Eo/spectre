@@ -2,20 +2,30 @@
   .col-3
     = render 'workers/menu'
 
-  .col-3
-    = gravatar @worker, class: 'rounded-3 w-100', s: 255
+  .col-9
+    .row
+      .col-12
+        h4.font-weight-normal Perfil
+        hr.mt-0
 
-    div.my-3
-      h3 = @worker.name
-      p.d-flex.align-items-center
-        = octicon 'mail', class: 'mr-2 text-muted'
-        = @worker.email
+      .col-8
+        = form_for(@worker, url: update_profile_worker_path) do |f|
+          .form-group
+            = f.label :first_name, 'Nombre'
+            = f.text_field :first_name, class: 'form-control'
 
-    hr
+          .form-group
+            = f.label :last_name, 'Apellidos'
+            = f.text_field :last_name, class: 'form-control'
 
-    div.my-3
-      = link_to 'Eliminar trabajador',
-                worker_path(@worker),
-                method: :delete,
-                data: { confirm: '¿Eliminar?' },
-                class: 'btn btn-outline-danger btn-block'
+          = f.submit 'Actualizar perfil', class: 'btn btn-success'
+
+      .col-4
+        p.mb-2 Imagen de perfil
+        = gravatar @worker, class: 'rounded-3 w-100', s: 255
+
+        div.my-3
+          = link_to 'Cambiar imagen',
+                    'http://es.gravatar.com/emails/',
+                    class: 'btn btn-outline-secondary btn-block',
+                    target: '_blank'
