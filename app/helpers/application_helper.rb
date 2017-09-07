@@ -11,7 +11,9 @@ module ApplicationHelper
     hash = Digest::MD5.hexdigest(object.email)
 
     image_tag "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}",
-              class: image_class
+              class: image_class,
+              width: options[:s],
+              height: options[:s]
   end
 
   def tab_item(name = '', **options)
