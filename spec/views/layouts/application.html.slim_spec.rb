@@ -4,6 +4,7 @@ describe 'layouts/application' do
   subject {
     assign(:title, title)
     stub_template 'shared/_company_header' => header
+    stub_template 'shared/_user_links' => 'user links'
     allow(view).to receive(:flash).and_return(flash)
     render
   }
@@ -51,6 +52,7 @@ describe 'layouts/application' do
   describe 'yield' do
     it 'returns content' do
       stub_template 'shared/_company_header' => header
+      stub_template 'shared/_user_links' => 'user links'
       render html: 'rspec__foobar', layout: 'layouts/application'
       expect(rendered).to have_content('rspec__foobar')
     end
