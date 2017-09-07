@@ -16,7 +16,9 @@ module ApplicationHelper
               height: options[:s]
   end
 
-  def tab_item(name = '', **options)
+  def tab_item(name = '', options = {})
+    raise "Can't create tab item" if name.blank? || options.blank?
+
     url = options.fetch(:url, '')
     controller = options.fetch(:controller, '')
     icon = options.fetch(:icon, '')
