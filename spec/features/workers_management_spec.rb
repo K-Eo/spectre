@@ -12,7 +12,7 @@ RSpec.feature "WorkersManagement", type: :feature do
     expect(page).to have_current_path(dashboard_path)
     visit workers_path
     fill_in 'worker_email', with: 'foo@bar.com'
-    click_button 'Create Worker'
+    click_button 'Agregar trabajador'
     expect(page).to have_current_path(workers_path)
     expect(page).to have_content(/Email sent to/)
     expect(last_email.to).to eq(['foo@bar.com'])
