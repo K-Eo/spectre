@@ -1,5 +1,6 @@
 class WorkersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_worker, only: [:profile, :account, :settings, :destroy]
 
   def index
     @worker_form = WorkerForm.new
@@ -26,12 +27,16 @@ class WorkersController < ApplicationController
     end
   end
 
-  def show
-    @worker = User.find(params[:id])
+  def profile
+  end
+
+  def account
+  end
+
+  def settings
   end
 
   def destroy
-    @worker = User.find(params[:id])
     @worker.destroy
     redirect_to workers_path
   end
@@ -40,6 +45,10 @@ private
 
   def worker_params
     params.require(:worker).permit(:email)
+  end
+
+  def set_worker
+    @worker = User.find(params[:id])
   end
 
 end
