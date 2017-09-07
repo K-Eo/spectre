@@ -4,11 +4,15 @@
 
     div.my-3
       h3 = @worker.name
-      p = @worker.email
+      p.d-flex.align-items-center
+        = octicon 'mail', class: 'mr-2 text-muted'
+        = @worker.email
 
     hr
 
     div.my-3
       = link_to 'Eliminar trabajador',
                 worker_path(@worker),
-                class: 'btn btn-outline-secondary btn-block'
+                method: :delete,
+                data: { confirm: '¿Eliminar?' },
+                class: 'btn btn-outline-danger btn-block'
