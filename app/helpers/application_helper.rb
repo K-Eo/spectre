@@ -1,5 +1,19 @@
 module ApplicationHelper
 
+  def gravatar(object, args = {})
+    options = Hash.new
+
+    options[:d] = args[:d] || 'retro'
+    options[:s] = args[:s] || 80
+
+    image_class = args[:class] || ''
+
+    hash = Digest::MD5.hexdigest(object.email)
+
+    image_tag "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}",
+              class: image_class
+  end
+
   def tab_item(name = '', **options)
     url = options.fetch(:url, '')
     controller = options.fetch(:controller, '')
