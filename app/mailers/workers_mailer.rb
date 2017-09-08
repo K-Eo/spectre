@@ -5,9 +5,9 @@ class WorkersMailer < ApplicationMailer
   #
   #   en.workers_mailer.credentials.subject
   #
-  def credentials(worker)
-    @email = worker.email
-    @password = worker.password
+  def credentials(email, password)
+    @email = email
+    @password = password
 
     mail to: worker.email
   end
