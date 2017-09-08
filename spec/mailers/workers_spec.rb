@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe WorkersMailer, type: :mailer do
   describe "credentials" do
     let(:worker) { WorkerForm.new(email: 'foo@mail.com') }
-    let(:mail) { WorkersMailer.credentials(worker) }
+    let(:mail) { WorkersMailer.credentials(worker.email, worker.password) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Credentials")
