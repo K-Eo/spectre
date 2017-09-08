@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   acts_as_tenant :company
 
+  has_secure_token :access_token
+
   def name
     [self.first_name, self.last_name].compact.join(' ')
   end
