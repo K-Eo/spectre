@@ -33,7 +33,7 @@ class WorkerForm
   end
 
   def send_credentials
-    WorkersMailer.credentials(self).deliver_now
+    WorkersMailer.credentials(self.email, self.password).deliver_later
   end
 
   def verify_unique_email

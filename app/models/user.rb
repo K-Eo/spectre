@@ -14,4 +14,8 @@ class User < ApplicationRecord
   def name
     [self.first_name, self.last_name].compact.join(' ')
   end
+
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 end
