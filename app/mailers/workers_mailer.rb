@@ -9,6 +9,6 @@ class WorkersMailer < ApplicationMailer
     @email = email
     @password = password
 
-    mail to: worker.email
+    mail to: email
   end
 end
