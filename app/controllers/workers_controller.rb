@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_worker, only: [:profile, :account, :settings, :destroy]
+  before_action :set_worker, only: [:profile, :update_profile, :account, :settings, :destroy]
 
   def index
     @worker_form = WorkerForm.new
@@ -28,6 +28,18 @@ class WorkersController < ApplicationController
   end
 
   def profile
+    @profile = ProfileForm.new(@worker)
+  end
+
+  def update_profile
+    @profile = ProfileForm.new(@worker)
+    if @profile.update(params)
+      flash.now[:success] = 'Perfil actualizado correctamente.'
+      render 'profile'
+    else
+      flash.now[:alert] = 'No se ha podido actualizar el perfil. Intente nuevamente.'
+      render 'profile'
+    end
   end
 
   def account

@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   resources :workers, except: [:show, :edit, :update, :new] do
     member do
       get 'profile'
-      put 'update_profile'
+      patch 'update_profile'
       get 'settings'
       get 'account'
-      put 'update_account'
+      patch 'update_account'
     end
   end
 
