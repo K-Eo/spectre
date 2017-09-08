@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   belongs_to :company
 
+  default_scope { order('created_at DESC') }
+
   acts_as_tenant :company
 
   def name

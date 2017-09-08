@@ -7,4 +7,4 @@ li.list-group-item.d-flex
       = link_to (worker.name.present? ? worker.name : "Worker #{worker.id}"), profile_worker_path(worker), class: 'text-black'
     p.mb-0
       ' #{worker.email}
-      span.text-muted • joined #{timeago_for(worker)}
+      span.text-muted • se unió #{timeago_for(worker)}
