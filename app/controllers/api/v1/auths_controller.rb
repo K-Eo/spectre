@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AuthsController < ActionController::Base
+    class AuthsController < ApiController
       before_action :authenticate, only: [:destroy]
 
       def create
@@ -22,19 +22,10 @@ module Api
       end
 
       def destroy
-        @user.access_token = nil
-        @user.save
+        current_user.access_token = nil
+        current_user.save
         head :ok
       end
-
-      private
-
-        def authenticate
-          authenticate_or_request_with_http_token do |token, options|
-            @user = User.find_by(access_token: token)
-            !@user.nil?
-          end
-        end
 
     end
   end
