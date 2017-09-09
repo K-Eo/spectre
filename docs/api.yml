@@ -1,0 +1,82 @@
+swagger: "2.0"
+
+info:
+  description: "Documentación para Spectre API V1"
+  version: "0.0.1"
+  title: "Spectre"
+  license:
+    name: "UNLICENSED"
+host: "spectre-55.herokuapps.com"
+basePath: "/api/v1"
+tags:
+- name: "auth"
+  description: "Autorización"
+- name: "user"
+  description: "Cuenta de usuario"
+schemes:
+- "https"
+securityDefinitions:
+  Token:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /auth:
+    post:
+      tags:
+      - "auth"
+      summary: "Inicio de sesión"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "email"
+        in: "formData"
+        description: "Correo electrónico del usuario"
+        required: true
+        type: string
+      - name: "password"
+        description: "Contraseña del usuario"
+        required: true
+        in: "formData"
+        type: string
+      responses:
+        200:
+          description: "Login exitoso."
+          schema:
+            $ref: "#/definitions/Auth"
+        400:
+          description: "No se incluye email o password. Email no existe. Password no es correcto."
+    delete:
+      tags:
+      - "auth"
+      security:
+        - Token: []
+      responses:
+        200:
+          description: "Logout exitoso."
+        401:
+          description: "Sin autorización"
+definitions:
+  Auth:
+    type: "object"
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      created_at:
+        type: "string"
+        format: "date-time"
+      access_token:
+        type: "string"
+      email:
+        type: "string"
+      company:
+        $ref: "#/definitions/Company"
+  Company:
+    type: "object"
+    properties:
+      name:
+        type: "string"
