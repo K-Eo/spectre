@@ -25,7 +25,7 @@ class ProfileForm
   end
 
   def update(params)
-    return false if params.nil?
+    return false if params.nil? || params[:profile].blank?
 
     user.assign_attributes(params.require(:profile).permit(:first_name, :last_name))
 
