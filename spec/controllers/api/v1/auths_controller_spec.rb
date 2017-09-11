@@ -17,6 +17,10 @@ describe Api::V1::AuthsController do
     context 'when params are valid' do
       it { is_expected.to have_http_status(:ok) }
       it { is_expected.to have_attributes(content_type: 'application/json') }
+
+      it "returns access token" do
+        expect(subject.body).to match(/"access_token":"[a-zA-Z0-9]*"/)
+      end
     end
 
     context 'when password is incorrect' do
