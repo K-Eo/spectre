@@ -60,4 +60,42 @@ describe Api::V1::UsersController do
       it { is_expected.to have_http_status(:unauthorized) }
     end
   end
+
+  describe 'PATCH update_password' do
+    let(:password) { 'qwerty' }
+    let(:password_confirmation) { 'qwerty' }
+    let(:current_password) { 'password' }
+    let(:params) { { user: { password: password,
+                             password_confirmation: password_confirmation,
+                             current_password: current_password } } }
+    let(:action) { patch :update_password, params: params, as: :json }
+
+    context 'when params are set' do
+      it { is_expected.to have_http_status(:ok) }
+    end
+
+    context 'when password is invalid' do
+      let(:password) { '' }
+
+      it { is_expected.to have_http_status(:unprocessable_entity) }
+    end
+
+    context 'when password confirmation is invalid' do
+      let(:password_confirmation) { '' }
+
+      it { is_expected.to have_http_status(:unprocessable_entity) }
+    end
+
+    context 'when current password is not set' do
+      let(:current_password) { '' }
+
+      it { is_expected.to have_http_status(:unprocessable_entity) }
+    end
+
+    context 'when current password is incorrect' do
+      let(:current_password) { 'foobar' }
+
+      it { is_expected.to have_http_status(:unprocessable_entity) }
+    end
+  end
 end

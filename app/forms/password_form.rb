@@ -5,9 +5,6 @@ class PasswordForm
   attr_accessor :password_confirmation
   attr_accessor :current_password
 
-  validates :password, length: { minimum: 6 },
-                       confirmation: true
-
   delegate :errors, to: :user_errors
 
   def initialize(user)
@@ -29,11 +26,7 @@ class PasswordForm
   def update(params)
     return false if params.nil? || params[:user].blank?
 
-    if user.update_with_password(user_params(params))
-      true
-    else
-      false
-    end
+    user.update_with_password(user_params(params))
   end
 
   def self.model_name
