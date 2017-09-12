@@ -33,7 +33,7 @@ describe Api::V1::AlertsController do
     context 'when params is not set' do
       let(:params) { {} }
 
-      it { is_expected.to have_http_status(:ok) }
+      it { is_expected.to have_http_status(:unprocessable_entity) }
     end
   end
 end
