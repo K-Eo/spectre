@@ -8,6 +8,7 @@ class AlertForm
   def initialize(user)
     @user = user
     @alert = @user.alerts.new
+    @alert.company_id = @user.company_id
   end
 
   def alert
