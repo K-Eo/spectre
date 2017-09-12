@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :user do
         patch 'update_password', on: :collection
       end
+      resources :alerts
     end
   end
 
