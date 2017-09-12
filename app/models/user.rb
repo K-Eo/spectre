@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :company
+  has_many :alerts
 
   default_scope { order('created_at DESC') }
 
