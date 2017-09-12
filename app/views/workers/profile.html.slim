@@ -9,7 +9,7 @@
         hr.mt-0
 
       .col-8
-        = form_for(@profile, url: update_profile_worker_path) do |f|
+        = form_for(@profile, url: profile_worker_path) do |f|
           .form-group
             = f.label :first_name, 'Nombre'
             = f.text_field :first_name, class: 'form-control'

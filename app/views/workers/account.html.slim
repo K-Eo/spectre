@@ -6,7 +6,7 @@
     h4.font-weight-normal Cuenta
     hr.mt-0
 
-    = form_for(@worker, url: update_account_worker_path) do |f|
+    = form_for(@worker, url: account_worker_path) do |f|
       .form-group
         = f.label :email, 'Correo electrónico'
         = f.text_field :email, class: 'form-control w-50'
