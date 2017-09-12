@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_worker, only: [:profile, :update_profile, :account, :settings, :destroy]
+  before_action :set_worker, only: [:profile, :update_profile, :update_geo, :account, :settings, :destroy]
 
   def index
     @worker_form = WorkerForm.new
@@ -42,10 +42,23 @@ class WorkersController < ApplicationController
     end
   end
 
+  def update_geo
+    @geo_form = GeoForm.new(@worker)
+
+    if @geo_form.update(params)
+      flash.now[:success] = 'Perfil actualizado correctamente.'
+    else
+      flash.now[:alert] = 'No se ha podido actualizar el perfil. Intente nuevamente.'
+    end
+
+    render 'settings'
+  end
+
   def account
   end
 
   def settings
+    @geo_form = GeoForm.new(@worker)
   end
 
   def destroy

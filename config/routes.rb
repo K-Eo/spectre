@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'settings'
       get 'account'
       patch 'update_account'
+      patch 'geo', to: 'workers#update_geo'
     end
   end
 
