@@ -10,6 +10,7 @@ class User < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   acts_as_tenant :company
+  acts_as_mappable
 
   has_secure_token :access_token
 
