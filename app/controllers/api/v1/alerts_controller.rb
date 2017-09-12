@@ -7,6 +7,10 @@ module Api
         render json: '', status: :ok
       end
 
+      def create
+        head :ok
+      end
+
     end
   end
 end
