@@ -48,7 +48,7 @@ gem 'acts_as_tenant'
 gem 'sidekiq'
 
 # Geolocalization
-gem 'geocoder'
+gem 'geokit-rails'
 
 group :development, :test do
   gem 'pry-byebug'
