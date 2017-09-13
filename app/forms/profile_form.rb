@@ -1,6 +1,4 @@
-class ProfileForm
-  include ActiveModel::Model
-
+class ProfileForm < ApplicationForm
   attr_accessor :first_name
   attr_accessor :last_name
 
@@ -11,18 +9,6 @@ class ProfileForm
                         format: { with: /\A[a-zA-Z\s]*\z/ }
 
   delegate :first_name, :last_name, to: :user
-
-  def user
-    @user
-  end
-
-  def initialize(user)
-    @user = user
-  end
-
-  def persisted?
-    @user.persisted?
-  end
 
   def update(params)
     return false if params.nil? || params[:profile].blank?

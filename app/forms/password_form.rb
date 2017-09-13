@@ -1,26 +1,12 @@
-class PasswordForm
-  include ActiveModel::Model
-
+class PasswordForm < ApplicationForm
   attr_accessor :password
   attr_accessor :password_confirmation
   attr_accessor :current_password
 
   delegate :errors, to: :user_errors
 
-  def initialize(user)
-    @user = user
-  end
-
   def user_errors
     user
-  end
-
-  def user
-    @user
-  end
-
-  def persisted?
-    user.persisted?
   end
 
   def update(params)

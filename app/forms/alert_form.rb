@@ -1,22 +1,16 @@
-class AlertForm
-  include ActiveModel::Model
-
+class AlertForm < ApplicationForm
   attr_accessor :text
 
   delegate :text, to: :alert
 
   def initialize(user)
-    @user = user
+    super(user)
     @alert = @user.alerts.new
     @alert.company_id = @user.company_id
   end
 
   def alert
     @alert
-  end
-
-  def user
-    @user
   end
 
   def update(params)

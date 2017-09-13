@@ -1,6 +1,4 @@
-class GeoForm
-  include ActiveModel::Model
-
+class GeoForm < ApplicationForm
   attr_accessor :lat
   attr_accessor :lng
 
@@ -8,18 +6,6 @@ class GeoForm
   validates :lng, numericality: true
 
   delegate :lat, :lng, to: :user
-
-  def initialize(user)
-    @user = user
-  end
-
-  def user
-    @user
-  end
-
-  def persisted?
-    user.persisted?
-  end
 
   def update(params)
     return false if params.nil? || params[:geo].blank?
