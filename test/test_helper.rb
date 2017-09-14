@@ -9,13 +9,26 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-module ApiHelper
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   def token_header(user)
     { 'Authorization': "Token token=\"#{user.access_token}\"" }
   end
-end
 
-class ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-  include ApiHelper
+  def login(user, password)
+    post new_user_session_path, params: { user: { email: user.email, password: password } }
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
+  end
+
+  def last_email
+    ActionMailer::Base.deliveries.last
+  end
+
+  def mailer_size
+    ActionMailer::Base.deliveries.size
+  end
+
 end
