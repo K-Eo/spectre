@@ -5,7 +5,7 @@ class AlertForm < ApplicationForm
 
   def initialize(user)
     super(user)
-    @alert = @user.alerts.new
+    @alert = @user.issued_alerts.new
     @alert.company_id = @user.company_id
   end
 

@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912214906) do
+ActiveRecord::Schema.define(version: 20170913222744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alert_events", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "alert_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alert_id"], name: "index_alert_events_on_alert_id"
+    t.index ["user_id"], name: "index_alert_events_on_user_id"
+  end
 
   create_table "alerts", force: :cascade do |t|
     t.string "text"
@@ -65,6 +74,8 @@ ActiveRecord::Schema.define(version: 20170912214906) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "alert_events", "alerts"
+  add_foreign_key "alert_events", "users"
   add_foreign_key "alerts", "companies"
   add_foreign_key "alerts", "users"
   add_foreign_key "users", "companies"
