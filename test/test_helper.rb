@@ -1,5 +1,6 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'devise'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -15,5 +16,6 @@ module ApiHelper
 end
 
 class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   include ApiHelper
 end
