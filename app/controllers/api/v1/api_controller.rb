@@ -1,6 +1,7 @@
 module Api
   module V1
     class ApiController < ActionController::Base
+      before_action :authenticate
 
       def current_user
         @user
