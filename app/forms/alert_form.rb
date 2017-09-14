@@ -33,6 +33,7 @@ private
     guards = User.within(1, units: :kms, origin: user).where.not(id: user.id)
     guards.each do |guard|
       guard.notify_alert(alert)
+      AlertNotificationJob.perform_later
     end
   end
 
