@@ -1,3 +1,18 @@
 .row
   .col-3
     = render 'workers/menu'
+
+  .col-9
+    h4.fond-weight-normal Geolocalización
+    hr.mt-0
+
+    = form_for(@geo_form, url: geo_worker_path) do |f|
+      .form-group
+        = f.label :lat, 'Latitud'
+        = f.text_field :lat, class: 'form-control w-50'
+
+      .form-group
+        = f.label :lng, 'Longitud'
+        = f.text_field :lng, class: 'form-control w-50'
+
+      = f.submit 'Guardar', class: 'btn btn-success'

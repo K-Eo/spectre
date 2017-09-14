@@ -5,13 +5,25 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  belongs_to :company
-
   default_scope { order('created_at DESC') }
 
+  acts_as_mappable
+
   acts_as_tenant :company
+  belongs_to :company
+
+  # As a company worker
+  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'user_id'
+
+  # As a company guard
+  has_many :alert_events
+  has_many :alert_notifications, through: :alert_events
 
   has_secure_token :access_token
+
+  def notify_alert(alert)
+    alert_notifications << alert
+  end
 
   def name
     [self.first_name, self.last_name].compact.join(' ')

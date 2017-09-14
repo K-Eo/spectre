@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resource :user do
         patch 'update_password', on: :collection
       end
+      resources :alerts
     end
   end
 
@@ -17,10 +18,11 @@ Rails.application.routes.draw do
   resources :workers, except: [:show, :edit, :update, :new] do
     member do
       get 'profile'
-      patch 'update_profile'
+      patch 'profile', to: 'workers#update_profile'
       get 'settings'
       get 'account'
-      patch 'update_account'
+      patch 'account', to: 'workers@update_account'
+      patch 'geo', to: 'workers#update_geo'
     end
   end
 
