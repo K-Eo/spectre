@@ -21,6 +21,10 @@ class User < ApplicationRecord
 
   has_secure_token :access_token
 
+  def notify_alert(alert)
+    alert_notifications << alert
+  end
+
   def name
     [self.first_name, self.last_name].compact.join(' ')
   end

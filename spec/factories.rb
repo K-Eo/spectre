@@ -5,6 +5,8 @@ FactoryGirl.define do
     last_name "bar"
     password "password"
     password_confirmation "password"
+    lat Faker::Address.latitude
+    lng Faker::Address.longitude
     confirmed_at Date.today
   end
 

@@ -20,6 +20,7 @@ class AlertForm < ApplicationForm
 
     if valid?
       alert.save!
+      notify_guards
       true
     else
       false
@@ -27,6 +28,13 @@ class AlertForm < ApplicationForm
   end
 
 private
+
+  def notify_guards
+    guards = User.within(1, units: :kms, origin: user).where.not(id: user.id)
+    guards.each do |guard|
+      guard.notify_alert(alert)
+    end
+  end
 
   def alert_params(params)
     params.require(:alert).permit(:text)
