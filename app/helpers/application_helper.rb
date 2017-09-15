@@ -19,16 +19,15 @@ module ApplicationHelper
   def tab_item(name = '', options = {})
     raise "Can't create tab item" if name.blank? || options.blank?
 
-    url = options.fetch(:url, '')
+    url = options.fetch(:url, '/')
     controller = options.fetch(:controller, '')
     icon = options.fetch(:icon, '')
 
     active_class = active_link(url, controller)
 
-    css = ['nav-link',
-           'd-flex',
-           'align-items-center',
-           active_class].compact.join(' ')
+
+    css = 'nav-link d-flex align-items-center'
+    css << active_class
 
     content_tag :li, class: 'nav-item' do
       link_to url, class: css do
@@ -63,7 +62,7 @@ private
     url = controller if controller.present?
 
     if url.include?(controller_name)
-      'active'
+      ' active'
     else
       ''
     end
