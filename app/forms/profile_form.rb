@@ -13,7 +13,10 @@ class ProfileForm < ApplicationForm
   def update(params)
     return false if params.nil? || params[:profile].blank?
 
-    user.assign_attributes(params.require(:profile).permit(:first_name, :last_name))
+    profile = params.require(:profile).permit(:first_name, :last_name)
+
+    user.first_name = profile[:first_name].squish
+    user.last_name = profile[:last_name].squish
 
     if valid?
       user.save!

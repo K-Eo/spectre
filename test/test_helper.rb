@@ -7,6 +7,23 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def make_params(options = {})
+    ActionController::Parameters.new(options)
+  end
+
+  def last_email
+    ActionMailer::Base.deliveries.last
+  end
+
+  def mailer_size
+    ActionMailer::Base.deliveries.size
+  end
+
+  def reset_emails
+    ActionMailer::Base.deliveries = []
+  end
+
 end
 
 class ActionDispatch::IntegrationTest
@@ -21,14 +38,6 @@ class ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
-  end
-
-  def last_email
-    ActionMailer::Base.deliveries.last
-  end
-
-  def mailer_size
-    ActionMailer::Base.deliveries.size
   end
 
 end

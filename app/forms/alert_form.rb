@@ -1,6 +1,7 @@
 class AlertForm < ApplicationForm
   attr_accessor :text
 
+  validates :text, length: { maximum: 255 }
   delegate :text, to: :alert
 
   def initialize(user)

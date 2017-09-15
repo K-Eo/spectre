@@ -44,7 +44,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "redirects to root if logged in" do
     sign_in users(:jo)
     create_user
-    assert_redirected_to root_path
+    assert_redirected_to dashboard_path
   end
 
   test "does not create user if logged in" do

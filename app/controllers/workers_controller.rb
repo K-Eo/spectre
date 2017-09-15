@@ -17,10 +17,11 @@ class WorkersController < ApplicationController
       return
     end
 
-    @worker_form = WorkerForm.new(worker_params)
+    @worker_form = WorkerForm.new
 
-    if @worker_form.submit
+    if @worker_form.submit(params)
       flash.now[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
+      @worker_form = WorkerForm.new
       render 'index', status: :created
     else
       render 'index', status: :unprocessable_entity
