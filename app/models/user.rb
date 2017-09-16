@@ -21,6 +21,8 @@ class User < ApplicationRecord
 
   has_secure_token :access_token
 
+  scope :workers, -> (current_user) { where.not(id: current_user.id) }
+
   def notify_alert(alert)
     alert_notifications << alert
   end

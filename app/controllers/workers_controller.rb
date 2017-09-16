@@ -4,11 +4,11 @@ class WorkersController < ApplicationController
 
   def index
     @worker_form = WorkerForm.new
-    @workers = User.page(params[:page])
+    @workers = User.workers(current_user).page(params[:page])
   end
 
   def create
-    @workers = User.page(params[:page])
+    @workers = User.workers(current_user).page(params[:page])
 
     if params[:worker].blank?
       @worker_form = WorkerForm.new
@@ -22,6 +22,7 @@ class WorkersController < ApplicationController
     if @worker_form.submit(params)
       flash.now[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
       @worker_form = WorkerForm.new
+      @workers.reload
       render 'index', status: :created
     else
       render 'index', status: :unprocessable_entity
