@@ -1,5 +1,25 @@
 module ApplicationHelper
 
+  def sidebar_link(options = {})
+    options.symbolize_keys
+
+    url         = options.delete(:url)
+    icon        = options.delete(:icon)
+    name        = options.delete(:name)
+    controller  = options.fetch(:controller, '')
+    method      = options.delete(:method)
+
+    active_target = if controller.present? then controller else url end
+
+    class_name = 'nav-link text-light d-flex align-items-center'
+    class_name << ' active' if active_target.include?(controller_name)
+
+    link_to url, class: class_name, method: method do
+      concat octicon(icon, class: 'mr-3', height: 15)
+      concat content_tag(:span, name)
+    end
+  end
+
   def gravatar(object, args = {})
     options = Hash.new
 
@@ -14,27 +34,6 @@ module ApplicationHelper
               class: image_class,
               width: options[:s],
               height: options[:s]
-  end
-
-  def tab_item(name = '', options = {})
-    raise "Can't create tab item" if name.blank? || options.blank?
-
-    url = options.fetch(:url, '/')
-    controller = options.fetch(:controller, '')
-    icon = options.fetch(:icon, '')
-
-    active_class = active_link(url, controller)
-
-
-    css = 'nav-link d-flex align-items-center'
-    css << active_class
-
-    content_tag :li, class: 'nav-item' do
-      link_to url, class: css do
-        concat octicon icon, class: 'mr-1' if icon.present?
-        concat name
-      end
-    end
   end
 
   def flash_message(col = nil)
@@ -57,16 +56,6 @@ module ApplicationHelper
   end
 
 private
-
-  def active_link(url, controller)
-    url = controller if controller.present?
-
-    if url.include?(controller_name)
-      ' active'
-    else
-      ''
-    end
-  end
 
   def build_alert(content, type, col)
     content = alert_content_wrapper(col) do

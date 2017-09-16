@@ -13,15 +13,40 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = render 'layouts/nav'
 
-    = flash_message
+    nav.sidebar.bg-dark
+      p.h5.text-light.font-weight-normal.my-4.ml-3.d-flex.align-items-center
+        = octicon 'eye', height: 32, class: 'mr-2'
+        span.pl-1.text-no-select Spectre
 
-    = render 'shared/company_header'
+      hr.bg-gray
 
-    = render 'layouts/tabs'
+      .nav.nav-pills.flex-column
+        = sidebar_link url: dashboard_path,
+                       icon: 'dashboard',
+                       name: 'Actividad',
+                       controller: 'dashboards'
 
-    .container.mt-4
-      == yield
+        = sidebar_link url: workers_path,
+                       icon: 'organization',
+                       name: 'Trabajadores'
 
-    = render 'shared/footer'
+      hr.bg-gray
+
+      .nav.nav-pills.flex-column
+        = sidebar_link url: workers_path,
+                       icon: 'tools',
+                       name: 'Opciones'
+
+        = sidebar_link url: workers_path,
+                       icon: 'question',
+                       name: 'Ayuda'
+
+        = sidebar_link url: destroy_user_session_path,
+                       icon: 'sign-out',
+                       name: 'Salir',
+                       method: :delete
+
+    .main.sidebar-offset
+      .container-fluid
+        == yield

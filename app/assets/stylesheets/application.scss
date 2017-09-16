@@ -2,6 +2,36 @@
 @import "bootstrap";
 @import "default";
 
+.sidebar {
+  position: fixed;
+  width: 220px;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  .nav-pills .nav-link {
+    border-radius: 0;
+  }
+
+  .nav-pills .nav-link.active, .show > .nav-pills .nav-link {
+    background-color: #50545a;
+  }
+}
+
+.text-no-select {
+  user-select: none;
+  cursor: default;
+}
+
+.sidebar-offset {
+  margin-left: 220px !important;
+}
+
+.bg-gray {
+  background-color: $gray-700;
+}
+
 .input-group {
   padding-bottom: 1em;
 }
