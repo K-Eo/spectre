@@ -58,13 +58,6 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'dotenv-rails'
-  gem 'faker', '~> 1.8', '>= 1.8.4'
-  gem 'rspec-rails', '~> 3.6'
-  gem 'guard-rspec'
-  gem 'rails-controller-testing'
-  gem 'database_cleaner'
-  gem 'factory_girl_rails'
-  gem "rspec_junit_formatter"
 end
 
 group :development do
