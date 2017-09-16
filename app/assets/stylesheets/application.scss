@@ -17,6 +17,13 @@
   .nav-pills .nav-link.active, .show > .nav-pills .nav-link {
     background-color: #50545a;
   }
+
+  .divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid $gray-700;
+  }
 }
 
 .app-nav {
