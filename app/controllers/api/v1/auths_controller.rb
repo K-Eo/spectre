@@ -1,7 +1,7 @@
 module Api
   module V1
     class AuthsController < ApiController
-      before_action :authenticate, only: [:destroy]
+      skip_before_action :authenticate, only: [:create]
 
       def create
         if params[:email].blank? || params[:password].blank?
@@ -15,7 +15,7 @@ module Api
           head :bad_request
         elsif @user.valid_password?(params[:password])
           @user.regenerate_access_token
-          render
+          render status: :created
         else
           head :bad_request
         end

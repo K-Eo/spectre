@@ -13,17 +13,18 @@ class WorkersController < ApplicationController
     if params[:worker].blank?
       @worker_form = WorkerForm.new
       flash.now[:alert] = 'Email required'
-      render 'index'
+      render 'index', status: :bad_request
       return
     end
 
-    @worker_form = WorkerForm.new(worker_params)
+    @worker_form = WorkerForm.new
 
-    if @worker_form.submit
+    if @worker_form.submit(params)
       flash.now[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
-      render 'index'
+      @worker_form = WorkerForm.new
+      render 'index', status: :created
     else
-      render 'index'
+      render 'index', status: :unprocessable_entity
     end
   end
 

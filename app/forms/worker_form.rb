@@ -1,30 +1,34 @@
-class WorkerForm
-  include ActiveModel::Model
-
+class WorkerForm < ApplicationForm
   attr_accessor :email
 
   validate :verify_unique_email
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
 
-  delegate :email, to: :user
+  delegate :email, to: :worker
 
-  def initialize(params = {})
-    user.email = params.fetch(:email, '')
+  def initialize
+    super(nil)
   end
 
-  def user
-    @user ||= User.new
+  def persisted?
+    worker.persisted?
+  end
+
+  def worker
+    @worker ||= User.new
   end
 
   def password
     @password ||= Devise.friendly_token.first(8)
   end
 
-  def submit
-    user.password = password
+  def submit(params)
+    worker.email = params.require(:worker).permit(:email)[:email]
+    worker.password = password
+
     if valid?
-      user.skip_confirmation!
-      user.save!
+      worker.skip_confirmation!
+      worker.save!
       send_credentials
       true
     else
@@ -33,7 +37,7 @@ class WorkerForm
   end
 
   def send_credentials
-    WorkersMailer.credentials(self.email, self.password).deliver_later
+    WorkersMailer.credentials(worker.email, password).deliver_later
   end
 
   def verify_unique_email
