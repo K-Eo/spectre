@@ -11,6 +11,7 @@ class WorkersMailerTest < ActionMailer::TestCase
 
     assert_equal ['foo@bar.com'], email.to
     assert_equal ['spectre@support.com'], email.from
+    assert_equal 'Credenciales para cuenta de Spectre', email.subject
 
     assert_match /foo@bar.com/, email.text_part.body.to_s
     assert_match /foo@bar.com/, email.html_part.body.to_s

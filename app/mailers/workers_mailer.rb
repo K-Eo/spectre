@@ -9,6 +9,6 @@ class WorkersMailer < ApplicationMailer
     @email = email
     @password = password
 
-    mail to: email
+    mail to: email, subject: 'Credenciales para cuenta de Spectre'
   end
 end
