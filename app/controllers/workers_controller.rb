@@ -3,8 +3,11 @@ class WorkersController < ApplicationController
   before_action :set_worker, only: [:profile, :update_profile, :update_geo, :account, :settings, :destroy]
 
   def index
-    @worker_form = WorkerForm.new
     @workers = User.workers(current_user).page(params[:page])
+  end
+
+  def new
+    @worker_form = WorkerForm.new
   end
 
   def create
