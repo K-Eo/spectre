@@ -2,14 +2,16 @@
   .col-10.mb-3
     .d-flex.flex-row
       = form_for :search, html: { class: 'w-100 mr-3' } do |f|
-        = f.text_field :keywork, class: 'form-control', placeholder: 'Buscar'
+        = f.text_field :keywork, class: 'form-control', placeholder: 'Buscar por nombre o correo electrónico'
 
       = link_to 'Nuevo Trabajador',
                 new_worker_path,
                 class: 'btn btn-success'
   .col-10.mb-3
     nav.nav.nav-pills
-      = link_to 'Todos', workers_path, class: 'nav-link active'
+      = link_to workers_path, class: 'nav-link active' do
+        | Todos
+        span.ml-3.badge.badge-light = @workers.count
       a.nav-link href="#" Administradores
 
   .col-10
