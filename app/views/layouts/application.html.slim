@@ -14,42 +14,7 @@ html
 
   body
 
-    nav.sidebar.bg-dark.d-flex.flex-column
-      p.h5.text-light.font-weight-normal.my-4.ml-3.d-flex.align-items-center
-        = octicon 'eye', height: 32, class: 'mr-2'
-        span.pl-1.text-no-select Spectre
-
-      div class="divider"
-
-      .nav.nav-pills.flex-column
-        = sidebar_link url: dashboard_path,
-                       icon: 'dashboard',
-                       name: 'Actividad',
-                       controller: 'dashboards'
-
-        = sidebar_link url: workers_path,
-                       icon: 'organization',
-                       name: 'Trabajadores'
-
-      div class="divider"
-
-      .nav.nav-pills.flex-column
-        = sidebar_link url: root_path,
-                       icon: 'tools',
-                       name: 'Opciones'
-
-        = sidebar_link url: root_path,
-                       icon: 'question',
-                       name: 'Ayuda'
-
-        = sidebar_link url: destroy_user_session_path,
-                       icon: 'sign-out',
-                       name: 'Salir',
-                       method: :delete
-
-      = link_to root_path, class: 'user-avatar px-3 py-3 d-flex align-items-center mt-auto' do
-        = gravatar current_user, class: 'mr-3 rounded-3', s: 28
-        span.text-light = current_user.name
+    = render 'shared/sidebar'
 
     .main.sidebar-offset
       = render 'layouts/nav'
