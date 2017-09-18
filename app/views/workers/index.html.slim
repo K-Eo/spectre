@@ -7,6 +7,11 @@
       = link_to 'Nuevo Trabajador',
                 new_worker_path,
                 class: 'btn btn-success'
+  .col-10.mb-3
+    nav.nav.nav-pills
+      = link_to 'Todos', workers_path, class: 'nav-link active'
+      a.nav-link href="#" Administradores
+
   .col-10
     ul.list-group
       = render partial: 'worker', collection: @workers
