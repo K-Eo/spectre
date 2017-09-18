@@ -1,5 +1,13 @@
 module ApplicationHelper
 
+  def form_feedback_icon(icon = 'check', badge = 'success')
+    content_tag :span,
+                class: "badge badge-pill badge-#{badge} ml-3 align-middle",
+                id: 'form_feedback_icon' do
+      octicon icon, height: 18
+    end
+  end
+
   def sidebar_link(options = {})
     options.symbolize_keys
 

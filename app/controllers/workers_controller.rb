@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_worker, only: [:profile, :show, :update_profile, :update_geo, :account, :settings, :destroy]
+  before_action :set_worker, only: [:profile, :show, :profile, :geo, :account, :settings, :destroy]
 
   def index
     @workers = User.workers(current_user).page(params[:page])
@@ -11,64 +11,53 @@ class WorkersController < ApplicationController
   end
 
   def create
-    @workers = User.workers(current_user).page(params[:page])
-
     if params[:worker].blank?
       @worker_form = WorkerForm.new
       flash.now[:alert] = 'Email required'
-      render 'index', status: :bad_request
+      render 'new', status: :bad_request
       return
     end
 
     @worker_form = WorkerForm.new
 
     if @worker_form.submit(params)
-      flash.now[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
-      @worker_form = WorkerForm.new
-      @workers.reload
-      render 'index', status: :created
+      flash[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
+      redirect_to worker_path(@worker_form.worker)
     else
-      render 'index', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity
     end
   end
 
   def show
     @profile = ProfileForm.new(@worker)
-    @geo_form = GeoForm.new(@worker)
+    @geo = GeoForm.new(@worker)
   end
 
   def profile
     @profile = ProfileForm.new(@worker)
-  end
 
-  def update_profile
-    @profile = ProfileForm.new(@worker)
-    if @profile.update(params)
-      flash.now[:success] = 'Perfil actualizado correctamente.'
-      render 'profile'
-    else
-      flash.now[:alert] = 'No se ha podido actualizar el perfil. Intente nuevamente.'
-      render 'profile'
+    respond_to do |format|
+      if @profile.update(params)
+        format.js
+      else
+        format.js
+      end
     end
   end
 
-  def update_geo
-    @geo_form = GeoForm.new(@worker)
+  def geo
+    @geo = GeoForm.new(@worker)
 
-    if @geo_form.update(params)
-      flash.now[:success] = 'Perfil actualizado correctamente.'
-    else
-      flash.now[:alert] = 'No se ha podido actualizar el perfil. Intente nuevamente.'
+    respond_to do |format|
+      if @geo.update(params)
+        format.js
+      else
+        format.js
+      end
     end
-
-    render 'settings'
   end
 
   def account
-  end
-
-  def settings
-    @geo_form = GeoForm.new(@worker)
   end
 
   def destroy
