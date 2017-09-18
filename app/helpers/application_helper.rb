@@ -44,10 +44,10 @@ module ApplicationHelper
               height: options[:s]
   end
 
-  def flash_message(col = nil)
+  def flash_message(options = {})
     html = ""
     flash.each do |key, value|
-      html << build_alert(value, key, col)
+      html << build_alert(value, key, options)
     end
     html.html_safe
   end
@@ -65,37 +65,26 @@ module ApplicationHelper
 
 private
 
-  def build_alert(content, type, col)
-    content = alert_content_wrapper(col) do
-      <<~HTML
-        <button class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        #{content}
-      HTML
-    end
+  def build_alert(content, type, options)
+    options.symbolize_keys
+
+    col = options.fetch(:col, 'col-12')
+    container = options.fetch(:container, 'container-fluid')
 
     <<~HTML
-      <div class="flash-message alert alert-#{flash_type(type)} alert-dismissable fade show my-0" role="alert">
-        <div class="container">
-          #{content}
+      <div class="flash-message alert alert-#{flash_type(type)} alert-dismissable fade show my-0 px-0" role="alert">
+        <div class="#{container}">
+          <div class="row justify-content-center">
+            <div class="#{col}">
+              <button class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              #{content}
+            </div>
+          </div>
         </div>
       </div>
     HTML
-  end
-
-  def alert_content_wrapper(col)
-    if col.nil?
-      yield
-    else
-      html = <<~HTML
-        <div class="row justify-content-center">
-          <div class="#{col}">
-            #{yield}
-          </div>
-        </div>
-      HTML
-    end
   end
 
   def flash_type(type)

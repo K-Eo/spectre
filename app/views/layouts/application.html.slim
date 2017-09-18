@@ -18,6 +18,8 @@ html
 
     .main.sidebar-offset
       = render 'layouts/nav'
+      .flash-content
+        = flash_message(col: 'col-10')
       .container-fluid
         .row.justify-content-center
           == yield

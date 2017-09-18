@@ -4,18 +4,18 @@ class ApplicationHelperTest < ActionView::TestCase
 
   class FlashHelperTest < ActionView::TestCase
 
-    def nuke(messages = {}, col = nil)
+    def nuke(messages = {}, options = {})
       messages.each do |key, value|
         flash[key] = value
       end
-      @output_buffer = flash_message(col)
+      @output_buffer = flash_message(options)
     end
 
     test "returns message" do
       nuke({ notice: 'foobar' })
 
       assert_select '.flash-message.alert.alert-success.alert-dismissable.fade.show.my-0' do
-        assert_select '.container' do |element|
+        assert_select '.container-fluid' do |element|
           assert_match /foobar/, element.to_s
         end
       end
@@ -58,10 +58,18 @@ class ApplicationHelperTest < ActionView::TestCase
     end
 
     test "returns alert with col wrapper" do
-      nuke({ notice: 'foobar' }, 'col-10')
+      nuke({ notice: 'foobar' }, { col: 'col-10' })
 
       assert_select '.alert-success' do
         assert_select '.col-10'
+      end
+    end
+
+    test "returns alert with container wrapper" do
+      nuke({ notice: 'foobar' }, { container: 'foo-container' })
+
+      assert_select '.alert-success' do
+        assert_select '.foo-container'
       end
     end
 
