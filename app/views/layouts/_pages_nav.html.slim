@@ -1,5 +1,7 @@
-nav class="app-nav mb-3 navbar navbar-expand-md navbar-light" id="app-nav"
-    = link_to company.name, dashboard_path, class: 'navbar-brand'
+nav class="navbar navbar-expand-md navbar-dark bg-dark" id="app-nav"
+  .container
+    = link_to 'Spectre', root_path, class: 'navbar-brand'
+
 
     button [class="navbar-toggler"
             type="button"
@@ -11,3 +13,4 @@ nav class="app-nav mb-3 navbar navbar-expand-md navbar-light" id="app-nav"
       span class="navbar-toggler-icon"
 
     div class="collapse navbar-collapse" id="nav-content"
+      = render 'shared/auth_links'

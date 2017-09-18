@@ -10,9 +10,9 @@ html
 
   body
 
-    = render 'layouts/nav'
+    = render 'layouts/pages_nav'
 
-    = flash_message
+    = flash_message(container: 'container')
 
     - if controller_name == 'pages' && action_name == 'index'
       = render 'layouts/marketing'

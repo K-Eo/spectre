@@ -1,0 +1,49 @@
+.col-10
+  .row.mb-5
+    .col-12
+      h5 Perfil
+      hr.mt-0
+
+    .col-10.mt-2
+      = render 'workers/profile_form'
+
+    .col-2
+      p.mb-2 Imagen de perfil
+      = gravatar @worker, class: 'rounded-3 w-100', s: 204
+
+      div.mt-3
+        = link_to 'Cambiar imagen',
+                  'http://es.gravatar.com/emails/',
+                  class: 'btn btn-outline-secondary btn-block',
+                  target: '_blank'
+
+  .row.mb-5
+    .col-12
+      h5 Geolocalización
+      hr.mt-0
+
+    .col-12.mt-2
+      = render 'workers/geo_form'
+
+  .row.mb-5
+    .col-12
+      h5 Correo electrónico
+      hr.mt-0
+
+    .col-12.mt-2
+      = render 'workers/account_form'
+
+    .col-12.mt-5
+      h5 Eliminar cuenta
+      hr.mt-0
+
+    .col-12
+      p
+        ' Una vez que se elimina el trabajador, todos sus datos asociados también son removidos
+        ' y no hay forma de recuperarlos. Por favor, tenga precaución.
+
+      = link_to 'Eliminar trabajador',
+                worker_path(@worker),
+                method: :delete,
+                data: { confirm: '¿Eliminar?' },
+                class: 'btn btn-danger'

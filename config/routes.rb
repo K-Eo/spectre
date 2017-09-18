@@ -15,14 +15,11 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
-  resources :workers, except: [:show, :edit, :update, :new] do
+  resources :workers, except: [:edit, :update] do
     member do
-      get 'profile'
-      patch 'profile', to: 'workers#update_profile'
-      get 'settings'
-      get 'account'
-      patch 'account', to: 'workers@update_account'
-      patch 'geo', to: 'workers#update_geo'
+      patch 'profile'
+      patch 'account'
+      patch 'geo'
     end
   end
 

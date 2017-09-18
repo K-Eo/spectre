@@ -13,15 +13,13 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    = render 'layouts/nav'
 
-    = flash_message
+    = render 'shared/sidebar'
 
-    = render 'shared/company_header'
-
-    = render 'layouts/tabs'
-
-    .container.mt-4
-      == yield
-
-    = render 'shared/footer'
+    .main.sidebar-offset
+      = render 'layouts/nav'
+      .flash-content
+        = flash_message(col: 'col-10')
+      .container-fluid
+        .row.justify-content-center
+          == yield

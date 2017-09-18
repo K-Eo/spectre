@@ -1,19 +1,21 @@
-.row
-  .col-12
-    h6 Agrege un nuevo trabajador usando su correo electrónico
-    small.form-text.text-muted Solo puede agregar correos electrónicos que no se encuentren registrados en otras compañias.
+.col-10.mb-3
+  .d-flex.flex-row
+    = form_for :search, html: { class: 'w-100 mr-3' } do |f|
+      = f.text_field :keywork, class: 'form-control', placeholder: 'Buscar por nombre o correo electrónico'
 
-  .col-6.mt-2
-    = form_for(@worker_form) do |f|
-          .input-group
-            = f.text_field :email, class: 'form-control', autocomplete: 'off'
-            span.input-group-btn
-              = f.submit 'Agregar trabajador', class: 'btn btn-success'
+    = link_to 'Nuevo Trabajador',
+              new_worker_path,
+              class: 'btn btn-success'
+.col-10.mb-3
+  nav.nav.nav-pills
+    = link_to workers_path, class: 'nav-link active' do
+      | Todos
+      span.ml-3.badge.badge-light = @workers.count
+    a.nav-link href="#" Administradores
 
-.row
-  .col-12.mt-3
-    ul.list-group
-      = render partial: 'worker', collection: @workers
+.col-10
+  ul.list-group
+    = render partial: 'worker', collection: @workers
 
-  .col-12
-    = paginate @workers
+.col-10
+  = paginate @workers
