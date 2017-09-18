@@ -2,44 +2,6 @@ require 'test_helper'
 
 class ApplicationHelperTest < ActionView::TestCase
 
-  class TabItemTest < ActionView::TestCase
-
-    def tab(name = nil, options = nil)
-      @output_buffer = tab_item(name, options)
-    end
-
-    test "throws if name is not set" do
-      assert_raises do
-        tab(nil, { url: '/foobar' })
-      end
-    end
-
-    test "returns item" do
-      tab('Foobar', { url: '/foobar' })
-
-      assert_select 'li.nav-item' do
-        assert_select 'a.nav-link[href="/foobar"]', 'Foobar'
-      end
-    end
-
-    test "returns item without active if controller does not include name" do
-      tab('Test', { url: '/' })
-
-      assert_select 'li.nav-item' do
-        assert_select 'a.nav-link[href="/"]', 'Test'
-      end
-    end
-
-    test "returns item with active if controller includes name" do
-      tab('Test', { url: '/test' })
-
-      assert_select 'li.nav-item' do
-        assert_select 'a.nav-link.active[href="/test"]', 'Test'
-      end
-    end
-
-  end
-
   class FlashHelperTest < ActionView::TestCase
 
     def nuke(messages = {}, col = nil)
