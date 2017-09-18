@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
-  resources :workers, except: [:show, :edit, :update] do
+  resources :workers, except: [:edit, :update] do
     member do
       get 'profile'
       patch 'profile', to: 'workers#update_profile'

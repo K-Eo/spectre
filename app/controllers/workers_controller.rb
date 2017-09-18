@@ -1,6 +1,6 @@
 class WorkersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_worker, only: [:profile, :update_profile, :update_geo, :account, :settings, :destroy]
+  before_action :set_worker, only: [:profile, :show, :update_profile, :update_geo, :account, :settings, :destroy]
 
   def index
     @workers = User.workers(current_user).page(params[:page])
@@ -30,6 +30,11 @@ class WorkersController < ApplicationController
     else
       render 'index', status: :unprocessable_entity
     end
+  end
+
+  def show
+    @profile = ProfileForm.new(@worker)
+    @geo_form = GeoForm.new(@worker)
   end
 
   def profile

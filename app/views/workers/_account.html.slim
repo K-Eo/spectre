@@ -1,21 +1,22 @@
-.row
-  .col-3
-    = render 'workers/menu'
-
-  .col-9
-    h4.font-weight-normal Cuenta
+.row.mb-5
+  .col-12
+    h5 Correo electrónico
     hr.mt-0
 
+  .col-12.mt-2
     = form_for(@worker, url: account_worker_path) do |f|
-      .form-group
-        = f.label :email, 'Correo electrónico'
-        = f.text_field :email, class: 'form-control w-50'
+      .form-group.row
+        = f.label :email, 'Correo electrónico', class: 'col-sm-2 col-form-label text-right'
+        .col-sm-10
+          = f.text_field :email, class: 'form-control', autocomplete: 'off'
 
-      = f.submit 'Actualizar cuenta', class: 'btn btn-success'
+      = f.submit 'Guardar', class: 'btn btn-success'
 
-    h4.font-weight-normal.mt-5 Eliminar cuenta
+  .col-12.mt-5
+    h5 Eliminar cuenta
     hr.mt-0
 
+  .col-12
     p
       ' Una vez que se elimina el trabajador, todos sus datos asociados también son removidos
       ' y no hay forma de recuperarlos. Por favor, tenga precaución.
