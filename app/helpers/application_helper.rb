@@ -29,19 +29,15 @@ module ApplicationHelper
   end
 
   def gravatar(object, args = {})
-    options = Hash.new
+    options = {
+      d: args.fetch(:d, 'retro'),
+      s: args.fetch(:height, '80')
+    }
 
-    options[:d] = args[:d] || 'retro'
-    options[:s] = args[:s] || 80
-
-    image_class = args[:class] || ''
+    args.delete(:d)
 
     hash = Digest::MD5.hexdigest(object.email)
-
-    image_tag "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}",
-              class: image_class,
-              width: options[:s],
-              height: options[:s]
+    image_tag "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}", args
   end
 
   def flash_message(options = {})

@@ -15,6 +15,10 @@ nav.sidebar.bg-dark.d-flex.flex-column
                    icon: 'organization',
                    name: 'Trabajadores'
 
+    = sidebar_link url: alerts_path,
+                   icon: 'alert',
+                   name: 'Alertas'
+
   div class="divider"
 
   .nav.nav-pills.flex-column
@@ -32,5 +36,5 @@ nav.sidebar.bg-dark.d-flex.flex-column
                    method: :delete
 
   = link_to root_path, class: 'user-avatar px-3 py-3 d-flex align-items-center mt-auto' do
-    = gravatar current_user, class: 'mr-3 rounded-3', s: 28
+    = gravatar current_user, class: 'mr-3 rounded-3', height: 28
     span.text-light = current_user.name
