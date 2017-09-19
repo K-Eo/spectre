@@ -1,20 +1,15 @@
 require 'test_helper'
 
-class WorkerFormTest < ActiveSupport::TestCase
+class UserFormTest < ActiveSupport::TestCase
 
   def setup
     @user = users(:jo)
-    @form = WorkerForm.new
+    @form = UserForm.new(@user.company.users.new)
     @email = 'foo@bar.com'
-    ActsAsTenant.current_tenant = companies(:spectre)
-  end
-
-  def teardown
-    ActsAsTenant.current_tenant = nil
   end
 
   def submit
-    params = { worker: { email: @email } }
+    params = { user: { email: @email } }
     @form.submit(make_params(params))
   end
 

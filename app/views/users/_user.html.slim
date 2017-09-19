@@ -1,0 +1,9 @@
+= content_tag :li, id: "user_#{user.id}", class: 'align-items-center d-flex list-group-item'
+  = gravatar user, height: 38, class: 'mr-3 rounded-3'
+
+  div
+    h6.mt-0.mb-0
+      = link_to (user.name.present? ? user.name : "User #{user.id}"), user_path(user), class: 'text-black'
+    p.mb-0
+      ' #{user.email}
+      span.text-muted

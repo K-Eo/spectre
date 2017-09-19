@@ -1,8 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  before_action :create_company, only: [:create]
-  after_action :restore_company, only: [:create]
 
   # GET /resource/sign_up
   # def new
@@ -11,10 +9,28 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
-    if !resource.persisted?
-      ActsAsTenant.current_tenant = nil
+    build_resource(sign_up_params)
+    create_company
+
+    resource.company_id = @company.id
+    resource.save
+
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message! :notice, :signed_up
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
       @company.destroy!
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
     end
   end
 
@@ -71,19 +87,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
 private
 
-  def restore_company
-    ActsAsTenant.current_tenant = public_company
-  end
-
   def create_company
     @company = Company.new(name: 'My Company')
     @company.save
-    public_company
-    ActsAsTenant.current_tenant = @company
-  end
-
-  def public_company
-    @public_company ||= ActsAsTenant.current_tenant
   end
 
 end

@@ -10,12 +10,12 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, path: 'user', controllers: {
+  devise_for :users, path: 'auth', controllers: {
     registrations: 'users/registrations'
   }
 
   resource :dashboard
-  resources :workers, except: [:edit, :update] do
+  resources :users, except: [:edit, :update] do
     member do
       patch 'profile'
       patch 'account'

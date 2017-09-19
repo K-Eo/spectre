@@ -1,5 +1,5 @@
 .col-10
-  h5 Nuevo Trabajador
+  h5 Nuevo Usuario
 
 .col-10.mt-3
   = form_for(@worker_form) do |f|
@@ -10,5 +10,5 @@
         small.form-text.text-muted Solo puede agregar correos electrónicos que no se encuentren registrados en otras compañias.
 
     hr.mt-4
-    = link_to 'Cancelar', workers_path, class: 'btn btn-outline-secondary float-right'
-    = f.submit 'Agregar Trabajador', class: 'btn btn-success'
+    = link_to 'Cancelar', users_path, class: 'btn btn-outline-secondary float-right'
+    = f.submit 'Agregar Usuario', class: 'btn btn-success'

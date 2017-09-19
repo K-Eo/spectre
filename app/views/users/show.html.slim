@@ -5,7 +5,7 @@
       hr.mt-0
 
     .col-10.mt-2
-      = render 'workers/profile_form'
+      = render 'users/profile_form'
 
     .col-2
       p.mb-2 Imagen de perfil
@@ -23,7 +23,7 @@
       hr.mt-0
 
     .col-12.mt-2
-      = render 'workers/geo_form'
+      = render 'users/geo_form'
 
   .row.mb-5
     .col-12
@@ -31,7 +31,7 @@
       hr.mt-0
 
     .col-12.mt-2
-      = render 'workers/account_form'
+      = render 'users/account_form'
 
     .col-12.mt-5
       h5 Eliminar cuenta
@@ -43,7 +43,7 @@
         ' y no hay forma de recuperarlos. Por favor, tenga precaución.
 
       = link_to 'Eliminar trabajador',
-                worker_path(@worker),
+                user_path(@worker),
                 method: :delete,
                 data: { confirm: '¿Eliminar?' },
                 class: 'btn btn-danger'

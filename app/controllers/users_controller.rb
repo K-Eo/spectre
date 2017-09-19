@@ -1,28 +1,28 @@
-class WorkersController < ApplicationController
+class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_worker, only: [:profile, :show, :profile, :geo, :account, :settings, :destroy]
 
   def index
-    @workers = User.workers(current_user).page(params[:page])
+    @users = User.workers(current_user).page(params[:page])
   end
 
   def new
-    @worker_form = WorkerForm.new
+    @worker_form = UserForm.new
   end
 
   def create
-    if params[:worker].blank?
-      @worker_form = WorkerForm.new
+    if params[:user].blank?
+      @worker_form = UserForm.new
       flash.now[:alert] = 'Email required'
       render 'new', status: :bad_request
       return
     end
 
-    @worker_form = WorkerForm.new
+    @worker_form = UserForm.new(User.new(company_id: current_company.id))
 
     if @worker_form.submit(params)
       flash[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
-      redirect_to worker_path(@worker_form.worker)
+      redirect_to user_path(@worker_form.user)
     else
       render 'new', status: :unprocessable_entity
     end

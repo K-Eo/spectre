@@ -4,7 +4,7 @@ tr
   td style="width: 140px;"
     = link_to "##{alert.id}", alert_path(alert)
     span.mx-2 por
-    = link_to worker_path(alert.issuing) do
+    = link_to user_path(alert.issuing) do
       = gravatar alert.issuing,
                  width: 20,
                  height: 20,
@@ -14,7 +14,7 @@ tr
 
   td style="width: 140px;"
     - alert.guards.each do |guard|
-      = link_to worker_path(guard) do
+      = link_to user_path(guard) do
         = gravatar alert.issuing,
                    width: 20,
                    height: 20,
