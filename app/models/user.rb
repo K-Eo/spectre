@@ -13,10 +13,10 @@ class User < ApplicationRecord
   belongs_to :company
 
   # As a company worker
-  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'user_id'
+  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'issuing_id'
 
   # As a company guard
-  has_many :alert_events
+  has_many :alert_events, foreign_key: 'guard_id'
   has_many :alert_notifications, through: :alert_events
 
   has_secure_token :access_token

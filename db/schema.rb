@@ -16,22 +16,22 @@ ActiveRecord::Schema.define(version: 20170913222744) do
   enable_extension "plpgsql"
 
   create_table "alert_events", force: :cascade do |t|
-    t.bigint "user_id"
     t.bigint "alert_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "guard_id"
     t.index ["alert_id"], name: "index_alert_events_on_alert_id"
-    t.index ["user_id"], name: "index_alert_events_on_user_id"
+    t.index ["guard_id"], name: "index_alert_events_on_guard_id"
   end
 
   create_table "alerts", force: :cascade do |t|
     t.string "text"
     t.bigint "company_id"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "issuing_id"
     t.index ["company_id"], name: "index_alerts_on_company_id"
-    t.index ["user_id"], name: "index_alerts_on_user_id"
+    t.index ["issuing_id"], name: "index_alerts_on_issuing_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 20170913222744) do
   end
 
   add_foreign_key "alert_events", "alerts"
-  add_foreign_key "alert_events", "users"
+  add_foreign_key "alert_events", "users", column: "guard_id"
   add_foreign_key "alerts", "companies"
-  add_foreign_key "alerts", "users"
+  add_foreign_key "alerts", "users", column: "issuing_id"
   add_foreign_key "users", "companies"
 end
