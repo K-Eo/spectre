@@ -1,0 +1,19 @@
+.col-10.mb-3
+  nav.nav.nav-pills
+    = link_to workers_path, class: 'nav-link active' do
+      | Todos
+      span.ml-3.badge.badge-light 0
+    a.nav-link href="#" Atendidos
+    a.nav-link href="#" Por atender
+
+.col-10
+  table.table
+    thead
+      tr
+        th Estado
+        th Alerta
+        th Guardias
+        th Comentario
+        th
+    tbody
+      = render @alerts

@@ -1,0 +1,26 @@
+tr
+  td style="width: 120px;"
+    span.badge.badge-primary Abierto
+  td style="width: 140px;"
+    = link_to "##{alert.id}", alert_path(alert)
+    span.mx-2 por
+    = link_to worker_path(alert.issued) do
+      = gravatar alert.issued,
+                 width: 20,
+                 height: 20,
+                 class: 'rounded-3',
+                 title: alert.issued.name,
+                 alt: alert.issued.name
+
+  td style="width: 140px;"
+    - alert.guards.each do |guard|
+      = link_to worker_path(guard) do
+        = gravatar alert.issued,
+                   width: 20,
+                   height: 20,
+                   class: 'rounded-3',
+                   title: guard.name,
+                   alt: guard.name
+
+  td style="width: 200px;"
+    span class="d-inline-block text-truncate" style="max-width: 150px;" = alert.text

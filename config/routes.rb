@@ -23,5 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :alerts
+
   root 'pages#index'
 end

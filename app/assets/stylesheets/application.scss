@@ -31,6 +31,17 @@
   border-bottom: 1px solid #efefef;
 }
 
+.table {
+  thead {
+    th {
+      border-width: 1px;
+      color: $gray-600;
+      font-weight: 500;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
 .main {
   .alert {
     border-radius: 0;
