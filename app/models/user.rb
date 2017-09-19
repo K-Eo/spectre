@@ -9,7 +9,6 @@ class User < ApplicationRecord
 
   acts_as_mappable
 
-  acts_as_tenant :company
   belongs_to :company
 
   # As a company worker

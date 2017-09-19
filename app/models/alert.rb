@@ -4,8 +4,6 @@ class Alert < ApplicationRecord
   has_many :alert_events
   has_many :guards, through: :alert_events
 
-  acts_as_tenant :company
-
   def has_guard?(user)
     guards.include?(user)
   end

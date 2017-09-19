@@ -40,9 +40,11 @@ gem 'kaminari'
 gem 'octicons_helper'
 gem 'draper'
 
-# User Management
+# Authentication
 gem 'devise', '~> 4.2'
-gem 'acts_as_tenant'
+
+# Authorization
+gem "pundit"
 
 # Active Job
 gem 'sidekiq'
