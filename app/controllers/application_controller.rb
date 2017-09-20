@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
   before_action :load_company
 
@@ -9,12 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    super || guest_user
-  end
-
-  def guest_user
-    guest = GuestUser.new
-    guest
+    super || GuestUser.new
   end
 
 protected

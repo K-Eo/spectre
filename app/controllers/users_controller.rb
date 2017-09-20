@@ -3,11 +3,13 @@ class UsersController < ApplicationController
   before_action :set_worker, only: [:profile, :show, :profile, :geo, :account, :settings, :destroy]
 
   def index
-    @users = User.workers(current_user).page(params[:page])
+    @users = policy_scope(User).page(params[:page])
+    @users.each { |u| authorize u, :index? }
   end
 
   def new
     @worker_form = UserForm.new
+    authorize @worker_form
   end
 
   def create
