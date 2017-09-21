@@ -4,6 +4,4 @@
   div
     h6.mt-0.mb-0
       = link_to (user.name.present? ? user.name : "User #{user.id}"), user_path(user), class: 'text-black'
-    p.mb-0
-      ' #{user.email}
-      span.text-muted
+    p.mb-0.text-muted = user.email
