@@ -15,7 +15,7 @@ tr
   td style="width: 140px;"
     - alert.guards.each do |guard|
       = link_to user_path(guard) do
-        = gravatar alert.issuing,
+        = gravatar guard,
                    width: 20,
                    height: 20,
                    class: 'rounded-3',
