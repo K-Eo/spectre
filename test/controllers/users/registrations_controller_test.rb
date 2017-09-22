@@ -12,7 +12,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "redirects to root after create" do
     create_user
-    assert_redirected_to root_path
+    assert_redirected_to new_user_session_path
   end
 
   test "creates user" do
