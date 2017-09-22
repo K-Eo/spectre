@@ -12,6 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
     create_company
 
+    resource.role = :admin
     resource.company_id = @company.id
     resource.save
 
