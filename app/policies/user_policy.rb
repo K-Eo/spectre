@@ -1,16 +1,20 @@
 class UserPolicy < ApplicationPolicy
 
   def index?
-    record.company_id == user.company.id
+    user.admin? || user.moderator?
   end
 
   def new?
-    true
+    user.admin? || user.moderator?
   end
 
   class Scope < Scope
     def resolve
-      scope.where(company_id: user.company.id)
+      if user.admin? || user.moderator?
+        scope.where(company_id: user.company.id)
+      else
+        scope.where(company_id: nil)
+      end
     end
   end
 end

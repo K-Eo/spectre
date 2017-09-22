@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
   def index
     @users = policy_scope(User).page(params[:page])
-    @users.each { |u| authorize u, :index? }
   end
 
   def new
