@@ -1,7 +1,7 @@
 {
   "name": "spectre",
   "scripts": {
-    "postdeploy": "bundle exec rake db:schema:load db:seed"
+    "postdeploy": "bundle exec rake db:schema:load db:fixtures:load"
   },
   "env": {
     "LANG": {
