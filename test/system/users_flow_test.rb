@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class UsersFlowTest < ApplicationSystemTestCase
   test "user adds new worker" do
-    user = users(:jo)
+    user = users(:eo)
 
     visit new_user_session_path
 

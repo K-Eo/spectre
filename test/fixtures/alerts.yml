@@ -3,3 +3,10 @@
 # This model initially had no columns defined. If you add columns to the
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
+
+<% 1.upto(50) do |i| %>
+alert_<%= i %>:
+  id: <%= i %>
+  company: spectre
+  user_id: <%= [1, 2, 3].sample %>
+<% end %>

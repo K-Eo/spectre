@@ -4,50 +4,88 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 
-jo:
-  email: 'jo@spectre.com'
-  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
-  confirmed_at: <%= Time.zone.now - 1.hour %>
-  confirmation_sent_at: <%= Time.zone.now - 2.hours %>
-  lat: 17.2681067
-  lng: -97.6782673
-  first_name: Jo
-  last_name: Davis
+eo:
+  id: 1
   access_token: <%= SecureRandom.base58(24) %>
   company: spectre
-
-lee:
-  email: 'lee@ghost.com'
+  confirmation_sent_at: <%= Time.zone.now - 22.hours %>
+  confirmed_at: <%= Time.zone.now - 21.hours %>
+  email: eo@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
-  confirmed_at: <%= Time.zone.now - 2.hour %>
-  confirmation_sent_at: <%= Time.zone.now - 3.hours %>
-  lat: 17.2684659
-  lng: -97.6790971
-  first_name: Lee
-  last_name: Park
+  first_name: Eo
+  last_name: Knight
+  lat: 17.272432
+  lng: -97.6816656
+  role: admin
+
+kat:
+  id: 2
   access_token: <%= SecureRandom.base58(24) %>
-  company: ghost
+  company: spectre
+  confirmation_sent_at: <%= Time.zone.now - 20.hours %>
+  confirmed_at: <%= Time.zone.now - 21.hours %>
+  email: kat@spectre.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Kat
+  last_name: Evans
+  lat: 17.2668944
+  lng: -97.678272
+  role: moderator
+
+jo:
+  id: 3
+  access_token: <%= SecureRandom.base58(24) %>
+  company: spectre
+  confirmation_sent_at: <%= Time.zone.now - 18.hours %>
+  confirmed_at: <%= Time.zone.now - 17.hours %>
+  email: jo@spectre.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Jo
+  last_name: Davis
+  lat: 17.2681067
+  lng: -97.6782673
+  role: user
+
+# Ghost
 
 mia:
-  email: 'mia@ghost.com'
+  id: 4
+  access_token: <%= SecureRandom.base58(24) %>
+  company: ghost
+  confirmation_sent_at: <%= Time.zone.now - 16.hours %>
+  confirmed_at: <%= Time.zone.now - 15.hours %>
+  email: mia@ghost.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
-  confirmed_at: <%= Time.zone.now - 4.hour %>
-  confirmation_sent_at: <%= Time.zone.now - 5.hours %>
-  lat: 17.245328
-  lng: -97.6950679
   first_name: Mia
   last_name: Woods
+  lat: 17.245328
+  lng: -97.6950679
+  role: admin
+
+lee:
+  id: 5
   access_token: <%= SecureRandom.base58(24) %>
   company: ghost
+  confirmation_sent_at: <%= Time.zone.now - 14.hours %>
+  confirmed_at: <%= Time.zone.now - 13.hours %>
+  email: lee@ghost.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Lee
+  last_name: Park
+  lat: 17.2684659
+  lng: -97.6790971
+  role: moderator
 
 tom:
-  email: 'tom@ghost.com'
-  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
-  confirmed_at: <%= Time.zone.now - 6.hour %>
-  confirmation_sent_at: <%= Time.zone.now - 7.hours %>
-  lat: 17.2687989
-  lng: -97.6781947
-  first_name: Tom
-  last_name: Miller
+  id: 6
   access_token: <%= SecureRandom.base58(24) %>
   company: ghost
+  confirmation_sent_at: <%= Time.zone.now - 12.hours %>
+  confirmed_at: <%= Time.zone.now - 11.hours %>
+  email: tom@ghost.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Tom
+  last_name: Miller
+  lat: 17.2687989
+  lng: -97.6781947
+  role: user

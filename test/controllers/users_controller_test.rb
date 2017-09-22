@@ -5,7 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   class Index < UsersControllerTest
 
     test "index returns success" do
-      sign_in users(:jo)
+      sign_in users(:eo)
       get users_path
       assert_response :success
     end

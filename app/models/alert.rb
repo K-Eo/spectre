@@ -1,8 +1,9 @@
 class Alert < ApplicationRecord
-  belongs_to :issuing, class_name: 'User', foreign_key: 'issuing_id'
+  belongs_to :company
+  belongs_to :issuing, class_name: 'User', foreign_key: 'user_id'
 
-  has_many :alert_events
-  has_many :guards, through: :alert_events
+  has_many :notices
+  has_many :guards, through: :notices, source: :user
 
   def has_guard?(user)
     guards.include?(user)

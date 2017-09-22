@@ -2,18 +2,8 @@ require 'test_helper'
 
 class UserPolicyTest < ActiveSupport::TestCase
 
-  def test_scope
+  test "index only for admin or moderator" do
+    assert UserPolicy.new(users(:eo), User).index?
   end
 
-  def test_show
-  end
-
-  def test_create
-  end
-
-  def test_update
-  end
-
-  def test_destroy
-  end
 end
