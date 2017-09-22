@@ -10,40 +10,43 @@
 spectre = Company.create!(name: 'Spectre Inc.')
 
 eo = User.new(
+  company_id: spectre.id,
   email: "eo@spectre.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.272432,
-  lng: -97.6816656,
   first_name: "Eo",
   last_name: "Knight",
-  company_id: spectre.id
+  lat: 17.272432,
+  lng: -97.6816656,
+  password: "password",
+  password_confirmation: "password",
+  role: :admin
 )
 eo.skip_confirmation!
 eo.save!
 
 kat = User.new(
+  company_id: spectre.id,
   email: "kat@spectre.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.2668944,
-  lng: -97.678272,
   first_name: "Kat",
   last_name: "Evans",
-  company_id: spectre.id
+  lat: 17.2668944,
+  lng: -97.678272,
+  password: "password",
+  password_confirmation: "password",
+  role: :moderator
 )
 kat.skip_confirmation!
 kat.save!
 
 jo = User.new(
+  company_id: spectre.id,
   email: "jo@spectre.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.2681067,
-  lng: -97.6782673,
   first_name: "Jo",
   last_name: "Davis",
-  company_id: spectre.id
+  lat: 17.2681067,
+  lng: -97.6782673,
+  password: "password",
+  password_confirmation: "password",
+  role: :user
 )
 jo.skip_confirmation!
 jo.save!
@@ -54,40 +57,43 @@ spectre_ids = [eo.id, kat.id, jo.id]
 ghost = Company.create!(name: 'Ghost Inc.')
 
 mia = User.new(
+  company_id: ghost.id,
   email: "mia@ghost.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.245328,
-  lng: -97.6950679,
   first_name: "Mia",
   last_name: "Woods",
-  company_id: ghost.id
+  lat: 17.245328,
+  lng: -97.6950679,
+  password: "password",
+  password_confirmation: "password",
+  role: :admin
 )
 mia.skip_confirmation!
 mia.save!
 
 lee = User.new(
+  company_id: ghost.id,
   email: "lee@ghost.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.2684659,
-  lng: -97.6790971,
   first_name: "Lee",
   last_name: "Park",
-  company_id: ghost.id
+  lat: 17.2684659,
+  lng: -97.6790971,
+  password: "password",
+  password_confirmation: "password",
+  role: :moderator
 )
 lee.skip_confirmation!
 lee.save!
 
 tom = User.new(
+  company_id: ghost.id,
   email: "tom@ghost.com",
-  password: "password",
-  password_confirmation: "password",
-  lat: 17.2687989,
-  lng: -97.6781947,
   first_name: "Tom",
   last_name: "Miller",
-  company_id: ghost.id
+  lat: 17.2687989,
+  lng: -97.6781947,
+  password: "password",
+  password_confirmation: "password",
+  role: :user
 )
 tom.skip_confirmation!
 tom.save!
