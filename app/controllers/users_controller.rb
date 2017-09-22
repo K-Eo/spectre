@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_worker, only: [:profile, :show, :profile, :geo, :account, :settings, :destroy]
 
   def index
+    authorize User
     @users = policy_scope(User).page(params[:page])
   end
 
