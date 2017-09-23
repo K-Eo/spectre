@@ -5,11 +5,11 @@ class GeoFormTest < ActiveSupport::TestCase
   def setup
     @user = users(:jo)
     @form = GeoForm.new(@user)
-    @params = { geo: { lat: 17.2695858, lng: -97.6803423 } }
+    @params = { lat: 17.2695858, lng: -97.6803423 }
   end
 
   def update
-    @form.update(make_params(@params))
+    @form.update(@params)
   end
 
   test "update returns true" do
@@ -22,10 +22,4 @@ class GeoFormTest < ActiveSupport::TestCase
     assert_equal 17.2695858, @user.lat
     assert_equal -97.6803423, @user.lng
   end
-
-  test "update returns false if params is not set" do
-    @params = {}
-    assert_not update
-  end
-
 end

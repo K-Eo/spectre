@@ -48,6 +48,10 @@ class UserPolicy < ApplicationPolicy
     [:first_name, :last_name]
   end
 
+  def permitted_attributes_for_geo
+    [:lat, :lng]
+  end
+
   class Scope < Scope
     def resolve
       scope.where(company_id: user.company.id)

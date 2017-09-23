@@ -23,6 +23,6 @@ class ProfileForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Profile')
+    ActiveModel::Name.new(self, nil, 'User')
   end
 end

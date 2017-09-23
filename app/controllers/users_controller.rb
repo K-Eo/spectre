@@ -49,10 +49,10 @@ class UsersController < ApplicationController
     @geo = GeoForm.new(@user)
 
     respond_to do |format|
-      if @geo.update(params)
+      if @geo.update(permitted_attributes(@user))
         format.js
       else
-        format.js { render(status: :bad_request) }
+        format.js
       end
     end
   end

@@ -8,9 +8,7 @@ class GeoForm < ApplicationForm
   delegate :lat, :lng, to: :user
 
   def update(params)
-    return false if params.nil? || params[:geo].blank?
-
-    user.assign_attributes(geo_params(params))
+    user.assign_attributes(params)
 
     if valid?
       user.save!
@@ -21,13 +19,7 @@ class GeoForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Geo')
-  end
-
-private
-
-  def geo_params(params)
-    params.require(:geo).permit(:lat, :lng)
+    ActiveModel::Name.new(self, nil, 'User')
   end
 
 end

@@ -241,7 +241,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   class Geo < UsersControllerTest
 
     def setup
-      @params = { geo: { lat: 22.22, lng: -24.44 } }
+      @params = { user: { lat: 22.22, lng: -24.44 } }
     end
 
     def nuke(as, who)
