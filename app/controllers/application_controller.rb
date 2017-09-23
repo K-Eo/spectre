@@ -1,13 +1,17 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery with: :exception
-  before_action :load_company
 
+  before_action :load_company
   helper_method :current_company
 
-  rescue_from ActiveRecord::RecordNotFound do
-    render_404
-  end
+rescue_from ActiveRecord::RecordNotFound do
+  render_404
+end
+
+rescue_from Pundit::NotAuthorizedError do
+  render_401
+end
 
   def current_user
     super || GuestUser.new
@@ -25,6 +29,15 @@ protected
 
   def current_company
     @company
+  end
+
+  def render_401
+    respond_to do |format|
+      format.html do
+        render 'pages/unauthorized', layout: false, status: :unauthorized
+      end
+      format.any { head :unauthorized }
+    end
   end
 
   def render_404

@@ -1,4 +1,4 @@
-$('#worker_profile').replaceWith("<%= j render 'workers/profile_form' %>")
+$('#worker_profile').replaceWith("<%= j render 'users/profile_form' %>")
 
 <% unless @profile.errors.any? %>
   $('#worker_profile').append('<%= form_feedback_icon  %>')

@@ -5,7 +5,7 @@
 # below each fixture, per the syntax in the comments below
 
 <% 1.upto(50) do |i| %>
-  <% [4, 5, 6].sample(2).each do |guard| %>
+  <% [6, 7, 8].sample(2).each do |guard| %>
 
 notice_<%= i %>_<%= guard %>:
   user_id: <%= guard %>

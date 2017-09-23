@@ -8,5 +8,5 @@
 alert_<%= i %>:
   id: <%= i %>
   company: spectre
-  user_id: <%= [1, 2, 3].sample %>
+  user_id: <%= [1, 2, 3, 4, 5].sample %>
 <% end %>

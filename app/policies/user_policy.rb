@@ -8,13 +8,41 @@ class UserPolicy < ApplicationPolicy
     user.admin? || user.moderator?
   end
 
+  def create?
+    (user.admin? || user.moderator?) &&
+    (record.user.company_id == user.company_id)
+  end
+
+  def show?
+    (user.admin? ||
+    user.moderator? ||
+    (record.id == user.id)) &&
+    (record.company_id == user.company_id)
+  end
+
+  def profile?
+    (user.admin? ||
+    (user.moderator? && record.user?) ||
+    (record.id == user.id)) &&
+    (record.company_id == user.company_id)
+  end
+
+  def geo?
+    (user.admin? ||
+    (user.moderator? && record.user?) ||
+    (record.id == user.id)) &&
+    (record.company_id == user.company_id)
+  end
+
+  def destroy?
+    (user.admin? && !record.admin?) ||
+    (user.moderator? && record.user?) ||
+    (record.id == user.id && !record.admin?)
+  end
+
   class Scope < Scope
     def resolve
-      if user.admin? || user.moderator?
-        scope.where(company_id: user.company.id)
-      else
-        scope.where(company_id: nil)
-      end
+      scope.where(company_id: user.company.id)
     end
   end
 end

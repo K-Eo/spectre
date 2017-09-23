@@ -1,4 +1,4 @@
-$('#worker_geo').replaceWith("<%= j render 'workers/geo_form' %>")
+$('#worker_geo').replaceWith("<%= j render 'users/geo_form' %>")
 
 <% unless @geo.errors.any? %>
   $('#worker_geo').append('<%= form_feedback_icon  %>')

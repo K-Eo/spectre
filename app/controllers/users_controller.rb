@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_worker, only: [:profile, :show, :profile, :geo, :account, :settings, :destroy]
+  before_action :set_user, only: [:account, :destroy, :geo, :profile, :settings, :show]
 
   def index
     authorize User
@@ -8,53 +8,58 @@ class UsersController < ApplicationController
   end
 
   def new
-    @worker_form = UserForm.new
-    authorize @worker_form
+    authorize User
+    @user_form = UserForm.new
   end
 
   def create
     if params[:user].blank?
-      @worker_form = UserForm.new
+      @user_form = UserForm.new
       flash.now[:alert] = 'Email required'
       render 'new', status: :bad_request
       return
     end
 
-    @worker_form = UserForm.new(User.new(company_id: current_company.id))
+    @user_form = UserForm.new(User.new(company_id: current_company.id))
 
-    if @worker_form.submit(params)
-      flash[:success] = "Email sent to <strong>#{@worker_form.email}</strong>."
-      redirect_to user_path(@worker_form.user)
+    authorize @user_form
+
+    if @user_form.submit(params)
+      flash[:success] = "Email sent to <strong>#{@user_form.email}</strong>."
+      redirect_to user_path(@user_form.user)
     else
       render 'new', status: :unprocessable_entity
     end
   end
 
   def show
-    @profile = ProfileForm.new(@worker)
-    @geo = GeoForm.new(@worker)
+    authorize @user, :show?
+    @profile = ProfileForm.new(@user)
+    @geo = GeoForm.new(@user)
   end
 
   def profile
-    @profile = ProfileForm.new(@worker)
+    authorize @user
+    @profile = ProfileForm.new(@user)
 
     respond_to do |format|
       if @profile.update(params)
         format.js
       else
-        format.js
+        format.js { render status: :bad_request }
       end
     end
   end
 
   def geo
-    @geo = GeoForm.new(@worker)
+    authorize @user
+    @geo = GeoForm.new(@user)
 
     respond_to do |format|
       if @geo.update(params)
         format.js
       else
-        format.js
+        format.js { render(status: :bad_request) }
       end
     end
   end
@@ -63,18 +68,15 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @worker.destroy
-    redirect_to workers_path
+    authorize @user
+    @user.destroy
+    redirect_to users_path
   end
 
 private
 
-  def worker_params
-    params.require(:worker).permit(:email)
-  end
-
-  def set_worker
-    @worker = User.find(params[:id])
+  def set_user
+    @user = policy_scope(User).find(params[:id])
   end
 
 end

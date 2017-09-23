@@ -26,6 +26,7 @@ class UserForm < ApplicationForm
   def submit(params)
     user.email = params.require(:user).permit(:email)[:email]
     user.password = password
+    user.role = :user
 
     if valid?
       user.skip_confirmation!
