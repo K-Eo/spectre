@@ -35,21 +35,21 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   class UpdateUser < Api::V1::UsersControllerTest
 
     test "returns ok if access token is valid" do
-      params = { profile: { first_name: 'Carly', last_name: 'Woods' } }
+      params = { user: { first_name: 'Carly', last_name: 'Woods' } }
       patch api_v1_user_path, params: params, as: :json, headers: token_header(@user)
       assert_response :ok
     end
 
     test "returns new json if access token is valid" do
-      params = { profile: { first_name: 'Carly', last_name: 'Woods' } }
+      params = { user: { first_name: 'Carly', last_name: 'Woods' } }
       patch api_v1_user_path, params: params, as: :json, headers: token_header(@user)
       assert_match /"first_name":"Carly"/, @response.body
       assert_match /"last_name":"Woods"/, @response.body
     end
 
-    test "responds unprocessable entity if no params and access token is valid" do
+    test "responds bad request if no params and access token is valid" do
       patch api_v1_user_path, as: :json, headers: token_header(@user)
-      assert_response :unprocessable_entity
+      assert_response :bad_request
     end
 
     test "respondes with unauthorized if access token is invalid" do

@@ -8,7 +8,7 @@ module Api
       def update
         @profile = ProfileForm.new(current_user)
 
-        if @profile.update(params)
+        if @profile.update(permitted_attributes(User, :profile))
           render status: :ok
         else
           head :unprocessable_entity

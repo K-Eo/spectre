@@ -1,7 +1,14 @@
 module Api
   module V1
     class ApiController < ActionController::Base
+      include Pundit
       before_action :authenticate
+
+    rescue_from ActionController::ParameterMissing do
+      respond_to do |format|
+        format.any { head :bad_request }
+      end
+    end
 
       def current_user
         @user
