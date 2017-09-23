@@ -100,12 +100,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_path
       assert_response :bad_request
     end
-
-    test "sets flash if user param is blank" do
-      sign_in users(:eo)
-      post users_path
-      assert_match /Email required/, flash[:alert]
-    end
   end
 
   class Show < UsersControllerTest
@@ -169,7 +163,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   class Profile < UsersControllerTest
 
     def setup
-      @params = { profile: { first_name: 'foo', last_name: 'bar' } }
+      @params = { user: { first_name: 'foo', last_name: 'bar' } }
     end
 
     def nuke(as, who)

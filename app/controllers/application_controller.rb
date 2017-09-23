@@ -13,6 +13,13 @@ rescue_from Pundit::NotAuthorizedError do
   render_401
 end
 
+rescue_from ActionController::ParameterMissing do
+  respond_to do |format|
+    format.js { render status: :bad_request }
+    format.any { head :bad_request }
+  end
+end
+
   def current_user
     super || GuestUser.new
   end

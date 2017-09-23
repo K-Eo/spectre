@@ -9,8 +9,8 @@ class UserFormTest < ActiveSupport::TestCase
   end
 
   def submit
-    params = { user: { email: @email } }
-    @form.submit(make_params(params))
+    params = { email: @email }
+    @form.submit(params)
   end
 
   test "submit returns true" do

@@ -40,6 +40,14 @@ class UserPolicy < ApplicationPolicy
     (record.id == user.id && !record.admin?)
   end
 
+  def permitted_attributes_for_create
+    [:email]
+  end
+
+  def permitted_attributes_for_profile
+    [:first_name, :last_name]
+  end
+
   class Scope < Scope
     def resolve
       scope.where(company_id: user.company.id)

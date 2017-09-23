@@ -24,7 +24,7 @@ class UserForm < ApplicationForm
   end
 
   def submit(params)
-    user.email = params.require(:user).permit(:email)[:email]
+    user.email = params[:email]
     user.password = password
     user.role = :user
 

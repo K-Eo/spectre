@@ -13,18 +13,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    if params[:user].blank?
-      @user_form = UserForm.new
-      flash.now[:alert] = 'Email required'
-      render 'new', status: :bad_request
-      return
-    end
-
     @user_form = UserForm.new(User.new(company_id: current_company.id))
 
     authorize @user_form
 
-    if @user_form.submit(params)
+    if @user_form.submit(permitted_attributes(User))
       flash[:success] = "Email sent to <strong>#{@user_form.email}</strong>."
       redirect_to user_path(@user_form.user)
     else
@@ -43,10 +36,10 @@ class UsersController < ApplicationController
     @profile = ProfileForm.new(@user)
 
     respond_to do |format|
-      if @profile.update(params)
+      if @profile.update(permitted_attributes(@user))
         format.js
       else
-        format.js { render status: :bad_request }
+        format.js
       end
     end
   end
