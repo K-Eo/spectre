@@ -1,14 +1,9 @@
 module Api
   module V1
-    class AuthsController < ApiController
+    class SessionsController < ApiControllerBase
       skip_before_action :authenticate, only: [:create]
 
       def create
-        if params[:email].blank? || params[:password].blank?
-          head :bad_request
-          return
-        end
-
         @user = User.find_by(email: params[:email])
 
         if @user.nil?
@@ -26,7 +21,6 @@ module Api
         current_user.save
         head :ok
       end
-
     end
   end
 end

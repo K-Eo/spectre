@@ -1,6 +1,6 @@
 module Api
   module V1
-    class ApiController < ActionController::Base
+    class ApiControllerBase < ActionController::Base
       include Pundit
       before_action :authenticate
 

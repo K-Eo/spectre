@@ -1,6 +1,6 @@
 module Api
   module V1
-    class AlertsController < ApiController
+    class AlertsController < ApiControllerBase
 
       def index
         render json: '', status: :ok

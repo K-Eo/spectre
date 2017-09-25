@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UsersController < ApiController
+    class UsersController < ApiControllerBase
 
       def show
       end
