@@ -1,6 +1,6 @@
 $('#worker_geo').replaceWith("<%= j render 'users/geo_form' %>")
 
-<% unless @geo.errors.any? %>
+<% unless @location.errors.any? %>
   $('#worker_geo').append('<%= form_feedback_icon  %>')
   $('#worker_geo #form_feedback_icon').hide().fadeIn('fast')
   $('#worker_geo #form_feedback_icon').delay(5000).fadeOut('slow', function () {

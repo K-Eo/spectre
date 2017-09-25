@@ -15,15 +15,10 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
+  resources :users, except: [:edit, :update]
   scope module: 'users' do
     resources :profiles, only: [:update]
-  end
-  resources :users, except: [:edit, :update] do
-    member do
-      patch 'profile'
-      patch 'account'
-      patch 'geo'
-    end
+    resources :location, only: [:update]
   end
 
   resources :alerts
