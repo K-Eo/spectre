@@ -2,9 +2,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resource :session, only: [:create, :destroy]
-      resource :profile, only: [:show, :update]
+      resource :location, only: [:show, :update]
       resource :password, only: [:update]
+      resource :profile, only: [:show, :update]
+      resource :session, only: [:create, :destroy]
       resources :alerts, only: [:create]
     end
   end
