@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'auth/edit', to: redirect('/users')
   devise_for :users, path: 'auth', controllers: {
     registrations: 'users/registrations'
   }
