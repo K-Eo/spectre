@@ -12,5 +12,4 @@ class Api::V1::ProfilesController < Api::V1::ApiControllerBase
       head :unprocessable_entity
     end
   end
-
 end

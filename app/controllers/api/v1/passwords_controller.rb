@@ -9,5 +9,4 @@ class Api::V1::PasswordsController < Api::V1::ApiControllerBase
       render json: @user_form.errors, status: :unprocessable_entity
     end
   end
-
 end

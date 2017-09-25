@@ -1,21 +1,16 @@
-module Api
-  module V1
-    class AlertsController < ApiControllerBase
+class Api::V1::AlertsController < Api::V1::ApiControllerBase
 
-      def index
-        render json: '', status: :ok
-      end
+  def index
+    render json: '', status: :ok
+  end
 
-      def create
-        @alert = AlertForm.new(current_user)
+  def create
+    @alert = AlertForm.new(current_user)
 
-        if @alert.update(params)
-          render json: '', status: :created
-        else
-          head :unprocessable_entity
-        end
-      end
-
+    if @alert.update(params)
+      render json: '', status: :created
+    else
+      head :unprocessable_entity
     end
   end
 end
