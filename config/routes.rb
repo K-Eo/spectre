@@ -4,9 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :session, only: [:create, :destroy]
       resource :profile, only: [:show, :update]
-      resource :user do
-        patch 'update_password', on: :collection
-      end
+      resource :password, only: [:update]
       resources :alerts
     end
   end
