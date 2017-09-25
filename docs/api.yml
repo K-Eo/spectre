@@ -2,17 +2,23 @@ swagger: "2.0"
 
 info:
   description: "Documentación para Spectre API V1"
-  version: "0.0.1"
+  version: "0.0.2"
   title: "Spectre"
   license:
     name: "UNLICENSED"
 host: "spectre-55.herokuapps.com"
 basePath: "/api/v1"
 tags:
-- name: "auth"
-  description: "Autorización"
-- name: "user"
-  description: "Cuenta de usuario"
+- name: "session"
+  description: "Login y logout"
+- name: "profile"
+  description: "Información de usuario"
+- name: "password"
+  description: "Contraseña de usuario"
+- name: "location"
+  description: "Información de latitud y longitud"
+- name: "alerts"
+  description: "Alertas"
 schemes:
 - "https"
 securityDefinitions:
@@ -21,11 +27,11 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
-  /auth:
+  /session:
     post:
       tags:
-      - "auth"
-      summary: "Inicio de sesión"
+        - "session"
+      summary: "Iniciar sesión"
       consumes:
         - "application/x-www-form-urlencoded"
       produces:
@@ -33,7 +39,7 @@ paths:
       parameters:
       - name: "email"
         in: "formData"
-        description: "Correo electrónico del usuario"
+        description: "Correo electrónico"
         required: true
         type: string
       - name: "password"
@@ -43,23 +49,182 @@ paths:
         type: string
       responses:
         200:
-          description: "Login exitoso."
+          description: "Inicio de sesión exitoso"
           schema:
-            $ref: "#/definitions/Auth"
+            $ref: "#/definitions/Token"
         400:
           description: "No se incluye email o password. Email no existe. Password no es correcto."
     delete:
       tags:
-      - "auth"
+        - "session"
+      summary: "Terminar sesión"
       security:
         - Token: []
       responses:
         200:
-          description: "Logout exitoso."
+          description: "Sesión terminada"
         401:
-          description: "Sin autorización"
+          description: "No tiene autorización para terminar la sesión"
+  /profile:
+    get:
+      tags:
+        - "profile"
+      summary: "Información de usuario"
+      security:
+        - Token: []
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Información de usuario"
+          schema:
+            $ref: "#/definitions/Profile"
+    patch:
+      tags:
+        - "profile"
+      summary: "Actualizar información de usuario"
+      security:
+        - Token: []
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "user[first_name]"
+        in: "formData"
+        description: "Nombre de usuario"
+        required: true
+        type: string
+      - name: "user[last_name]"
+        in: "formData"
+        description: "Apellidos de usuario"
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Nueva información de usuario"
+          schema:
+            $ref: "#/definitions/Profile"
+        400:
+          description: "Faltan parametros. Formato inválido."
+        401:
+          description: "No tiene autorización"
+  /password:
+    patch:
+      tags:
+        - "password"
+      summary: "Cambiar contraseña"
+      security:
+       - Token: []
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+       - "application/json"
+      parameters:
+      - name: "user[password]"
+        in: "formData"
+        description: "Nueva contraseña"
+        required: true
+        type: string
+      - name: "user[password_confirmation]"
+        in: "formData"
+        description: "Confirmación de la nueva contraseña"
+        required: true
+        type: string
+      - name: "user[current_password]"
+        in: "formData"
+        description: "Contraseña actual"
+        required: true
+        type: string
+      responses:
+        200:
+          description: "Contraseña actualizada"
+        400:
+          description: "Contraseña actual incorrecta. Nuevas contraseñas no coinciden."
+        401:
+          description: "No tiene autorización"
+  /location:
+    get:
+      tags:
+        - "location"
+      summary: "Obtener latitud y longitud del usuario"
+      security:
+       - Token: []
+      produces:
+       - "application/json"
+      responses:
+        200:
+          description: "Información de latitud y longitud"
+          schema:
+            $ref: "#/definitions/Location"
+        401:
+          description: "No tiene autorización"
+    patch:
+      tags:
+        - "location"
+      summary: "Actualizar latitud y longitud del usuario"
+      security:
+        - Token: []
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "location[lat]"
+        in: "formData"
+        description: "Latitud"
+        required: true
+        type: number
+      - name: "location[lng]"
+        in: "formData"
+        description: "Longitud"
+        required: true
+        type: number
+      responses:
+        200:
+          description: "Latitud y longitud actualizada"
+          schema:
+            $ref: "#/definitions/Location"
+        400:
+          description: "No se incluye lat y lng"
+        401:
+          description: "No tiene autorización"
+  /alerts:
+    post:
+      tags:
+        - "alerts"
+      summary: "Crear alerta"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "alert[text]"
+        in: "formData"
+        description: "Descripción"
+        required: false
+        type: string
+      responses:
+        201:
+          description: "Alerta creada"
+        400:
+          description: "Faltan parámetros"
+        401:
+          description: "No tiene autorización"
 definitions:
-  Auth:
+  Location:
+    type: "object"
+    properties:
+      lat:
+        type: number
+      lng:
+        type: number
+  Token:
+    type: "object"
+    properties:
+      access_token:
+        type: string
+  Profile:
     type: "object"
     properties:
       first_name:
@@ -69,8 +234,6 @@ definitions:
       created_at:
         type: "string"
         format: "date-time"
-      access_token:
-        type: "string"
       email:
         type: "string"
       company:
