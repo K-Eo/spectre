@@ -8,7 +8,7 @@ class ProfileForm < ApplicationForm
   validates :last_name, length: { maximum: 255 },
                         format: { with: /\A[a-zA-Z\s]*\z/ }
 
-  delegate :first_name, :last_name, to: :user
+  delegate :first_name, :last_name, :id, to: :user
 
   def update(params)
     user.first_name = params[:first_name].squish

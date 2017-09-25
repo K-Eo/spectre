@@ -10,8 +10,7 @@ class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
     sign_in users(as) unless as.nil?
     target = users(who)
     patch profile_path(target),
-          params: @params,
-          xhr: true
+          params: @params
   end
 
   test "user can update only his own profile" do
@@ -25,7 +24,7 @@ class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
 
     nuke(:jo, :jo)
-    assert_response :success
+    assert_redirected_to user_path(users(:jo))
   end
 
   test "moderator can update only users and own profile" do
@@ -36,21 +35,21 @@ class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unauthorized
 
     nuke(:kat, :kat)
-    assert_response :success
+    assert_redirected_to user_path(users(:kat))
 
     nuke(:kat, :jo)
-    assert_response :success
+    assert_redirected_to user_path(users(:jo))
   end
 
   test "admin can update any profile" do
     nuke(:eo, :eo)
-    assert_response :success
+    assert_redirected_to user_path(users(:eo))
 
     nuke(:eo, :kat)
-    assert_response :success
+    assert_redirected_to user_path(users(:kat))
 
     nuke(:eo, :jo)
-    assert_response :success
+    assert_redirected_to user_path(users(:jo))
   end
 
   test "users can't update profiles of other companies" do
@@ -64,16 +63,14 @@ class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  test "returns javascript on success" do
+  test "redirects to user path on success" do
     nuke(:eo, :eo)
-    assert_response :success
-    assert_equal 'text/javascript', @response.content_type
+    assert_redirected_to user_path(users(:eo))
   end
 
-  test "returns javascript on failure" do
+  test "responds with bad request if params is missing" do
     @params = nil
     nuke(:eo, :eo)
     assert_response :bad_request
-    assert_equal 'text/javascript', @response.content_type
   end
 end

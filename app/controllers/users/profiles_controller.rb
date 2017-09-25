@@ -5,12 +5,11 @@ class Users::ProfilesController < ApplicationController
     @profile = ProfileForm.new(@user)
     authorize @profile
 
-    respond_to do |format|
-      if @profile.update(permitted_attributes(Profile))
-        format.js
-      else
-        format.js
-      end
+    if @profile.update(permitted_attributes(Profile))
+      flash[:notice] = 'Datos guardados'
+      redirect_to user_path(@user)
+    else
+      redirect_to user_path(@user)
     end
   end
 end
