@@ -8,7 +8,7 @@ class Api::V1::SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def login
-    post api_v1_sessions_path, as: :json, params: @params
+    post api_v1_session_path, as: :json, params: @params
   end
 
   test "login returns created if valid credentials" do
@@ -39,17 +39,17 @@ class Api::V1::SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "login returns bad request if params is not set" do
-    post api_v1_sessions_path, as: :json
+    post api_v1_session_path, as: :json
     assert_response :bad_request
   end
 
   test "logout returns ok if token is valid" do
-    delete api_v1_sessions_path, as: :json, headers: token_header(@user)
+    delete api_v1_session_path, as: :json, headers: token_header(@user)
     assert_response :ok
   end
 
   test "logout returns unauthorized when token is invalid" do
-    delete api_v1_sessions_path, as: :json
+    delete api_v1_session_path, as: :json
     assert_response :unauthorized
   end
 end

@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resource :sessions, only: [:create, :destroy]
+      resource :session, only: [:create, :destroy]
+      resource :profile, only: [:show, :update]
       resource :user do
         patch 'update_password', on: :collection
       end

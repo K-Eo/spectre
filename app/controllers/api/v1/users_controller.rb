@@ -2,19 +2,6 @@ module Api
   module V1
     class UsersController < ApiControllerBase
 
-      def show
-      end
-
-      def update
-        @profile = ProfileForm.new(current_user)
-
-        if @profile.update(permitted_attributes(User, :profile))
-          render status: :ok
-        else
-          head :unprocessable_entity
-        end
-      end
-
       def update_password
         @user_form = PasswordForm.new(current_user)
 
