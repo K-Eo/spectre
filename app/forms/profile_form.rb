@@ -11,12 +11,8 @@ class ProfileForm < ApplicationForm
   delegate :first_name, :last_name, to: :user
 
   def update(params)
-    return false if params.nil? || params[:profile].blank?
-
-    profile = params.require(:profile).permit(:first_name, :last_name)
-
-    user.first_name = profile[:first_name].squish
-    user.last_name = profile[:last_name].squish
+    user.first_name = params[:first_name].squish
+    user.last_name = params[:last_name].squish
 
     if valid?
       user.save!
@@ -27,6 +23,6 @@ class ProfileForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Profile')
+    ActiveModel::Name.new(self, nil, 'User')
   end
 end

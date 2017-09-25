@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  enum role: [:guest, :user, :moderator, :admin, :root]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -9,22 +10,19 @@ class User < ApplicationRecord
 
   acts_as_mappable
 
-  acts_as_tenant :company
   belongs_to :company
 
   # As a company worker
-  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'user_id'
+  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'user_id', dependent: :destroy
 
   # As a company guard
-  has_many :alert_events
-  has_many :alert_notifications, through: :alert_events
+  has_many :notices, dependent: :destroy
+  has_many :alert_notices, through: :notices, source: :alert
 
   has_secure_token :access_token
 
-  scope :workers, -> (current_user) { where.not(id: current_user.id) }
-
   def notify_alert(alert)
-    alert_notifications << alert
+    alert_notices << alert
   end
 
   def name

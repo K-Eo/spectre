@@ -1,7 +1,0 @@
-= form_for(@worker, url: account_worker_path) do |f|
-  .form-group.row
-    = f.label :email, 'Correo electrónico', class: 'col-sm-2 col-form-label text-right'
-    .col-sm-10
-      = f.text_field :email, class: 'form-control', autocomplete: 'off'
-
-  = f.submit 'Guardar', class: 'btn btn-success'

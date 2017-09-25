@@ -1,26 +1,32 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
-  set_current_tenant_through_filter
-  before_action :set_tenant
 
-  helper_method :company
+  before_action :load_company
+  helper_method :current_company
 
-  rescue_from ActiveRecord::RecordNotFound do
-    render_404
+rescue_from ActiveRecord::RecordNotFound do
+  render_404
+end
+
+rescue_from Pundit::NotAuthorizedError do
+  render_401
+end
+
+rescue_from ActionController::ParameterMissing do
+  respond_to do |format|
+    format.js { render status: :bad_request }
+    format.any { head :bad_request }
   end
+end
 
   def current_user
-    super || guest_user
-  end
-
-  def guest_user
-    guest = GuestUser.new
-    guest
+    super || GuestUser.new
   end
 
 protected
 
-  def company
+  def load_company
     if devise_controller? || current_user.is_a?(GuestUser)
       @company = nil
     else
@@ -28,8 +34,17 @@ protected
     end
   end
 
-  def set_tenant
-    set_current_tenant(company)
+  def current_company
+    @company
+  end
+
+  def render_401
+    respond_to do |format|
+      format.html do
+        render 'pages/unauthorized', layout: false, status: :unauthorized
+      end
+      format.any { head :unauthorized }
+    end
   end
 
   def render_404

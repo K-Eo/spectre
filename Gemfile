@@ -40,9 +40,11 @@ gem 'kaminari'
 gem 'octicons_helper'
 gem 'draper'
 
-# User Management
+# Authentication
 gem 'devise', '~> 4.2'
-gem 'acts_as_tenant'
+
+# Authorization
+gem "pundit"
 
 # Active Job
 gem 'sidekiq'
@@ -58,6 +60,8 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'dotenv-rails'
+  gem 'guard'
+  gem 'guard-minitest'
 end
 
 group :development do

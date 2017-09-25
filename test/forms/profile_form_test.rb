@@ -10,8 +10,8 @@ class ProfileFormTest < ActiveSupport::TestCase
   end
 
   def update
-    params = { profile: { first_name: @first_name, last_name: @last_name } }
-    @form.update(make_params(params))
+    params = { first_name: @first_name, last_name: @last_name }
+    @form.update(params)
   end
 
   test "update returns true" do
@@ -57,9 +57,4 @@ class ProfileFormTest < ActiveSupport::TestCase
     assert_equal 'Foo', @user.first_name
     assert_equal 'Bar Baz', @user.last_name
   end
-
-  test "update returns false when params is not set" do
-    assert_not @form.update(make_params({}))
-  end
-
 end

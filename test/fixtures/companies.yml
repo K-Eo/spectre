@@ -5,7 +5,7 @@
 # below each fixture, per the syntax in the comments below
 
 spectre:
-  name: 'Spectre Inc.'
+  name: Spectre Inc.
 
 ghost:
-  name: 'Ghost Inc.'
+  name: Ghost Inc.

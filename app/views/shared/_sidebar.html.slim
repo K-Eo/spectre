@@ -11,9 +11,14 @@ nav.sidebar.bg-dark.d-flex.flex-column
                    name: 'Actividad',
                    controller: 'dashboards'
 
-    = sidebar_link url: workers_path,
-                   icon: 'organization',
-                   name: 'Trabajadores'
+    - if policy(User).index?
+      = sidebar_link url: users_path,
+                     icon: 'organization',
+                     name: 'Usuarios'
+
+    = sidebar_link url: alerts_path,
+                   icon: 'alert',
+                   name: 'Alertas'
 
   div class="divider"
 
@@ -32,5 +37,5 @@ nav.sidebar.bg-dark.d-flex.flex-column
                    method: :delete
 
   = link_to root_path, class: 'user-avatar px-3 py-3 d-flex align-items-center mt-auto' do
-    = gravatar current_user, class: 'mr-3 rounded-3', s: 28
+    = gravatar current_user, class: 'mr-3 rounded-3', height: 28
     span.text-light = current_user.name
