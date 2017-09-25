@@ -8,7 +8,7 @@ class Api::V1::SessionsController < Api::V1::ApiControllerBase
       head :bad_request
     elsif @user.valid_password?(params[:password])
       @user.regenerate_access_token
-      render status: :created
+      render status: :ok
     else
       head :bad_request
     end

@@ -13,7 +13,7 @@ class Api::V1::SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "login returns created if valid credentials" do
     login
-    assert_response :created
+    assert_response :ok
   end
 
   test "login returns access token if valid credentials" do
