@@ -7,16 +7,6 @@ class Api::V1::AlertsControllerTest < ActionDispatch::IntegrationTest
     @params = { alert: { text: 'foobar' } }
   end
 
-  test "get index returns success if logged in" do
-    get api_v1_alerts_path, headers: token_header(@user)
-    assert_response :success
-  end
-
-  test "get index returns unauthorized if logged out" do
-    get api_v1_alerts_path
-    assert_response :unauthorized
-  end
-
   test "create new alert responds with created if logged in" do
     post api_v1_alerts_path, params: @params, headers: token_header(@user)
     assert_response :created
@@ -30,7 +20,7 @@ class Api::V1::AlertsControllerTest < ActionDispatch::IntegrationTest
 
   test "create alert responds with 201 if params is not set" do
     post api_v1_alerts_path, headers: token_header(@user)
-    assert_response :unprocessable_entity
+    assert_response :bad_request
   end
 
   test "create new alert responds with unauthorized if logged out" do
