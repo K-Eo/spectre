@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :users, except: [:edit, :update]
   scope module: 'users' do
     resources :profiles, only: [:update]
-    resources :location, only: [:update]
+    resources :locations, only: [:update]
   end
 
   resources :alerts
