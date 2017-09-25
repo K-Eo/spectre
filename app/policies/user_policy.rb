@@ -20,13 +20,6 @@ class UserPolicy < ApplicationPolicy
     (record.company_id == user.company_id)
   end
 
-  def profile?
-    (user.admin? ||
-    (user.moderator? && record.user?) ||
-    (record.id == user.id)) &&
-    (record.company_id == user.company_id)
-  end
-
   def geo?
     (user.admin? ||
     (user.moderator? && record.user?) ||
@@ -42,10 +35,6 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes_for_create
     [:email]
-  end
-
-  def permitted_attributes_for_profile
-    [:first_name, :last_name]
   end
 
   def permitted_attributes_for_geo

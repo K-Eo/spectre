@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   }
 
   resource :dashboard
+  scope module: 'users' do
+    resources :profiles, only: [:update]
+  end
   resources :users, except: [:edit, :update] do
     member do
       patch 'profile'
