@@ -59,7 +59,7 @@ class Api::V1::ProfilesControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "responds unauthorized if access token is invalid" do
-      patch api_v1_profile_path, as: :json
+      patch api_v1_profile_path
       assert_response :unauthorized
     end
   end

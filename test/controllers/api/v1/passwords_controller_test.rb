@@ -10,8 +10,7 @@ class Api::V1::PasswordsControllerTest < ActionDispatch::IntegrationTest
     params = { user: { password: password,
                        password_confirmation: password_confirmation,
                        current_password: current_password } }
-    patch api_v1_password_path, as: :json,
-                                params: params,
+    patch api_v1_password_path, params: params,
                                 headers: token_header(@user)
   end
 
