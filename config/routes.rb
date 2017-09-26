@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   scope module: 'users' do
     resources :profiles, only: [:update]
     resources :locations, only: [:update]
+    resources :emails, only: [:update]
   end
 
   resources :alerts

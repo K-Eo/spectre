@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     authorize @user, :show?
     @profile = ProfileForm.new(@user)
     @location = LocationForm.new(@user)
+    @email = EmailForm.new(@user)
   end
 
   def destroy
