@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:account, :destroy, :geo, :profile, :settings, :show]
+  before_action :set_user, only: [:destroy, :show]
 
   def index
     authorize User
@@ -28,36 +28,9 @@ class UsersController < ApplicationController
   def show
     authorize @user, :show?
     @profile = ProfileForm.new(@user)
-    @geo = GeoForm.new(@user)
-  end
-
-  def profile
-    authorize @user
-    @profile = ProfileForm.new(@user)
-
-    respond_to do |format|
-      if @profile.update(permitted_attributes(@user))
-        format.js
-      else
-        format.js
-      end
-    end
-  end
-
-  def geo
-    authorize @user
-    @geo = GeoForm.new(@user)
-
-    respond_to do |format|
-      if @geo.update(permitted_attributes(@user))
-        format.js
-      else
-        format.js
-      end
-    end
-  end
-
-  def account
+    @location = LocationForm.new(@user)
+    @email = EmailForm.new(@user)
+    @password = SecretForm.new(@user)
   end
 
   def destroy

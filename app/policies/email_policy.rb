@@ -1,4 +1,4 @@
-class ProfilePolicy < ApplicationPolicy
+class EmailPolicy < ApplicationPolicy
 
   def update?
     (user.admin? ||
@@ -8,7 +8,7 @@ class ProfilePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:first_name, :last_name]
+    [:email, :current_password]
   end
 
   class Scope < Scope

@@ -5,7 +5,7 @@ class LocationForm < ApplicationForm
   validates :lat, numericality: true
   validates :lng, numericality: true
 
-  delegate :lat, :lng, to: :user
+  delegate :id, :lat, :lng, to: :user
 
   def update(params)
     user.assign_attributes(params)

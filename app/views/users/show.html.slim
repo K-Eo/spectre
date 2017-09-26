@@ -5,7 +5,7 @@
       hr.mt-0
 
     .col-10.mt-2
-      = render 'users/profile_form'
+      = render 'users/profiles/form'
 
     .col-2
       p.mb-2 Imagen de perfil
@@ -19,19 +19,27 @@
 
   .row.mb-5
     .col-12
-      h5 Geolocalización
+      h5 Localización
       hr.mt-0
 
     .col-12.mt-2
-      = render 'users/geo_form'
+      = render 'users/locations/form'
 
   .row.mb-5
     .col-12
-      h5 Correo electrónico
+      h5 Cambiar correo electrónico
       hr.mt-0
 
     .col-12.mt-2
-      = render 'users/account_form'
+      = render 'users/emails/form'
+
+  .row.mb-5
+    .col-12
+      h5 Cambiar contraseña
+      hr.mt-0
+
+    .col-12.mt-2
+      = render 'users/passwords/form'
 
     .col-12.mt-5
       h5 Eliminar cuenta

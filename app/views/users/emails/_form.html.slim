@@ -1,0 +1,15 @@
+= form_for(@email) do |f|
+  .form-group.row
+    = f.label :email, 'Correo electrónico', class: 'col-sm-2 col-form-label text-right'
+    .col-sm-10
+      = f.email_field :email, class: 'form-control'
+      - if @email.user.pending_reconfirmation?
+        small.form-text.text-success Correo #{@email.user.unconfirmed_email} en espera de confirmación.
+
+  .form-group.row
+    = f.label :current_password, 'Contraseña actual', class: 'col-sm-2 col-form-label text-right'
+    .col-sm-10
+      = f.text_field :current_password, class: 'form-control'
+      small.form-text.text-muted Para actualizar el correo electrónico es necesario confirmar con su contraseña.
+
+  = f.submit 'Guardar', class: 'btn btn-success'

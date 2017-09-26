@@ -10,17 +10,18 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'auth/edit', to: redirect('/users')
   devise_for :users, path: 'auth', controllers: {
     registrations: 'users/registrations'
   }
 
   resource :dashboard
-  resources :users, except: [:edit, :update] do
-    member do
-      patch 'profile'
-      patch 'account'
-      patch 'geo'
-    end
+  resources :users, except: [:edit, :update]
+  scope module: 'users' do
+    resources :profiles, only: [:update]
+    resources :locations, only: [:update]
+    resources :emails, only: [:update]
+    resources :passwords, only: [:update]
   end
 
   resources :alerts

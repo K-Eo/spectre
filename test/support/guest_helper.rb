@@ -43,13 +43,16 @@ module GuestHelper
     end
   end
 
-  def guest_login
+  def user_login(email = 'foo@bar.com', password = 'password')
     post user_session_path,
-         params: { user: { email: 'foo@bar.com', password: 'password' } }
-
+         params: { user: { email: email, password: password } }
     assert_redirected_to dashboard_path
     follow_redirect!
     assert_response :success
+  end
+
+  def guest_login
+    user_login
     assert_match /My Company/, @response.body
   end
 end

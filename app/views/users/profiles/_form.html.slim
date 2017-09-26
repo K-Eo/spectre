@@ -1,4 +1,4 @@
-= form_with(model: @profile, url: profile_user_path, id: 'worker_profile') do |f|
+= form_for(@profile) do |f|
   .form-group.row
     = f.label :first_name, 'Nombre', class: 'col-sm-2 col-form-label text-right'
     .col-sm-10
