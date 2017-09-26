@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :profiles, only: [:update]
     resources :locations, only: [:update]
     resources :emails, only: [:update]
+    resources :passwords, only: [:update]
   end
 
   resources :alerts

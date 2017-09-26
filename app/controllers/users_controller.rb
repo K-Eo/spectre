@@ -30,6 +30,7 @@ class UsersController < ApplicationController
     @profile = ProfileForm.new(@user)
     @location = LocationForm.new(@user)
     @email = EmailForm.new(@user)
+    @password = SecretForm.new(@user)
   end
 
   def destroy

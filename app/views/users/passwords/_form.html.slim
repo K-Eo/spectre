@@ -1,0 +1,17 @@
+= form_for(@password) do |f|
+  .form-group.row
+    = f.label :password, 'Nueva contraseña', class: 'col-sm-2 col-form-label text-right'
+    .col-sm-10
+      = f.text_field :password, class: 'form-control'
+
+  .form-group.row
+    = f.label :password_confirmation, 'Confirmar contraseña', class: 'col-sm-2 col-form-label text-right'
+    .col-sm-10
+      = f.text_field :password_confirmation, class: 'form-control'
+
+  .form-group.row
+    = f.label :current_password, 'Contraseña actual', class: 'col-sm-2 col-form-label text-right'
+    .col-sm-10
+      = f.text_field :current_password, class: 'form-control'
+
+  = f.submit 'Guardar', class: 'btn btn-success'
