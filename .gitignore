@@ -19,3 +19,8 @@
 .byebug_history
 
 .env.*
+
+# VIM temp files
+*~
+*.swp
+*.swo
