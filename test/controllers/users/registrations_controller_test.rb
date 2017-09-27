@@ -1,9 +1,10 @@
-require 'test_helper'
+require "test_helper"
 
 class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
-
   def setup
-    @user = { email: 'foo@bar.com', password: 'password', password_confirmation: 'password' }
+    @user = { email: "foo@bar.com",
+              password: "password",
+              password_confirmation: "password" }
   end
 
   def create_user
@@ -16,7 +17,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "user is persisted as an amdin" do
-    assert_difference 'User.count' do
+    assert_difference "User.count" do
       create_user
     end
 
@@ -25,14 +26,14 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "creates company" do
-    assert_difference 'Company.count' do
+    assert_difference "Company.count" do
       create_user
     end
   end
 
   test "does not create user and company if invalid user" do
-    @user[:email] = ''
-    assert_no_difference ['User.count', 'Company.count'] do
+    @user[:email] = ""
+    assert_no_difference ["User.count", "Company.count"] do
       create_user
     end
   end
@@ -45,23 +46,22 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "does not create user if logged in" do
     sign_in users(:jo)
-    assert_no_difference 'User.count' do
+    assert_no_difference "User.count" do
       create_user
     end
   end
 
   test "does not create company if logged in" do
     sign_in users(:jo)
-    assert_no_difference 'Company.count' do
+    assert_no_difference "Company.count" do
       create_user
     end
   end
 
   test "does not create user and company if email already exists" do
-    assert_no_difference ['User.count', 'Company.count'] do
-      @user[:email] = 'jo@spectre.com'
+    assert_no_difference ["User.count", "Company.count"] do
+      @user[:email] = "jo@spectre.com"
       create_user
     end
   end
-
 end

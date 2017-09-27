@@ -1,10 +1,9 @@
-require 'test_helper'
+require "test_helper"
 
-class Api::V1::SessionsControllerTest < ActionDispatch::IntegrationTest
-
+class SessionsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:jo)
-    @params = { email: @user.email, password: 'password' }
+    @params = { email: @user.email, password: "password" }
   end
 
   def login
@@ -18,22 +17,22 @@ class Api::V1::SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "login returns access token if valid credentials" do
     login
-    assert_match /"access_token":"[a-zA-Z0-9]*"/, @response.body
+    assert_match(/"access_token":"[a-zA-Z0-9]*"/, @response.body)
   end
 
   test "login returns json content if valid credentials" do
     login
-    assert_equal 'application/json', @response.content_type
+    assert_equal "application/json", @response.content_type
   end
 
   test "login returns bad request if password is incorrect" do
-    @params[:password] = 'foobar'
+    @params[:password] = "foobar"
     login
     assert_response :bad_request
   end
 
   test "login returns bad request if email does not exist" do
-    @params[:email] = 'foo@bar.com'
+    @params[:email] = "foo@bar.com"
     login
     assert_response :bad_request
   end

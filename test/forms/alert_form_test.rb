@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class AlertFormTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
@@ -6,7 +6,7 @@ class AlertFormTest < ActiveSupport::TestCase
   def setup
     @user = users(:jo)
     @form = AlertForm.new(@user)
-    @params = { text: 'foobar' }
+    @params = { text: "foobar" }
   end
 
   def update
@@ -18,7 +18,7 @@ class AlertFormTest < ActiveSupport::TestCase
   end
 
   test "update creates new alert" do
-    assert_difference 'Alert.count' do
+    assert_difference "Alert.count" do
       update
     end
   end
@@ -27,7 +27,7 @@ class AlertFormTest < ActiveSupport::TestCase
   # FIXME: Should selects only guards users
 
   # test "update creates alert events" do
-  #   assert_difference 'Notice.count', 2 do
+  #   assert_difference "Notice.count", 2 do
   #     update
   #   end
   # end
@@ -39,9 +39,8 @@ class AlertFormTest < ActiveSupport::TestCase
   # end
 
   test "update returns false if text is too long" do
-    text = 'a' * 256
+    text = "a" * 256
     @params = { text: text }
     assert_not update
   end
-
 end

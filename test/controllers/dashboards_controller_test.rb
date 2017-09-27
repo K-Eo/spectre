@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class DashboardsControllerTest < ActionDispatch::IntegrationTest
-
   test "index returns success" do
     sign_in users(:jo)
     get dashboard_path
@@ -12,5 +11,4 @@ class DashboardsControllerTest < ActionDispatch::IntegrationTest
     get dashboard_path
     assert_redirected_to new_user_session_path
   end
-
 end

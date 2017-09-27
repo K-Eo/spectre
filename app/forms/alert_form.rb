@@ -35,5 +35,4 @@ private
       AlertNotificationJob.perform_later
     end
   end
-
 end

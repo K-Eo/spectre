@@ -1,5 +1,4 @@
 class UserPolicy < ApplicationPolicy
-
   def index?
     user.admin? || user.moderator?
   end

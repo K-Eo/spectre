@@ -6,14 +6,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  default_scope { order('created_at DESC') }
+  default_scope { order("created_at DESC") }
 
   acts_as_mappable
 
   belongs_to :company
 
   # As a company worker
-  has_many :issued_alerts, class_name: 'Alert', foreign_key: 'user_id', dependent: :destroy
+  has_many :issued_alerts, class_name: "Alert", foreign_key: "user_id", dependent: :destroy
 
   # As a company guard
   has_many :notices, dependent: :destroy
@@ -26,7 +26,7 @@ class User < ApplicationRecord
   end
 
   def name
-    [self.first_name, self.last_name].compact.join(' ')
+    [self.first_name, self.last_name].compact.join(" ")
   end
 
   def send_devise_notification(notification, *args)

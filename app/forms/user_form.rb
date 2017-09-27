@@ -44,11 +44,11 @@ class UserForm < ApplicationForm
 
   def verify_unique_email
     if User.exists?(email: email)
-      errors.add(:email, 'has already been taken')
+      errors.add(:email, "has already been taken")
     end
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'User')
+    ActiveModel::Name.new(self, nil, "User")
   end
 end

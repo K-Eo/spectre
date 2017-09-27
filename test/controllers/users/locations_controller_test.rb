@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class Users::LocationsControllerTest < ActionDispatch::IntegrationTest
-
   def setup
     @params = { location: { lat: 22.22, lng: -24.44 } }
   end
@@ -52,7 +51,7 @@ class Users::LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_path(users(:jo))
   end
 
-  test "any can't update geo from users of other companies" do
+  test "any cannot update geo from users of other companies" do
     nuke(:eo, :tom)
     assert_response :not_found
 
@@ -65,7 +64,7 @@ class Users::LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test "redirects to user path on success" do
     nuke(:eo, :eo)
-    assert_equal 'Datos guardados', flash[:notice]
+    assert_equal "Datos guardados", flash[:notice]
     assert_redirected_to user_path(users(:eo))
   end
 

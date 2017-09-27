@@ -2,11 +2,11 @@ class Api::V1::ApiControllerBase < ActionController::Base
   include Pundit
   before_action :authenticate
 
-rescue_from ActionController::ParameterMissing do
-  respond_to do |format|
-    format.any { head :bad_request }
+  rescue_from ActionController::ParameterMissing do
+    respond_to do |format|
+      format.any { head :bad_request }
+    end
   end
-end
 
   def current_user
     @user

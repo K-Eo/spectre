@@ -1,12 +1,11 @@
-require 'test_helper'
+require "test_helper"
 
 class ProfileFormTest < ActiveSupport::TestCase
-
   def setup
     @user = users(:jo)
     @form = ProfileForm.new(@user)
-    @first_name = 'Foo'
-    @last_name = 'Bar'
+    @first_name = "Foo"
+    @last_name = "Bar"
   end
 
   def update
@@ -26,35 +25,35 @@ class ProfileFormTest < ActiveSupport::TestCase
   end
 
   test "update returns false if first_name is too long" do
-    @first_name = 'f' * 256
+    @first_name = "f" * 256
     assert_not update
     assert_equal 1, @form.errors.messages.length
   end
 
   test "update returns false if last_name is too long" do
-    @last_name = 'f' * 256
+    @last_name = "f" * 256
     assert_not update
     assert_equal 1, @form.errors.messages.length
   end
 
   test "update returns false if first_name has invalid format" do
-    @first_name = '!@$%&'
+    @first_name = "!@$%&"
     assert_not update
     assert_equal 1, @form.errors.messages.length
   end
 
   test "update returns false if last_name has invalid format" do
-    @last_name = '!@$%&'
+    @last_name = "!@$%&"
     assert_not update
     assert_equal 1, @form.errors.messages.length
   end
 
   test "update sanitizes extra spaces" do
-    @first_name = 'Foo  '
-    @last_name = ' Bar     Baz '
+    @first_name = "Foo  "
+    @last_name = " Bar     Baz "
     assert update
     @user.reload
-    assert_equal 'Foo', @user.first_name
-    assert_equal 'Bar Baz', @user.last_name
+    assert_equal "Foo", @user.first_name
+    assert_equal "Bar Baz", @user.last_name
   end
 end

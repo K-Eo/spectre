@@ -1,5 +1,4 @@
 class ProfilePolicy < ApplicationPolicy
-
   def update?
     (user.admin? ||
     (user.moderator? && record.user.user?) ||

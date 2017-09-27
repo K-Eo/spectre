@@ -16,7 +16,7 @@ class PasswordForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveMode::Name.new(self, nil, 'User')
+    ActiveMode::Name.new(self, nil, "User")
   end
 
 private
@@ -24,5 +24,4 @@ private
   def user_params(params)
     params.require(:user).permit(:password, :password_confirmation, :current_password)
   end
-
 end

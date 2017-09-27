@@ -12,5 +12,4 @@ class ApplicationForm
   def persisted?
     user.persisted?
   end
-
 end
