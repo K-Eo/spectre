@@ -10,7 +10,6 @@ class SecretForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Password')
+    ActiveModel::Name.new(self, nil, "Password")
   end
-
 end

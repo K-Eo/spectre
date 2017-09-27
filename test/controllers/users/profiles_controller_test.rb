@@ -1,9 +1,8 @@
-require 'test_helper'
+require "test_helper"
 
 class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
-
   def setup
-    @params = { profile: { first_name: 'foo', last_name: 'bar' } }
+    @params = { profile: { first_name: "foo", last_name: "bar" } }
   end
 
   def nuke(as, who)
@@ -52,7 +51,7 @@ class Users::ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_path(users(:jo))
   end
 
-  test "users can't update profiles of other companies" do
+  test "users cannot update profiles of other companies" do
     nuke(:eo, :tom)
     assert_response :not_found
 

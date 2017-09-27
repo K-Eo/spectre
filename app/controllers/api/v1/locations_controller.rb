@@ -1,5 +1,4 @@
 class Api::V1::LocationsController < Api::V1::ApiControllerBase
-
   def show
   end
 

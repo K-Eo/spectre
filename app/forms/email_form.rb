@@ -11,7 +11,6 @@ class EmailForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Email')
+    ActiveModel::Name.new(self, nil, "Email")
   end
-
 end

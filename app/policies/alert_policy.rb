@@ -1,5 +1,4 @@
 class AlertPolicy < ApplicationPolicy
-
   def permitted_attributes
     [:text]
   end

@@ -1,5 +1,4 @@
 class Api::V1::PasswordsController < Api::V1::ApiControllerBase
-
   def update
     @user_form = PasswordForm.new(current_user)
 

@@ -89,8 +89,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 private
 
   def create_company
-    @company = Company.new(name: 'My Company')
+    @company = Company.new(name: "My Company")
     @company.save
   end
-
 end

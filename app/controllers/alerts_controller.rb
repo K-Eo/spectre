@@ -4,5 +4,4 @@ class AlertsController < ApplicationController
   def index
     @alerts = current_company.alerts.includes(:issuing, :guards)
   end
-
 end

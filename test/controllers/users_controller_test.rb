@@ -1,8 +1,7 @@
-require 'test_helper'
+require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   class Index < UsersControllerTest
-
     def nuke(as)
       sign_in users(as) unless as.nil?
       get users_path
@@ -26,7 +25,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   class New < UsersControllerTest
-
     def nuke(user)
       sign_in users(user) unless user.nil?
       get new_user_path
@@ -50,8 +48,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Create < UsersControllerTest
-
-    def create_user(as, email = 'foo@bar.com')
+    def create_user(as, email = "foo@bar.com")
       sign_in(users(as)) if as.present?
       params = { user: { email: email } }
       post users_path, params: params
@@ -66,32 +63,32 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       create_user(:eo)
       assert_response :redirect
 
-      create_user(:kat, 'bar@bar.com')
+      create_user(:kat, "bar@bar.com")
       assert_response :redirect
 
-      create_user(:jo, 'baz@bar.com')
+      create_user(:jo, "baz@bar.com")
       assert_response :unauthorized
     end
 
     test "user is persisted into creator company scope as a user" do
       create_user(:eo)
-      user = User.find_by(email: 'foo@bar.com')
+      user = User.find_by(email: "foo@bar.com")
       assert_equal user.company_id, users(:eo).company_id
       assert user.user?
     end
 
     test "sets flash if user data is valid" do
       create_user(:eo)
-      assert_match /Email sent to/, flash[:success]
+      assert_match(/Email sent to/, flash[:success])
     end
 
     test "renders error if email is invalid" do
-      create_user(:eo, '')
-      assert_match /is invalid/, @response.body
+      create_user(:eo, "")
+      assert_match(/is invalid/, @response.body)
     end
 
     test "responds with unprocessable entity if email is invalid" do
-      create_user(:eo, '')
+      create_user(:eo, "")
       assert_response :unprocessable_entity
     end
 
@@ -103,13 +100,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Show < UsersControllerTest
-
     def nuke(as, who)
       sign_in users(as) unless as.nil?
       get user_path(users(who))
     end
 
-    test "users can't see profile of other companies" do
+    test "users cannot see profile of other companies" do
       nuke(:eo, :mia)
       assert_response :not_found
 
@@ -161,7 +157,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   class Destroy < UsersControllerTest
-
     def nuke(as, who)
       sign_in users(as)
       delete user_path(users(who))
@@ -206,7 +201,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       assert_response :redirect
     end
 
-    test "users can't destroy users from other company" do
+    test "users cannot destroy users from other company" do
       nuke(:eo, :tom)
       assert_response :not_found
     end

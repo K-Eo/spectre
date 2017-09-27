@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class PagesControllerTest < ActionDispatch::IntegrationTest
-
   test "index redirects to dashboard if logged in" do
     sign_in users(:jo)
     get root_path
@@ -12,5 +11,4 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_path
     assert_response :success
   end
-
 end

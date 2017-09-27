@@ -3,11 +3,11 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
+#   Character.create(name: "Luke", movie: movies.first)
 
 # Spectre Company
-spectre = Company.create!(name: 'Spectre Inc.')
+spectre = Company.create!(name: "Spectre Inc.")
 
 eo = User.new(
   company_id: spectre.id,
@@ -52,7 +52,7 @@ jo.skip_confirmation!
 jo.save!
 
 # Ghost company
-ghost = Company.create!(name: 'Ghost Inc.')
+ghost = Company.create!(name: "Ghost Inc.")
 
 mia = User.new(
   company_id: ghost.id,

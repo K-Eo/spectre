@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       flash[:success] = "Email sent to <strong>#{@user_form.email}</strong>."
       redirect_to user_path(@user_form.user)
     else
-      render 'new', status: :unprocessable_entity
+      render "new", status: :unprocessable_entity
     end
   end
 
@@ -44,5 +44,4 @@ private
   def set_user
     @user = policy_scope(User).find(params[:id])
   end
-
 end

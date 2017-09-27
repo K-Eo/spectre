@@ -44,7 +44,7 @@ gem 'draper'
 gem 'devise', '~> 4.2'
 
 # Authorization
-gem "pundit"
+gem 'pundit'
 
 # Active Job
 gem 'sidekiq'

@@ -1,13 +1,12 @@
-require 'test_helper'
+require "test_helper"
 
 class PasswordFormTest < ActiveSupport::TestCase
-
   def setup
     @user = users(:jo)
     @form = PasswordForm.new(@user)
-    @params = { user: { password: 'foobar',
-                        password_confirmation: 'foobar',
-                        current_password: 'password' } }
+    @params = { user: { password: "foobar",
+                        password_confirmation: "foobar",
+                        current_password: "password" } }
   end
 
   def update
@@ -22,5 +21,4 @@ class PasswordFormTest < ActiveSupport::TestCase
     @params = {}
     assert_not update
   end
-
 end

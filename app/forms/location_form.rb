@@ -19,6 +19,6 @@ class LocationForm < ApplicationForm
   end
 
   def self.model_name
-    ActiveModel::Name.new(self, nil, 'Location')
+    ActiveModel::Name.new(self, nil, "Location")
   end
 end

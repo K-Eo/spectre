@@ -1,5 +1,4 @@
 class WorkersMailer < ApplicationMailer
-
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -9,6 +8,6 @@ class WorkersMailer < ApplicationMailer
     @email = email
     @password = password
 
-    mail to: email, subject: 'Credenciales para cuenta de Spectre'
+    mail to: email, subject: "Credenciales para cuenta de Spectre"
   end
 end
