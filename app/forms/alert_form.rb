@@ -29,10 +29,13 @@ class AlertForm < ApplicationForm
 private
 
   def notify_guards
-    guards = User.within(1, units: :kms, origin: user).where.not(id: user.id)
+    guards = User.within(5, units: :kms, origin: user)
+                 .joins(:company)
+                 .where(companies: { kind: :security })
+
     guards.each do |guard|
       guard.notify_alert(alert)
-      AlertNotificationJob.perform_later
+      NoticeJob.perform_later(guard.id, alert.id)
     end
   end
 end
