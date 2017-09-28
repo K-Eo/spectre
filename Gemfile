@@ -52,6 +52,9 @@ gem 'sidekiq'
 # Geolocalization
 gem 'geokit-rails'
 
+# Notifications
+gem 'pusher'
+
 group :development, :test do
   gem 'pry-byebug'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
