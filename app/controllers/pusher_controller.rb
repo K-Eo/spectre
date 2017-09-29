@@ -7,8 +7,4 @@ class PusherController < ApplicationController
       render text: "Forbidden", status: 403
     end
   end
-
-  def channels
-    render json: { private: "private-#{current_user.id}" }
-  end
 end

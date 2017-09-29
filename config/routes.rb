@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   }
 
   post 'pusher/auth', to: 'pusher#auth'
-  get 'pusher/channels', to: 'pusher#channels'
 
   resource :dashboard
   resources :users, except: [:edit, :update]
@@ -26,6 +25,7 @@ Rails.application.routes.draw do
     resources :emails, only: [:update]
     resources :passwords, only: [:update]
   end
+  resource :channels
 
   resources :alerts
 
