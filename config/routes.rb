@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  post 'pusher/auth', to: 'pusher#auth'
+  get 'pusher/channels', to: 'pusher#channels'
+
   resource :dashboard
   resources :users, except: [:edit, :update]
   scope module: 'users' do

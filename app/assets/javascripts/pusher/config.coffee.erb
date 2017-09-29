@@ -1,0 +1,28 @@
+channels = null
+pusher = null
+
+channeling = ->
+  channel = pusher.subscribe channels.private
+  channel.bind 'my-event', (data) ->
+    console.log data
+
+$(document).ready ->
+  AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+  pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+    cluster: 'us2'
+    encrypted: true
+    authEndpoint: '/pusher/auth'
+    auth:
+      headers:
+        'X-CSRF-Token': AUTH_TOKEN
+  })
+
+  $.ajax {
+    type: 'GET'
+    url: '/pusher/channels'
+    success: (data) ->
+      channels = data
+      channeling()
+    error: (data) ->
+      console.log(data)
+  }
