@@ -11,3 +11,25 @@ nav class="app-nav mb-3 navbar navbar-expand-md navbar-light" id="app-nav"
       span class="navbar-toggler-icon"
 
     div class="collapse navbar-collapse" id="nav-content"
+      ul.navbar-nav.ml-auto
+        li.nav-item.dropdown
+          a.nav-link.d-flex href="#" id="alerts_dropdown" data-toggle="dropdown"
+            = octicon :megaphone, class: 'mr-1', width: 16
+            span [class="badge badge-danger"
+                  data-notification
+                  data-turbolinks-permanent
+                  id="alerts_counter"]
+
+          div.dropdown-menu.dropdown-menu-right aria-labelledby="alerts_dropdown"
+            span.my-2.mx-3 Alerts
+
+        li.nav-item.dropdown
+          a.nav-link.d-flex href="#" id="notifications_dropdown" data-toggle="dropdown"
+            = octicon :bell, class: 'mr-1', width: 16
+            span [class="badge badge-danger"
+                  data-notification
+                  data-turbolinks-permanent
+                  id="notifications_counter"]
+
+          div.dropdown-menu.dropdown-menu-right aria-labelledby="notifications_dropdown"
+            span.my-2.mx-3 Notifications
