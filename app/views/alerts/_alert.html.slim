@@ -1,6 +1,10 @@
 tr
   td style="width: 120px;"
-    span.badge.badge-primary Abierto
+    - if alert.opened?
+      span.badge.badge-success Abierto
+    - else
+      span.badge.badge-danger Cerrado
+
   td style="width: 140px;"
     = link_to "##{alert.id}", alert_path(alert)
     span.mx-2 por
