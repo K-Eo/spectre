@@ -7,8 +7,9 @@ channeling = ->
     $('span#alerts_counter').trigger('incoming-notification')
 
 $(document).ready ->
+  pusherKey = '<%= ENV["PUSHER_KEY"] %>'
   AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
-  pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>', {
+  pusher = new Pusher(pusherKey, {
     cluster: 'us2'
     encrypted: true
     auth:
