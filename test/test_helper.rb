@@ -1,6 +1,7 @@
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "devise"
+require 'aasm/minitest'
 require "support/users_helper"
 require "support/mailer_helper"
 require "support/guest_helper"
