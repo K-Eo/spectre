@@ -19,20 +19,9 @@ class AlertForm < ApplicationForm
 
     if valid?
       alert.save!
-      notify_guards
       true
     else
       false
-    end
-  end
-
-private
-
-  def notify_guards
-    guards = User.within(1, units: :kms, origin: user).where.not(id: user.id)
-    guards.each do |guard|
-      guard.notify_alert(alert)
-      AlertNotificationJob.perform_later
     end
   end
 end
