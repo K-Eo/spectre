@@ -4,9 +4,8 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 
-<% 1.upto(50) do |i| %>
+<% 1.upto(10) do |i| %>
 alert_<%= i %>:
-  id: <%= i %>
   company: spectre
-  user_id: <%= [1, 2, 3, 4, 5].sample %>
+  issuing: <%= [:eo, :kat, :leo, :jo, :case].sample %>
 <% end %>
