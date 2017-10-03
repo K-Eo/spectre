@@ -16,17 +16,8 @@ tr
                  title: alert.issuing.name,
                  alt: alert.issuing.name
 
-  td style="width: 140px;"
-    - alert.guards.each do |guard|
-      = link_to user_path(guard) do
-        = gravatar guard,
-                   width: 20,
-                   height: 20,
-                   class: 'rounded-3',
-                   title: guard.name,
-                   alt: guard.name
-
   td style="width: 200px;"
     span class="d-inline-block text-truncate" style="max-width: 150px;" = alert.text
 
+  td
   td
