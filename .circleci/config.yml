@@ -38,7 +38,7 @@ jobs:
             - node_modules
 
       - run:
-          name: Install 'phantomjs'
+          name: Install PhantomJS
           command: |
             sudo curl --output /tmp/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
             sudo chmod ugo+x /tmp/phantomjs
