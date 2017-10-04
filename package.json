@@ -2,6 +2,7 @@
   "name": "spectre",
   "private": true,
   "dependencies": {
+    "pusher-js": "^4.2.1",
     "timeago.js": "^3.0.2"
   }
 }

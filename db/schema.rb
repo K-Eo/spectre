@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922000652) do
+ActiveRecord::Schema.define(version: 20171003232055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170922000652) do
     t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "state", default: 0
     t.index ["company_id"], name: "index_alerts_on_company_id"
     t.index ["user_id"], name: "index_alerts_on_user_id"
   end
@@ -29,6 +30,19 @@ ActiveRecord::Schema.define(version: 20170922000652) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "kind", default: 0
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "recipient_id"
+    t.integer "actor_id"
+    t.datetime "read_at"
+    t.string "action"
+    t.string "notifiable_type"
+    t.bigint "notifiable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,6 +72,8 @@ ActiveRecord::Schema.define(version: 20170922000652) do
     t.float "lat"
     t.float "lng"
     t.integer "role", default: 0
+    t.boolean "monitor", default: false
+    t.boolean "create_alert", default: false
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

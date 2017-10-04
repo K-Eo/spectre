@@ -15,8 +15,18 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  post 'pusher/auth', to: 'pusher#auth'
+
   resource :dashboard
-  resources :users, except: [:edit, :update]
+  resource :channels
+  resources :alerts
+  resources :users, except: [:edit, :update] do
+    namespace :permissions do
+      resource :monitor, only: [:update, :destroy]
+      resource :alert, only: [:update, :destroy]
+    end
+  end
+
   scope module: 'users' do
     resources :profiles, only: [:update]
     resources :locations, only: [:update]
@@ -24,7 +34,6 @@ Rails.application.routes.draw do
     resources :passwords, only: [:update]
   end
 
-  resources :alerts
 
   root 'pages#index'
 end

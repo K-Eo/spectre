@@ -2,47 +2,56 @@ version: 2
 
 jobs:
   build:
-    parallelism: 3
     working_directory: ~/circleci-spectre
     docker:
       - image: circleci/ruby:2.4.1-node
         environment:
           RAILS_ENV: test
+          RACK_ENV: test
       - image: circleci/postgres:9.4.12-alpine
+      - image: selenium/standalone-chrome:latest
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - gem-cache-{{ .Branch }}
+            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-{{ arch }}-{{ .Branch }}
             - gem-cache
 
       - run: bundle install --path vendor/bundle
 
       - save_cache:
-          key: gem-cache-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
       - restore_cache:
           keys:
-            - yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-cache-{{ .Branch }}
+            - yarn-cache-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-cache-{{ arch }}-{{ .Branch }}
             - yarn-cache
 
       - run: yarn install
 
       - save_cache:
-          key: yarn-cache-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-cache-{{ arch }}-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+
+      - run:
+          name: Install PhantomJS
+          command: |
+            sudo curl --output /tmp/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+            sudo chmod ugo+x /tmp/phantomjs
+            sudo ln -sf /tmp/phantomjs /usr/local/bin/phantomjs
 
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # Run rspec in parallel
+      # Run tests
       - type: shell
         command: |
           bundle exec rails test
+          bundle exec rails test:system

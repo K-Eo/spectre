@@ -16,4 +16,4 @@
 //= require popper
 //= require bootstrap
 //= require timeago.js/src/timeago.js
-//= require_tree .
+//= require timeago

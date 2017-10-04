@@ -1,0 +1,26 @@
+channels = null
+pusher = null
+
+channeling = ->
+  channel = pusher.subscribe channels.private
+  channel.bind 'notice', (data) ->
+    $('span#alerts_counter').trigger('incoming-notification')
+
+$(document).ready ->
+  pusherKey = '<%= ENV["PUSHER_KEY"] %>'
+  AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+  pusher = new Pusher(pusherKey, {
+    cluster: 'us2'
+    encrypted: true
+    auth:
+      headers:
+        'X-CSRF-Token': AUTH_TOKEN
+  })
+
+  $.ajax {
+    type: 'GET'
+    url: '/channels'
+    success: (data) ->
+      channels = data
+      channeling()
+  }

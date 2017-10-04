@@ -14,8 +14,10 @@
     a.nav-link href="#" Administradores
 
 .col-10
-  ul.list-group
-    = render @users
+  table.table
+    thead
+    tbody
+      = render @users
 
 .col-10
   = paginate @users

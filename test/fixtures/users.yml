@@ -9,12 +9,14 @@ eo:
   company: spectre
   confirmation_sent_at: <%= Time.zone.now - 28.hours %>
   confirmed_at: <%= Time.zone.now - 27.hours %>
+  create_alert: false
   email: eo@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Eo
   last_name: Knight
   lat: 17.272432
   lng: -97.6816656
+  monitor: false
   role: admin
 
 kat:
@@ -22,12 +24,14 @@ kat:
   company: spectre
   confirmation_sent_at: <%= Time.zone.now - 26.hours %>
   confirmed_at: <%= Time.zone.now - 25.hours %>
+  create_alert: false
   email: kat@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Kat
   last_name: Evans
   lat: 17.2668944
   lng: -97.678272
+  monitor: true
   role: moderator
 
 leo:
@@ -35,12 +39,14 @@ leo:
   company: spectre
   confirmation_sent_at: <%= Time.zone.now - 24.hours %>
   confirmed_at: <%= Time.zone.now - 23.hours %>
+  create_alert: true
   email: leo@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Leo
   last_name: Adams
   lat: 17.2705865
   lng: -97.6780658
+  monitor: true
   role: moderator
 
 jo:
@@ -48,12 +54,14 @@ jo:
   company: spectre
   confirmation_sent_at: <%= Time.zone.now - 22.hours %>
   confirmed_at: <%= Time.zone.now - 21.hours %>
+  create_alert: true
   email: jo@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Jo
   last_name: Davis
   lat: 17.2681067
   lng: -97.6782673
+  monitor: false
   role: user
 
 case:
@@ -61,12 +69,14 @@ case:
   company: spectre
   confirmation_sent_at: <%= Time.zone.now - 20.hours %>
   confirmed_at: <%= Time.zone.now - 19.hours %>
+  create_alert: true
   email: case@spectre.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Case
   last_name: Hardy
   lat: 0
   lng: 0
+  monitor: false
   role: user
 
 # Ghost
@@ -75,12 +85,14 @@ mia:
   company: ghost
   confirmation_sent_at: <%= Time.zone.now - 16.hours %>
   confirmed_at: <%= Time.zone.now - 15.hours %>
+  create_alert: false
   email: mia@ghost.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Mia
   last_name: Woods
   lat: 17.245328
   lng: -97.6950679
+  monitor: false
   role: admin
 
 lee:
@@ -88,12 +100,14 @@ lee:
   company: ghost
   confirmation_sent_at: <%= Time.zone.now - 14.hours %>
   confirmed_at: <%= Time.zone.now - 13.hours %>
+  create_alert: false
   email: lee@ghost.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Lee
   last_name: Park
   lat: 17.2684659
   lng: -97.6790971
+  monitor: true
   role: moderator
 
 tom:
@@ -101,10 +115,12 @@ tom:
   company: ghost
   confirmation_sent_at: <%= Time.zone.now - 12.hours %>
   confirmed_at: <%= Time.zone.now - 11.hours %>
+  create_alert: true
   email: tom@ghost.com
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   first_name: Tom
   last_name: Miller
   lat: 17.2687989
   lng: -97.6781947
+  monitor: false
   role: user

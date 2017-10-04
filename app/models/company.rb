@@ -1,4 +1,5 @@
 class Company < ApplicationRecord
+  enum kind: [:business, :security]
   has_many :users
   has_many :alerts
 

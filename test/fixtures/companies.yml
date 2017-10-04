@@ -6,6 +6,8 @@
 
 spectre:
   name: Spectre Inc.
+  kind: business
 
 ghost:
   name: Ghost Inc.
+  kind: security
