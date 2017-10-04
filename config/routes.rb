@@ -18,16 +18,22 @@ Rails.application.routes.draw do
   post 'pusher/auth', to: 'pusher#auth'
 
   resource :dashboard
-  resources :users, except: [:edit, :update]
+  resource :channels
+  resources :alerts
+  resources :users, except: [:edit, :update] do
+    namespace :permissions do
+      resource :monitor, only: [:update, :destroy]
+      resource :alert, only: [:update, :destroy]
+    end
+  end
+
   scope module: 'users' do
     resources :profiles, only: [:update]
     resources :locations, only: [:update]
     resources :emails, only: [:update]
     resources :passwords, only: [:update]
   end
-  resource :channels
 
-  resources :alerts
 
   root 'pages#index'
 end

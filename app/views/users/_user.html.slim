@@ -1,7 +1,25 @@
-= content_tag :li, id: "user_#{user.id}", class: 'align-items-center d-flex list-group-item'
-  = gravatar user, height: 38, class: 'mr-3 rounded-3'
+tr id="user_#{user.id}"
+  td style="width: 50px;"
+    = gravatar user, height: 38, class: 'mr-3 rounded-3'
 
-  div
+  td style="width: 220px;"
     h6.mt-0.mb-0
-      = link_to (user.name.present? ? user.name : "User #{user.id}"), user_path(user), class: 'text-black'
+      = user.name.present? ? user.name : "Usuario inactivo"
     p.mb-0.text-muted = user.email
+
+  td style="width: 140px;" class="align-middle text-center"
+    - if user.admin?
+      span.badge.badge-danger Administrador
+    - elsif user.moderator?
+      span.badge.badge-warning Moderador
+    - else
+      span.badge.badge-primary Usuario
+
+  td class="align-middle text-center" style="width: 140px;"
+    = toggle_monitor_permission(user)
+
+  td class="align-middle text-center" style="width: 140px;"
+    = toggle_alert_permission(user)
+
+  td class="align-middle text-right"
+    a href="#" class="btn btn-danger btn-sm" role="button" Eliminar
