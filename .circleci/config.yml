@@ -37,6 +37,13 @@ jobs:
           paths:
             - node_modules
 
+      - run:
+        name: Install 'phantomjs'
+        command: |
+          sudo curl --output /tmp/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+          sudo chmod ugo+x /tmp/phantomjs
+          sudo ln -sf /tmp/phantomjs /usr/local/bin/phantomjs
+
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
