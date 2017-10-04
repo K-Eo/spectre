@@ -67,7 +67,6 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'guard'
   gem 'guard-minitest'
-  gem 'poltergeist'
 end
 
 group :development do

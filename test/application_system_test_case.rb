@@ -5,11 +5,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     browser: :remote,
     desired_capabilities: :chrome
   }
-  # driven_by :poltergeist
-
-  # def setup
-  #   Capybara.app_host = 'http://172.17.0.1'
-  # end
 
   def login_as(user, password = "password")
     email = user.respond_to?(:email) ? user.email : user
