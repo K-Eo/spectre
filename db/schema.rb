@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003210227) do
+ActiveRecord::Schema.define(version: 20171003232055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 20171003210227) do
     t.float "lat"
     t.float "lng"
     t.integer "role", default: 0
+    t.boolean "monitor", default: false
+    t.boolean "create_alert", default: false
     t.index ["access_token"], name: "index_users_on_access_token", unique: true
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
