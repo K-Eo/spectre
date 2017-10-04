@@ -9,6 +9,7 @@ jobs:
           RAILS_ENV: test
           RACK_ENV: test
       - image: circleci/postgres:9.4.12-alpine
+      - image: selenium/standalone-chrome:latest
     steps:
       - checkout
 
